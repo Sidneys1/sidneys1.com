@@ -22,6 +22,10 @@ layout: default
     </p>
   </header>
 
+  {%- if page.image -%}
+    <img class="post-image" src="{{ page.image }}">
+  {%- endif -%}
+
   <!-- <div class="post-toc"> -->
     {% toc %}
   <!-- </div> -->

@@ -8,7 +8,7 @@ serve:
 	bundle exec jekyll serve -w -l --force_polling
 
 _site/: ${SRC}
-	bundle exec jekyll build
+	env JEKYLL_ENV=production bundle exec jekyll build
 
 publish: _site/
 	rsync -icrz --delete _site/* sidneys1_sidneys1@ssh.phx.nearlyfreespeech.net:.

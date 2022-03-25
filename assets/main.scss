@@ -1,7 +1,58 @@
 --- 
 --- 
+@charset "utf-8";
 
-@import "minima";
+// Define defaults for each variable.
+
+$base-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
+$base-font-size:   16px !default;
+$base-font-weight: 400 !default;
+$small-font-size:  $base-font-size * 0.875 !default;
+$base-line-height: 1.5 !default;
+
+$spacing-unit:     30px !default;
+
+$text-color:       #111 !default;
+$background-color: #fdfdfd !default;
+$brand-color:      #2a7ae2 !default;
+
+$grey-color:       #828282 !default;
+$grey-color-light: lighten($grey-color, 40%) !default;
+$grey-color-dark:  darken($grey-color, 25%) !default;
+
+$table-text-align: left !default;
+
+// Width of the content area
+$content-width:    800px !default;
+
+$on-palm:          600px !default;
+$on-laptop:        800px !default;
+
+// Use media queries like this:
+// @include media-query($on-palm) {
+//   .wrapper {
+//     padding-right: $spacing-unit / 2;
+//     padding-left: $spacing-unit / 2;
+//   }
+// }
+@mixin media-query($device) {
+  @media screen and (max-width: $device) {
+    @content;
+  }
+}
+
+@mixin relative-font-size($ratio) {
+  font-size: $base-font-size * $ratio;
+}
+
+// Import partials.
+@import
+  "minima/base",
+  "minima/layout"//,
+//   "minima/syntax-highlighting"
+;
+
+@import url(monokai.css);
 
 .tag {
     font-size: small;
@@ -23,12 +74,18 @@
    }
 
 .toc__list {
-    border: 2px solid #eee;
     border-radius: 4px;
     line-height: 1.8rem;
     padding: 1rem 1.5rem;
     font-weight: 600;
     margin: 0 0 30px 0;
+    box-shadow: 0px 0px 10px #00000033;
+    transition: 250ms linear;
+}
+
+.toc__list:hover {
+    box-shadow: 0px 0px 10px #00000066;
+    transition: 250ms linear;
 }
 
 .toc__sublist li {
@@ -61,4 +118,65 @@ kbd {
     border-radius: 6px;
     box-shadow: inset 0 -1px 0 rgb(198, 187, 177);
     overflow-wrap: break-word;
+}
+
+fieldset.note {
+    font-size: smaller;
+    border: 0;
+    border-radius: 0.5em;
+    border-left: 2px groove $grey-color-light;
+    width: fit-content;
+    color: $grey-color;
+    margin: 0 1em;
+    > p {
+        margin-left: 1em;
+        margin-bottom: 0em;
+    }
+    > legend {
+        color: $text-color;
+        font-style: italic;
+        font-size: initial;
+    }
+}
+
+.post-excerpt {
+    > img {
+        max-height: 150px;
+        object-fit: cover;
+        margin-right: 1em;
+    }
+}
+
+.post-image {
+    border-radius: 4px;
+    margin: 0 0 30px 0;
+    box-shadow: 0px 0px 10px #00000033;
+    transition: 250ms linear;
+}
+
+.post-image:hover {
+    box-shadow: 0px 0px 10px #00000066;
+    transition: 250ms linear;
+}
+
+.post-content img {
+    box-shadow: 0px 0px 10px #00000033;
+    transition: 250ms linear;
+    margin: 0 auto;
+    display: block;
+}
+
+.post-content img:hover {
+    box-shadow: 0px 0px 10px #00000066;
+    transition: 250ms linear;
+}
+
+.post-content pre {
+    box-shadow: 0px 0px 10px #00000033;
+    transition: 250ms linear;
+}
+
+.post-content pre:hover {
+    box-shadow: 0px 0px 10px #00000066;
+    transition: 250ms linear;
 }
