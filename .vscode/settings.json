@@ -1,9 +1,15 @@
 {
     "cSpell.words": [
+        "bmatrix",
+        "constexpr",
         "javidx",
+        "powf",
         "raytracer",
         "raytracers",
         "Raytracing",
-        "Sidneys"
+        "renderable",
+        "Sidneys",
+        "sqrtf",
+        "struct"
     ]
 }

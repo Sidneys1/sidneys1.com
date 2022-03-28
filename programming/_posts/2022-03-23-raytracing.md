@@ -29,7 +29,7 @@ the canvas.
 
 ## How Do We Begin?
 
-### Create new, empty Visual Studio project
+### Creating a new `olc::PixelGameEngine` Project
 
 We're going to start with <kbd>Create a new project</kbd> in Visual Studio (I'm using 2022). Select the <kbd>Empty
 Project</kbd> (C++/Windows/Console) template. I also opted for the flat directory structure option <kbd>☑ Place solution
@@ -37,11 +37,9 @@ and project in the same directory</kbd>.
 
 ![Create new project](/images/2022-03-23-raytracing/create-a-new-project.png)
 
-### Add PGE header and create a game from template
-
-We copy in the `olcPixelGameEngine.h` file and add it to our solution. We also add a blank `main.cpp` and populate it
-with the contents of the template available in the `olcPixelGameEngine.h` header, taking care to rename our game class
-to match our needs.
+We copy in the [`olcPixelGameEngine.h` file][olc-pge-header] and add it to our solution. We also add a blank `main.cpp`
+and populate it with the contents of the template available in the `olcPixelGameEngine.h` header, taking care to rename
+our game class to match our needs.
 
 <fieldset class="note" markdown=1>
 <legend>Note</legend>
@@ -59,18 +57,11 @@ objects in the future.
 We also add a `std::vector` of `std::unique_ptr<Shape>` to our game class. This will allow us to add new `Shape`-derived
 objects to our scene:
 
-```c++
+```cpp
 shapes.emplace_back(std::make_unique<Sphere>());
 ```
 
-Finally, when the game exits, the memory we allocated will be freed (thanks, smart pointers).
-
-<!-- 
-<fieldset class="note" markdown=1>
-<legend>Note</legend>
-Running our project will now render a solid magenta canvas.
-</fieldset> 
--->
+When the game exits, the memory we allocated will be freed (thanks, smart pointers).
 
 ### Add constants and a way to "Sample" single pixels
 
@@ -78,9 +69,7 @@ We define a few constants for window geometry and begin implementing our renderi
 columns of the scene and calling a `Sample` function that takes a floating-point x,y position on the viewport and
 returns a `olc::Pixel` for that location.
 
-```c++
-/***** CONSTANTS *****/
-
+```cpp
 // Game width and height (in pixels).
 constexpr int WIDTH = 250;
 constexpr int HEIGHT = 250;
@@ -90,15 +79,14 @@ constexpr float HALF_WIDTH = WIDTH / 2.0f;
 constexpr float HALF_HEIGHT = HEIGHT / 2.0f;
 ```
 
-```c++
+```cpp
 bool OnUserUpdate(float fElapsedTime) override {
     // Called once per frame
 
     // Iterate over the rows and columns of the scene
     for (int y = 0; y < HEIGHT; y++) {
         for (int x = 0; x < WIDTH; x++) {
-            // Sample this specific pixel (converting screen coordinates
-            // to scene coordinates).
+            // Sample this specific pixel (converting screen coordinates to scene coordinates).
             auto color = Sample(x - HALF_WIDTH, y - HALF_HEIGHT);
             Draw(x, y, color);
         }
@@ -109,7 +97,6 @@ bool OnUserUpdate(float fElapsedTime) override {
 
 olc::Pixel Sample(float x, float y) const {
     // Called to get the color of a specific point on the screen.
-
     // For now we're returning a color based on the screen coordinates.
     return olc::Pixel(std::abs(x * 255), std::abs(y * 255), 0);
 }
@@ -122,17 +109,317 @@ color pattern converging in the center of the canvas:
 ![identity](/images/2022-03-23-raytracing/identity.png)
 </fieldset>
 
-<!-- ## Prepare For Rendering
-
 ### Add some geometry types, enhance Shape and Sphere
 
-We add structs for vectors and rays, and enhance our `Shape` and `Sphere` classes with properties that will allow us to
-describe their size and position in our scene. -->
+We add `struct`s for vectors (`vf3d`) and rays (`ray`). A vector represents a 3-dimensional point in space or a
+3-dimensional magnitude, while a ray uses two vectors, one to represent an origin point, and one to represent a
+directional magnitude out from that point.
 
-<!-- <fieldset class="note" markdown=1>
+```cpp
+// Struct to describe a 3D floating point vector.
+struct vf3d {
+    float x, y, z;
+    // Default constructor.
+    vf3d() = default;
+    // Explicit constructor that initializes x, y, and z.
+    constexpr vf3d(float x, float y, float z) : x(x), y(y), z(z) {}
+    // Explicit constructor that initializes x, y, and z to the same value.
+    constexpr vf3d(float f) : x(f), y(f), z(f) {}
+};
+
+// Struct to describe a 3D floating point ray (vector with origin point).
+struct ray {
+    vf3d origin, direction;
+    // Default constructor.
+    ray() = default;
+    // Add explicit constructor that initializes origin and direction.
+    constexpr ray(const vf3d origin, const vf3d direction) : origin(origin), direction(direction) {}
+};
+```
+
+We'll also enhance our `Shape` class with properties that will allow us to describe the size, position, and color of
+shapes in our scene:
+
+```cpp
+// Class to describe any kind of object we want to add to our scene.
+class Shape {
+public:
+    vf3d origin;
+    olc::Pixel fill;
+    // Delete the default constructor (we'll never have a Shape with a default origin and fill).
+    Shape() = delete;
+    // Add explicit constructor that initializes origin and fill.
+    Shape(vf3d origin, olc::Pixel fill) : origin(origin), fill(fill) {}
+};
+```
+
+We'll also give the `Sphere` class a notion of a `radius`, which is not shared by all `Shape`-derived classes:
+
+```cpp
+class Sphere : public Shape {
+public:
+    float radius;
+    // Delete the default constructor (see "Shape() = delete;").
+    Sphere() = delete;
+    // Add explicit constructor that initializes Shape::origin, Shape::fill, and Sphere::radius.
+    Sphere(vf3d origin, olc::Pixel fill, float radius) : Shape(origin, fill), radius(radius) {}
+};
+```
+
+Next, we'll want to update our `OnUserCreate` function to pass in the newly required properties of a `Sphere`. Let's
+create our initial `Sphere` at the position `x=0, y=0, z=200`, where $$x$$ is lateral position, $$y$$ is vertical
+position, and $$z$$ is depth (or distance from the camera). Since our camera will be at `x=0, y=0, z=0` this will
+align our `Sphere` in the center of the canvas, 200 units away. We'll also give our `Sphere` a solid `olc::GREY` color,
+and set the `radius` to `100`.
+
+```diff
+- shapes.emplace_back(std::make_unique<Sphere>());
++ shapes.emplace_back(std::make_unique<Sphere>(vf3d(0, 0, 200), olc::GREY, 100));
+```
+
+Finally, using our newly created `ray` type, let's construct a ray in `Sample` for a given pixel that will point into
+the scene:
+
+```cpp
+// Create a ray casting into the scene from this "pixel".
+ray sample_ray({ x, y, 0 }, { 0, 0, 1 });
+// TODO: We now need to test if this ray hits any Shapes and produces
+//       a color.
+```
+
+We create the `ray` at origin `x=x, y=y, z=0`, and set the direction to `x=0, y=0, z=1`. The direction is what we call a
+*unit vector*, which means that the overall magnitude to the vector is 1 ($$\sqrt{x^2+y^2+z^2}=1$$). Using a unit vector
+will simplify some math for us later.
+
+### Add fog color and a way to sample rays
+
+To prevent our scene from extending into infinity, and to have something to show when a ray doesn't hit *anything*, we
+add a new constant: a "fog" color.
+
+```cpp
+// A color representing scene fog.
+olc::Pixel FOG(128, 128, 128);
+```
+
+Additionally, we add a more specific function, `SampleRay`, that is called by `Sample` to return the color (or absence
+thereof) of a ray as it extends into our scene. For now, still, this returns a color relative to the $$x$$ and $$y$$
+coordinate in our scene:
+
+```cpp
+// Add a new include at the top of our file:
+#include <optional>
+
+// ---✂---
+
+std::optional<olc::Pixel> SampleRay(const ray r) const {
+    // Called to get the color produced by a specific ray.
+    // This will be the color we (eventually) return.
+    olc::Pixel final_color;
+    // For now we're returning a color based on the screen coordinates.
+    return olc::Pixel(std::abs(x * 255), std::abs(y * 255), 0);
+    final_color = olc::Pixel(std::abs(r.origin.x * 255), std::abs(r.origin.y * 255), 0);
+    return final_color;
+}
+```
+
+Don't forget to update `Sample` accordingly:
+
+```diff
+  // Create a ray casting into the scene from this "pixel".
+  ray sample_ray({ x, y, 0 }, { 0, 0, 1 });
+- // TODO: We now need to test if this ray hits any Shapes and produces
+- //       a color.
++ // Sample this ray - if the ray doesn't hit anything, use the color of
++ // the surrounding fog.
++ return SampleRay(sample_ray).value_or(FOG);
+```
+
+### Add intersection and sample methods to Shapes
+
+Our `SampleRay` function has been upgraded to search for a `Shape` that it intersects with. To do this, `Shape` has been
+upgraded with two new virtual methods:
+
+```c++
+// Get the color of this Shape (when intersecting with a given ray).
+virtual olc::Pixel sample(ray sample_ray) const { return fill; }
+
+// Determine how far along a given ray this Shape intersects (if at all).
+virtual std::optional<float> intersection(ray r) const = 0;
+```
+
+These methods provide the ability to determine where along a `ray` a `Shape` intersects, and to provide the color of the
+`Shape` at a given `ray` intersection. Our `Sphere` class overrides the `intersection` method, though for now
+the implementation only returns an empty optional.
+
+```c++
+// Determine how far along a given ray this Circle intersects (if at all).
+std::optional<float> intersection(ray r) const override {
+    // TODO: Implement ray-sphere intersection.
+    return {};
+}
+```
+
+Finally, let's update our `Sample` function, replacing the `final_color` value we compute based on screen coordinates
+with an algorithm that searches a `Shape` that intersects with our given `ray`:
+
+```c++
+// Store a pointer to the Shape this ray intersects with.
+auto intersected_shape_iterator = shapes.end();
+// Also store the distance along the ray that the intersection occurs.
+float intersection_distance = INFINITY;
+
+/* Determine the Shape this ray intersects with(if any). */ {
+    // Iterate over all of the Shapes in our scene.
+    for (auto it = shapes.begin(); it != shapes.end(); it++) {
+        // If the distance is not undefined (meaning no intersection)...
+        if (std::optional<float> distance = (*it)->intersection(r)) {
+            // Save the current Shape as the intersected Shape!
+            intersected_shape_iterator = it;
+            // Also save the distance along the ray that this intersection occurred.
+            intersection_distance = distance.value();
+        }
+    }
+    // If we didn't intersect with any Shapes, return an empty optional.
+    if (intersected_shape_iterator == shapes.end())
+        return {};
+}
+// Get the shape we discovered
+const Shape &intersected_shape = **intersected_shape_iterator;
+// Set our color to the sampled color of the Shape this ray with.
+final_color = intersected_shape.sample(r);
+```
+
+## Rendering Shapes
+
+### Implement ray-Sphere intersection
+
+We'll need to overload some operators for a `vf3d`: subtraction, and dot-product. A dot-product is a useful way of
+comparing two vectors to determine if they are similar. Consider two vectors, $$a$$ and $$b$$. The dot-product is a
+scalar value determined like so:
+
+$$dot(a,b) = a\cdot{}b = a_{1}b_{1}+a_{2}b_{2}+a_{3}b_{3}$$
+
+So, for example:
+
+$$\begin{bmatrix} 1 & 2 & 3\end{bmatrix}\cdot\begin{bmatrix} 4 & 5 & 6\end{bmatrix}\newline=\newline(1\cdot4)+(2\cdot5)+(3\cdot6)\newline=\newline4+10+18\newline=\newline32$$
+
+Translating this to C++ gives us our dot product function:
+
+```c++
+// Dot product (multiplication): vf3d * vf3d = float
+const float operator* (const vf3d right) const {
+    return (x * right.x) + (y * right.y) + (z * right.z);
+}
+
+// Subtraction: vf3d - vf3d = vf3d
+const vf3d operator-(const vf3d right) const {
+    return { x - right.x, y - right.y, z - right.z };
+}
+```
+
+We'll also implement the equation for an intersection between a `ray` and a `Sphere`. I'm not going to go into depth
+explaining the geometry here: this is a well-documented process and can be researched separately.
+
+```c++
+std::optional<float> intersection(ray r) const override {
+    return {};
+    vf3d oc = r.origin - origin;
+    float a = r.direction * r.direction;
+    float b = 2.0f * (oc * r.direction);
+    float c = (oc * oc) - (radius * radius);
+    float discriminant = powf(b, 2) - 4 * a * c;
+    if (discriminant < 0)
+        return {};
+    auto ret = (-b - sqrtf(discriminant)) / (2.0f * a);
+    if (ret < 0)
+        return {};
+    return ret;
+}
+```
+
+<fieldset class="note" markdown=1>
 <legend>Note</legend>
-Running our project produces no differences from the last commit.
-</fieldset> -->
+Running our project will now render a (highly aliased and flatly-colored) Sphere!
+![flat](/images/2022-03-23-raytracing/flat.png)
+</fieldset>
+
+### Add perspective rendering and depth sorting
+
+First we'll add some additional Spheres to our scene at different Z-depths. If we run our project now, you'll see that
+the Spheres added to our scene last are drawn in front of the earlier ones, even if they are further away.
+
+```c++
+// Add some additional Spheres at different positions.
+shapes.emplace_back(std::make_unique<Sphere>(vf3d(-150, +75, +300), olc::RED, 100));
+shapes.emplace_back(std::make_unique<Sphere>(vf3d(+150, -75, +100), olc::GREEN, 100));
+```
+
+![Bad Z-depth](/images/2022-03-23-raytracing/bad-z.png)
+
+To remedy that, we up date our hit check in `SampleRay` to select the object whose intersection is nearest to the `ray`
+origin. Now if we run our project, the Spheres are properly sorted.
+
+```diff
+- if (std::optional<float> distance = (*it)->intersection(r)) {
++ if (std::optional<float> distance = (*it)->intersection(r).value_or(INFINITY);
++                 distance < intersection_distance) {
+```
+
+![no-perspective](/images/2022-03-23-raytracing/no-perspective.png)
+
+However, you'll notice that all three Spheres are the same size, despite being different distances from the camera. To
+fix *this*, we'll need to add perspective to our camera. We'll do this in a very simplistic manner, by having all of the
+rays originate from some point, and pointing towards what you can think of as a "virtual canvas" some distance in front
+of that origin point. Update `Sample` like so:
+
+```diff
+- ray sample_ray({ x, y, 0 }, { 0, 0, 1 });
++ ray sample_ray({ 0, 0, -800 }, { (x / (float)WIDTH) * 100, (y / (float)HEIGHT) * 100, 200});
+
+  // Sample this ray - if the ray doesn't hit anything, use the color of
+  // the surrounding fog.
+- return SampleRay(sample_ray).value_or(FOG);
++ return SampleRay(sample_ray.normalize()).value_or(FOG);
+```
+
+Notice we call method of `ray` that we haven't defined yet: `normalize()`. Normalization produces a normalized vector
+(discussed before) from a non-normalized vector by resizing the vector components in proportion to their length such
+that the overall length is still 1. Normalization is defined as (with $$v\cdot{}v$$ of course being the dot product of
+itself):
+
+$$normalize(v) = \frac{v}{\sqrt{v\cdot{}v}}$$
+
+Let's add `normalize()` to both `ray` and `vf3d`:
+
+```c++
+// ---✂--- In ray:
+
+// Return a normalized version of this ray (magnitude == 1).
+const ray normalize() const {
+    return { origin, direction.normalize() };
+}
+
+// ---✂--- In vf3d:
+
+// Division: vf3d / float = vf3d
+const vf3d operator/(float divisor) const {
+    return { x / divisor, y / divisor, z / divisor };
+}
+
+// Return a normalized version of this vf3d (magnitude == 1).
+const vf3d normalize() const {
+    return (*this) / sqrtf((*this) * (*this));
+}
+```
+
+By normalizing this ray we get rays properly fanning out in a perspective.
+
+<fieldset class="note" markdown=1>
+<legend>Note</legend>
+Running our project will now produce a proper perspective rendering of our three flat-shaded Spheres, at the correct
+depths.
+![Perspective rendering.](/images/2022-03-23-raytracing/perspective.png)
+</fieldset>
 
 ## More to Come...
 
@@ -142,3 +429,4 @@ article. In the meantime, check out the [GitHub repo][gh] to see the complete pr
 [OLC]: https://community.onelonecoder.com/
 [javid]: https://www.youtube.com/channel/UC-yuWVUplUJZvieEligKBkA
 [gh]: https://github.com/Sidneys1/OlcPixelRayTracer
+[olc-pge-header]: https://github.com/OneLoneCoder/olcPixelGameEngine/releases/latest/download/olcPixelGameEngine.h
