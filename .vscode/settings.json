@@ -1,15 +1,21 @@
 {
     "cSpell.words": [
+        "Battlestation",
         "bmatrix",
         "constexpr",
+        "Inspiron",
+        "IPFS",
         "javidx",
         "powf",
         "raytracer",
         "raytracers",
         "Raytracing",
         "renderable",
+        "retrocomputing",
         "Sidneys",
         "sqrtf",
-        "struct"
-    ]
+        "struct",
+        "videography"
+    ],
+    "terminal.integrated.defaultProfile.windows": "Ubuntu (WSL)"
 }

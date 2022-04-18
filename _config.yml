@@ -18,7 +18,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Sidneys1
+title: Sidneys1.com
 email: admin@sidneys1.com
 description: >- # this means to ignore newlines until "baseurl:"
   A home for all my ramblings on subjects such as programming, cybersecurity,
@@ -40,6 +40,7 @@ theme: minima
 plugins:
   - jekyll-feed
   - jekyll-toc
+  - jekyll-seo-tag
 
 # Theme settings
 minima:
