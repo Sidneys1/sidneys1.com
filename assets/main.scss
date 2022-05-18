@@ -1,5 +1,5 @@
---- 
---- 
+---
+---
 @charset "utf-8";
 
 // Define defaults for each variable.
@@ -206,6 +206,20 @@ pre.highlight {
 
 .language-cpp {margin-top: -1em;}
 .language-cpp::before {
+    content: '.cpp';
+    color: #f8f8f2;
+    font-size: x-small;
+    font-family: monospace;
+    background-color: #272822;
+    border-radius: 0.5em;
+    padding: 0 0.25em;
+    position: relative;
+    top: 1em;
+    left: 1em;
+}
+
+.language-c\+\+ {margin-top: -1em;}
+.language-c\+\+::before {
     content: '.cpp';
     color: #f8f8f2;
     font-size: x-small;

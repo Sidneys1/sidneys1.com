@@ -6,6 +6,7 @@ tags: [programming, raytracing, ongoing projects]
 author: Sidneys1
 image: /images/2022-03-23-raytracing/hero.png
 toc: true
+excerpt_separator: <!--more-->
 ---
 
 Since I started programming I've had a dream in the back of my mind: *raytracers are super cool*, and I'd like to build
@@ -16,6 +17,8 @@ However this winter I discovered a new programming community, [OneLoneCoder][OLC
 Watching the videos produced by javidx9 inspired me to take a leap of faith in myself and start this raytracing project.
 The result has been amazing to see unfold as I developed first a working prototype in C#, then in C++, and finally as I
 produced what hopefully is an easy to follow "tutorial" style Git repository. So, lets dive in!
+
+<!--more-->
 
 ![finished product](/images/2022-03-23-raytracing/finished.gif)
 
@@ -239,7 +242,7 @@ Don't forget to update `Sample` accordingly:
 Our `SampleRay` function has been upgraded to search for a `Shape` that it intersects with. To do this, `Shape` has been
 upgraded with two new virtual methods:
 
-```c++
+```cpp
 // Get the color of this Shape (when intersecting with a given ray).
 virtual olc::Pixel sample(ray sample_ray) const { return fill; }
 
@@ -251,7 +254,7 @@ These methods provide the ability to determine where along a `ray` a `Shape` int
 `Shape` at a given `ray` intersection. Our `Sphere` class overrides the `intersection` method, though for now
 the implementation only returns an empty optional.
 
-```c++
+```cpp
 // Determine how far along a given ray this Circle intersects (if at all).
 std::optional<float> intersection(ray r) const override {
     // TODO: Implement ray-sphere intersection.
@@ -262,7 +265,7 @@ std::optional<float> intersection(ray r) const override {
 Finally, let's update our `Sample` function, replacing the `final_color` value we compute based on screen coordinates
 with an algorithm that searches a `Shape` that intersects with our given `ray`:
 
-```c++
+```cpp
 // Store a pointer to the Shape this ray intersects with.
 auto intersected_shape_iterator = shapes.end();
 // Also store the distance along the ray that the intersection occurs.
@@ -305,7 +308,7 @@ $$\begin{bmatrix} 1 & 2 & 3\end{bmatrix}\cdot\begin{bmatrix} 4 & 5 & 6\end{bmatr
 
 Translating this to C++ gives us our dot product function:
 
-```c++
+```cpp
 // Dot product (multiplication): vf3d * vf3d = float
 const float operator* (const vf3d right) const {
     return (x * right.x) + (y * right.y) + (z * right.z);
@@ -320,7 +323,7 @@ const vf3d operator-(const vf3d right) const {
 We'll also implement the equation for an intersection between a `ray` and a `Sphere`. I'm not going to go into depth
 explaining the geometry here: this is a well-documented process and can be researched separately.
 
-```c++
+```cpp
 std::optional<float> intersection(ray r) const override {
     return {};
     vf3d oc = r.origin - origin;
@@ -348,7 +351,7 @@ Running our project will now render a (highly aliased and flatly-colored) Sphere
 First we'll add some additional Spheres to our scene at different Z-depths. If we run our project now, you'll see that
 the Spheres added to our scene last are drawn in front of the earlier ones, even if they are further away.
 
-```c++
+```cpp
 // Add some additional Spheres at different positions.
 shapes.emplace_back(std::make_unique<Sphere>(vf3d(-150, +75, +300), olc::RED, 100));
 shapes.emplace_back(std::make_unique<Sphere>(vf3d(+150, -75, +100), olc::GREEN, 100));
@@ -391,7 +394,7 @@ $$normalize(v) = \frac{v}{\sqrt{v\cdot{}v}}$$
 
 Let's add `normalize()` to both `ray` and `vf3d`:
 
-```c++
+```cpp
 // ---✂--- In ray:
 
 // Return a normalized version of this ray (magnitude == 1).
@@ -420,6 +423,178 @@ Running our project will now produce a proper perspective rendering of our three
 depths.
 ![Perspective rendering.](/images/2022-03-23-raytracing/perspective.png)
 </fieldset>
+
+### Add a Plane Shape, and apply fog
+
+First we'll add a new type of `Shape`: a `Plane`. This is a flat surface extending infinitely in all directions. I'm not
+going to go into depth about the intersection algorithm, as that's basic geometry and is better explained elsewhere.
+Unlike a `Sphere`, orientation matters to a `Plane`, so we'll also add a "direction" `vf3d` that will indicate the
+normal pointing away from the surface.
+
+```cpp
+// Subclass of Shape that represents a flat Plane.
+class Plane : public Shape {
+public:
+	vf3d direction;
+
+	// Add explicit constructor that initializes
+	Plane(vf3d origin, vf3d direction, olc::Pixel fill) : Shape(origin, fill), direction(direction) {}
+
+	// Determine how far along a given ray this Plane intersects (if at all).
+	std::optional<float> intersection(ray sample_ray) const override {
+		auto denom = direction * sample_ray.direction;
+		if (fabs(denom) > 0.001f) {
+			auto ret = (origin - sample_ray.origin) * direction / denom;
+			if (ret > 0) return ret;
+		}
+		return {};
+	}
+};
+```
+
+We will also override the `sample` virtual method for the first time to provide a checkerboard pattern that will make
+the perspective rendering we added last time really pop.
+
+```cpp
+// Get the color of this Plane (when intersecting with a given ray).
+// We're overriding this to provide a checkerboard pattern.
+olc::Pixel sample(ray sample_ray) const override {
+	// Get the point of intersection.
+	auto intersect = (sample_ray * intersection(sample_ray).value_or(0.0f)).end();
+
+	// Get the distances along the X and Z axis from the origin to the intersection.
+	float diffX = origin.x - intersect.x;
+	float diffZ = origin.z - intersect.z;
+
+	// Get the XOR the signedness of the differences along X and Z.
+	// This allows us to "invert" the +X,-Z and -X,+Z quadrants.
+	bool color = (diffX < 0) ^ (diffZ < 0);
+
+	// Flip the "color" boolean if diff % 100 < 50 (e.g., flip one half of each 100-unit span.
+	if (fmod(fabs(diffZ), 100) < 50) color = !color;
+	if (fmod(fabs(diffX), 100) < 50) color = !color;
+
+	// If we're coloring this pixel, return the fill - otherwise return DARK_GREY.
+	if (color)
+		return fill;
+	return olc::DARK_GREY;
+}
+```
+
+To do this we'll also be adding some new operator overloads to both `vf3d` and `ray`, and we'll also add a new method to
+`ray` that returns the `vf3d` representing the endpoint of the `ray`.
+
+```cpp
+// ---✂--- In vf3d:
+
+// Addition: vf3d + vf3d = vf3d
+const vf3d operator+(const vf3d right) const {
+	return { x + right.x, y + right.y, z + right.z };
+}
+
+// Multiplication: vf3d * float = vf3d
+const vf3d operator*(float factor) const {
+	return { x * factor, y * factor, z * factor };
+}
+
+// ---✂--- In ray:
+
+// Multiplication: ray * float = ray
+const ray operator*(float right) const {
+	return { origin, direction * right };
+}
+
+// Return the vf3d at the end of this ray.
+const vf3d end() const {
+	return origin + direction;
+}
+```
+
+Finally, we'll add a new `Plane` to our scene just below our `Sphere`s. Note that since we render our canvas top to
+bottom, +Y is down, while -Y is up.
+
+```cpp
+// Add a "floor" Plane
+shapes.emplace_back(std::make_unique<Plane>(vf3d(0, 200, 0 ), vf3d(0, -1, 0), olc::Pixel(204, 204, 204)));
+```
+
+<fieldset class="note" markdown=1>
+<legend>Note</legend>
+
+Running our project now you'll see the checkerboard pattern continue off to the horizon - *however*, it appears
+further up on the canvas than you might expect. *Additionally*, the checkerboard pattern gets very garbled as the
+checks gets smaller than a single pixel, creating a sort of unexpected and disorienting moire pattern. Perhaps drawing
+surfaces *that* far away isn't good...
+
+*Coming soon: a screenshot.*
+<!-- TODO: ![Plane.]() -->
+
+</fieldset>
+
+To remedy this, we'll add the concept of Fog. We already have a Fog color, for when a ray doesn't hit anything. This new
+concept applies the idea of there being some extreme translucency to the nothingness between a ray's origin and the
+`Shape` it intersects with. We'll begin by adding two new constants, one to define the maximum distance at which an
+`Shape` would be visible, and the other as the reciprocal of that.
+
+```cpp
+// Fog distance and reciprocal (falloff).
+constexpr float FOG_INTENSITY_INVERSE = 3000;
+constexpr float FOG_INTENSITY = 1 / FOG_INTENSITY_INVERSE;
+```
+
+Now when we're determining the color of a ray in `SampleRay` we can check if the intersection distance is greater than
+that of the max Fog distance. If so, we'll immediately return the Fog color and skip further calculation. If the
+distance is lower, however, we want to smoothly transition between the `Shape`'s color and the Fog's color, depending on
+the distance.
+
+```cpp
+// Quick check - if the intersection is further away than the furthest Fog point,
+// then we can save some time and not calculate anything further, since it would
+// be obscured by Fog regardless.
+if (intersection_distance >= FOG_INTENSITY_INVERSE)
+	return FOG;
+
+// Set our color to the sampled color of the Shape this ray with.
+final_color = intersected_shape.sample(r);
+
+// Apply Fog
+if (FOG_INTENSITY)
+	final_color = lerp(final_color, FOG, intersection_distance * FOG_INTENSITY);
+```
+
+To do this, we've referenced a function called `lerp` - short for "linear interpolation" - that we haven't defined yet.
+This function smoothly mixes two colors based on a floating point value between 0.0 and 1.0.
+
+```cpp
+// Apply a linear interpolation between two colors:
+//  from |-------------------------------| to
+//                ^ by
+olc::Pixel lerp(olc::Pixel from, olc::Pixel to, float by) const {
+	if (by <= 0.0f) return from;
+	if (by >= 1.0f) return to;
+	return olc::Pixel(
+		from.r * (1 - by) + to.r * by,
+		from.g * (1 - by) + to.g * by,
+		from.b * (1 - by) + to.b * by
+	);
+}
+```
+
+<fieldset class="note" markdown=1>
+<legend>Note</legend>
+
+Running our project now displays our Spheres as before, plus the checkerboard Plane of the floor, smoothly fading
+into the distance.
+
+*Coming soon: a screenshot.*
+<!-- TODO: ![Fog.]() -->
+
+</fieldset>
+
+Note that as our scene and renderer grow in complexity we'll begin to see lower and lower frame-rates when running our
+project. Switching our compilation mode to Release and running without debugging can help, as the compiler will more
+aggressively apply optimizations. Feel free to experiment with optimization strategies in the Release compilation
+settings.
 
 ## More to Come...
 
