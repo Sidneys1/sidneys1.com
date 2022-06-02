@@ -596,10 +596,524 @@ project. Switching our compilation mode to Release and running without debugging
 aggressively apply optimizations. Feel free to experiment with optimization strategies in the Release compilation
 settings.
 
-## More to Come...
+## Prettying Up
 
-This page is still unfinished! Don't worry, I've finished this project, it's just a matter of writing up the rest of the
-article. In the meantime, check out the [GitHub repo][gh] to see the complete project.
+### Add reflections
+
+Reflections are an intrinsic feature of any raytracer. To begin, let's add a new constant to control just how many times
+a ray may reflect as it makes its way through the scene. Imagine being inside a hall of mirrors - the reflections may
+continue to some recursive depth - in real life, this is infinite (or at least to the degree allowed by the quality of
+the mirrors and available light). In our project, reflections add more computational complexity, so limiting the degree
+to which these reflections propagate is essential. To do so, I've surrounded two different values for this constant in
+preprocessor "if" statements to provide different values under Debug and Release mode respectively.
+
+```cpp
+#ifdef DEBUG
+constexpr int BOUNCES = 2;
+#else
+constexpr int BOUNCES = 5;
+#endif
+```
+
+Next we'll add a property to our base `Shape` class - a floating point representing `reflectivity`. This will range
+between 0 (no reflections) and 1 (a perfect mirror). We'll also initialize this as a constructor parameter, and extend
+that parameter to the `Sphere` class as well.
+
+```cpp
+// ---✂--- In Shape:
+
+vf3d origin;
+olc::Pixel fill;
+float reflectivity;
+
+/* CONSTRUCTORS */
+
+// Delete the default constructor (we'll never have a Shape with a default origin and fill).
+Shape() = delete;
+
+// Add explicit constructor that initializes origin and fill.
+Shape(vf3d origin, olc::Pixel fill, float reflectivity = 0.0f) : origin(origin), fill(fill), reflectivity(reflectivity) {}
+
+// ---✂--- In Sphere:
+
+Sphere(vf3d origin, olc::Pixel fill, float radius, float reflectivity = 0.0f) : Shape(origin, fill, reflectivity), radius(radius) {}
+```
+
+Next, we'll make the surfaces of our first and second `Sphere`s to be
+reflective.
+
+```diff
+ // Create a new Sphere and add it to our scene.
+-shapes.emplace_back(std::make_unique<Sphere>(vf3d(0, 0, 200), olc::GREY, 100));
++shapes.emplace_back(std::make_unique<Sphere>(vf3d(0, 0, 200), olc::GREY, 100, 0.9f));
+
+ // Add some additional Spheres at different positions.
+-shapes.emplace_back(std::make_unique<Sphere>(vf3d(-150, +75, +300), olc::RED, 100));
++shapes.emplace_back(std::make_unique<Sphere>(vf3d(-150, +75, +300), olc::RED, 100, 0.5f));
+```
+
+Lastly, we'll add a new abstract method to our `Shape` class that will return the normal at a given
+intersection point, and override this abstract method in our `Sphere` and `Plane` classes. A normal is simply a ray
+pointing outwards from the surface of the `Shape` at the given point.
+
+```cpp
+// ---✂--- In Shape:
+
+// Determine the surface normal of this Shape at a given intersection point.
+virtual ray normal(vf3d incident) const = 0;
+
+// ---✂--- In Sphere:
+
+// Return the surface normal of this Sphere at a given intersection point.
+ray normal(vf3d incident) const override {
+	return { incident, (incident - origin).normalize() };
+}
+```
+
+Next, let's enhance our `SampleRay` method by adding a parameter for how many "bounces" are allowed - as this method is
+called recursively we'll decrement this value, at at the point where bounces is zero we'll stop processing more
+reflections. We'll pass the initial bounces constant into the `SampleRay` method from the `Sample` method.
+
+```cpp
+// ---✂--- In Sample():
+
+// Sample this ray - if the ray doesn't hit anything, use the color of
+// the surrounding fog.
+return SampleRay(sample_ray.normalize(), BOUNCES).value_or(FOG);
+
+// ---✂--- In SampleRay():
+
+std::optional<olc::Pixel> SampleRay(ray r, int bounces) const {
+	bounces--;
+```
+
+Once we've
+sampled our `Shape` and determined its intrinsic color, we need to created a reflected ray and sample that to determine
+the color that would be reflected by this `Shape` - we can skip this process if the reflectivity is zero or if we've
+reached the max depth. Creating a reflected ray is a simple geometric function between the direction of the original
+`sample_ray` and the `Shape`'s normal at the intersection point. Finally, we sample this new ray (passing in the new,
+decremented bounces count). We'll mix our `final_color` between the intrinsic color of this `Shape` itself and the color
+we sampled along the reflected ray (or, if it didn't hit anything, our Fog color).
+
+```cpp
+// Set our color to the sampled color of the Shape this ray with.
+final_color = intersected_shape.sample(r);
+
+// Determine the point at which our ray intersects our Shape.
+vf3d intersection_point = (r * intersection_distance).end();
+// Calculate the normal of the given Shape at that point.
+ray normal = intersected_shape.normal(intersection_point);
+
+// Apply reflection
+if (bounces != 0 && intersected_shape.reflectivity > 0) {
+	// Our reflection ray starts out as our normal...
+	ray reflection = normal;
+
+	// Apply a slight offset *along* the normal. This way our reflected ray will
+	// start at some slight offset from the surface so that rounding errors don't
+	// cause it to collide with the Shape it originated from!
+	reflection.origin = reflection.origin + (normal.direction + 0.001f);
+
+	// Reflect the direction around the normal with some simple geometry.
+	reflection.direction = (normal.direction * (2 * ((r.direction * -1) * normal.direction)) + r.direction).normalize();
+
+	// Recursion! Since SampleRay doesn't care if the ray is coming from the
+	// canvas, we can use it to get the color that will be reflected by this Shape!
+	std::optional<olc::Pixel> reflected_color = SampleRay(reflection, bounces);
+
+	// Finally, mix our Shape's color with the reflected color (or Fog color, in case
+	// of a miss) according to the reflectivity.
+	final_color = lerp(final_color, reflected_color.value_or(FOG), intersected_shape.reflectivity);
+}
+```
+<fieldset class="note" markdown=1>
+<legend>Note</legend>
+
+Running our project at this point produces a beautifully rendered scene where the center and left `Sphere`s reflect
+their surroundings - and a sharp eye can determine that the left `Sphere` can even see itself in its reflection of the
+center `Sphere`.
+
+*Coming soon: a screenshot.*
+<!-- TODO: ![Reflections.]() -->
+
+</fieldset>
+
+To further highlight the reflections we'll add some simple motion to the scene by accumulating time in the
+`OnUserUpdate` function, and modifying the Y and Z coordinates of the center `Sphere` along a sine/cosine wave
+respectively.
+
+```cpp
+// Called once per frame
+
+// Create some static storage to accumulate elapsed time...
+static float accumulated_time = 0.0f;
+
+// ...and accumulate elapsed time into it.
+accumulated_time += fElapsedTime;
+
+// Update the position of our first Circle every update.
+// sin/cos = easy, cheap motion.
+Shape& shape = *shapes.at(0);
+shape.origin.y = sinf(accumulated_time) * 100 - 100;
+shape.origin.z = cosf(accumulated_time) * 100 + 100;
+
+// Iterate over the rows and columns of the scene
+```
+
+<fieldset class="note" markdown=1>
+<legend>Note</legend>
+
+Running our project now will display a smoothly floating `Sphere`, with appropriate reflections of its surrounding
+`Shapes`.
+
+*Coming soon: a screenshot.*
+<!-- TODO: ![Reflections in motion.]() -->
+
+</fieldset>
+
+### Create and use a `color3` type
+
+To simplify some upcoming features, let's replace our use of `olc::Pixel` with our own color type. Since we're used to
+representing color as the combination of three values - red, green, and blue - we can represent each with a floating
+point value between 0 and 1.
+
+Looking at our code, we already have a type to represent three floating point values: `vf3d`. Using a simple `using`
+alias, we can create a type alias called `color3` that is really a `vf3d` behind the scenes. This aliasing isn't really
+necessary, but it will help avoid confusion. Additionally, we can leverage the `olc::PixelF` type to convert our
+floating point color to one compatible with PixelGameEngine.
+
+```cpp
+// Use a type alias to use vf3d and color3 interchangeably.
+using color3 = vf3d;
+
+// ---✂---
+
+// Colors
+
+color3 LIGHT_GRAY(0.8f);
+color3 DARK_GRAY(0.5f);
+color3 GREY(0.75f);
+color3 RED(1.0f, 0.0f, 0.0f);
+color3 GREEN(0.0f, 1.0f, 0.0f);
+
+// ---✂---
+
+color3 FOG = DARK_GRAY;
+
+// ---✂---
+
+Draw(x, y, olc::PixelF(color.x, color.y, color.z));
+```
+
+You'll need to update references to `olc::Pixel` throughout the code to use `color3` instead. For example in our `lerp`
+function:
+
+```diff
+ // Apply a linear interpolation between two colors:
+ //  from |-------------------------------| to
+ //                ^ by
+-olc::Pixel lerp(olc::Pixel from, olc::Pixel to, float by) const {
++color3 lerp(color3 from, color3 to, float by) const {
+ 	if (by <= 0.0f) return from;
+ 	if (by >= 1.0f) return to;
+-	return olc::Pixel(
+-		from.r * (1 - by) + to.r * by,
+-		from.g * (1 - by) + to.g * by,
+-		from.b * (1 - by) + to.b * by
++	return color3(
++		from.x * (1 - by) + to.x * by,
++		from.y * (1 - by) + to.y * by,
++		from.z * (1 - by) + to.z * by
+ 	);
+ }
+```
+
+<fieldset class="note" markdown=1>
+<legend>Note</legend>
+
+Running our project now produces no difference from our previous commit.
+
+</fieldset>
+
+### Add diffuse lighting
+
+Let's add a single point light source to our scene. We'll add a member to our game class to represent this. We'll use a
+class member instead of a constant so that we can change the position of the light later. We'll initialize this value in
+the constructor to be 500 units behind and 500 units above our origin.
+
+```diff
+ // ---✂--- Add a class member to our OlPixelRayTracer:
+
++// The position of our point light.
++vf3d light_point;
+
+ // ---✂--- Update our game constructor:
+
+-OlcPixelRayTracer() {
++OlcPixelRayTracer() : light_point(0, -500, -500) {
+```
+
+Diffuse lighting is frighteningly simple - we already know that a dot product between two vectors returns a value that
+roughly describes the similarity of the vectors. To implement simple diffuse lighting, we can multiply our sample color
+by a dot product between the surface normal vector and a vector pointing towards our single light source.
+
+Let's add a section to our `SampleRay` function after we apply reflections where we'll apply diffuse lighting. The
+process only requires three lines of code! First we'll create a normalized ray at the intersection point, pointing
+towards the light point (we do this by subtracting the light point from the intersection point). Secondly, we'll
+calculate the dot product between our light ray and the surface normal we already have.
+
+```cpp
+// ---✂--- After applying reflections, and before applying fog:
+
+// Apply diffuse lighting
+
+// First we'll get the normalized ray from our intersection point to the light source.
+ray light_ray = ray(intersection_point, light_point - intersection_point).normalize();
+
+// Next we'll compute the dot product between our surface normal and the light ray.
+float dot = light_ray.direction * normal.direction;
+
+// Multiplying our final color by this dot product darkens surfaces pointing away from the light.
+final_color = final_color * dot;
+```
+
+<fieldset class="note" markdown=1>
+<legend>Note</legend>
+
+Running our project now will highlight a problem: the top halves of our `Shape`s look correct (towards the light), but
+the bottoms have a corrupted look. You'll remember that the dot product of two vectors lies in the range $$[-1,1]$$. As we
+reach the side of our `Shape`s pointing away from the light, our dot product enters the negative range - and "negative"
+colors are certainly a concept our data types are unprepared to handle! To fix this let's clamp the dot product value to
+the range $$[0,1]$$ - this way all negative values are discarded.
+
+
+*Coming soon: a screenshot.*
+<!-- TODO: ![Negative colors.]() -->
+
+</fieldset>
+
+```diff
+ // Next we'll compute the dot product between our surface normal and the light ray.
++// We need to clamp this between 0 and 1, because negative values have no meaning here.
+-float dot = light_ray.direction * normal.direction;
++float dot = std::clamp(light_ray.direction * normal.direction, 0.0f, 1.0f);
+```
+
+<fieldset class="note" markdown=1>
+<legend>Note</legend>
+
+Running our project now looks correct! The tops of our `Shape`s are light, while the bottoms are almost pitch black.
+**However**, since darkness isn't terribly interesting, let's add a global ambient light, which we'll implement as a new
+constant.
+
+
+*Coming soon: a screenshot.*
+<!-- TODO: ![Too dark.]() -->
+
+</fieldset>
+
+By adding our global light value to the dot product we'll ensure that our diffuse lighting never completely
+darkens our scene.
+
+```diff
+ // ---✂--- Add a new constant:
+
++// Lighting
++constexpr float AMBIENT_LIGHT = 0.5f;
+
+ // ---✂--- Update our diffuse lighting:
+
+ // Next we'll compute the dot product between our surface normal and the light ray.
+ // We need to clamp this between 0 and 1, because negative values have no meaning here.
++// Additionally, we'll add in our ambient light so no surfaces are entirely dark.
+-float dot = std::clamp(light_ray.direction * normal.direction, 0.0f, 1.0f);
++float dot = std::clamp(AMBIENT_LIGHT + (light_ray.direction * normal.direction), 0.0f, 1.0f);
+```
+
+<fieldset class="note" markdown=1>
+<legend>Note</legend>
+
+Running our project now displays simple diffuse lighting without darkening any parts of our scene entirely.
+
+
+*Coming soon: a screenshot.*
+<!-- TODO: ![Just right diffuse lighting.]() -->
+
+</fieldset>
+
+### Add shadow casting
+
+Let's upgrade our lighting mechanic with proper shadows. The theory is simple: we check if any `Shape`s intersect with
+the ray between a `Shape`'s surface and the light itself. If any `Shape`s do intersect, then the light is fully occluded
+and we can set the lighting to full-dark (rather than the diffuse value we calculated last time). If there are no
+intersecting `Shape`s, then we use the dot product as we did last time.
+
+To start, instead of normalizing our lighting ray immediately, we'll want to save its length - this lets us know how far
+away the light is from the current hit point. To do this we'll add a short method to `vf3d` to calculate its length.
+
+```cpp
+// Return the length of this vf3d.
+const float length() const {
+	return sqrtf(x * x + y * y + z * z);
+}
+```
+
+Next, to avoid the lighting ray intersecting with the current object itself we'll offset the light ray origin by a tiny
+amount along the surface normal. Finally, we'll normalize the light ray's direction.
+
+```cpp
+// ---✂--- In SampleRay(), replace our current diffuse lighting with the following:
+
+// Apply lighting
+
+// First we'll get the un-normalized ray from our intersection point to the light source.
+ray light_ray = ray(intersection_point, light_point - intersection_point);
+// Get the distance to the light (equal to the length of the un-normalized ray).
+float light_distance = light_ray.direction.length();
+// We'll also offset the origin of the light ray by a small amount along the
+// surface normal so the ray doesn't intersect with this Shape itself.
+light_ray.origin = light_ray.origin + (normal.direction * 0.001f);
+// And finally we'll normalize the light_ray.
+light_ray.direction = light_ray.direction.normalize();
+```
+
+To determine if any `Shape`s intersect with this ray, we'll use a simplified version of our search loop from before -
+however this time we don't care which `Shape` is intersecting, just whether one has. Additionally, we don't care about
+`Shape`s that intersect with the ray that are further from the origin than the light itself (meaning that `Shape` is on
+the far side of the light), so we'll initialize our search distance to the distance to the light itself.
+
+```cpp
+// Then we'll search for any Shapes that is occluding the light_ray,
+// using more or less our existing search code.
+// We initialize closest_distance to our light distance, because we
+// don't care if any of the Shapes intersect the ray beyond the light.
+float closest_distance = light_distance;
+for (auto& shape : shapes) {
+	if (float distance = shape->intersection(light_ray).value_or(INFINITY); distance < closest_distance) {
+		closest_distance = distance;
+	}
+}
+```
+
+Finally, if the final search distance is less than the distance to the light itself then we have a `Shape` occluding the
+ray! In this case we can skip the dot-product diffuse calculation and just multiply the color by our ambient light.
+Otherwise we calculate the diffuse lighting as before.
+
+```cpp
+// Check if we had an intersection (the light is occluded).
+if (closest_distance < light_distance) {
+	// Multiplying our final color by the ambient light darkens this surface "entirely".
+	final_color = final_color * AMBIENT_LIGHT;
+}  else {
+	// Next we'll compute the dot product between our surface normal and the light ray.
+	// We need to clamp this between 0 and 1, because negative values have no meaning here.
+	// Additionally, we'll add in our ambient light so no surfaces are entirely dark.
+	float dot = std::clamp(AMBIENT_LIGHT + (light_ray.direction * normal.direction), 0.0f, 1.0f);
+
+	// Multiplying our final color by this dot product darkens surfaces pointing away from the light.
+	final_color = final_color * dot;
+}
+```
+
+<fieldset class="note" markdown=1>
+<legend>Note</legend>
+
+Running our project now will render shadows cast upon other `Shape`s in the scene that dynamically update as the
+`Shape`s or light itself move.
+
+
+*Coming soon: a screenshot.*
+<!-- TODO: ![Shadows.]() -->
+
+</fieldset>
+
+### Add multisampling
+
+One very noticeable shortcoming of our current renderer is the strong aliasing - since we always cast our ray towards
+the exact center of every pixel, we don't get any sort of antialiasing effect for pixels that are only partially covered
+by a given `Shape` or feature such as shadows or reflections.
+
+An easy antialiasing solution is to implement multisampling, which is the process of sending multiple rays into each
+pixel and averaging the results. By varying the angle of each ray slightly we can average out aliasing error.
+
+Let's add a constant to define how many samples we'll take for each pixel.
+
+```cpp
+constexpr int SAMPLES = 3;
+```
+
+Then, as we iterate over the rows and columns of our canvas, let's instead create an array of colors the same size as
+our number of samples, and for each index in this array we'll generate a random offset in the X and Y dimensions, and
+add that to our previous ray direction. Finally, we'll use the standard library's `accumulate` function to sum these
+colors together, and then we'll divide the resulting color by the number of samples, effectively averaging our array.
+
+```cpp
+// ---✂--- Include the numeric header:
+
+#include <numeric>
+
+// ---✂--- Replace the current innermost loop contents in OnUserUpdate() with:
+
+// Create an array of colors - we'll be sampling this pixel multiple
+// times with varying offsets to create a multisample, and then
+// rendering the average of these samples.
+std::array<color3, SAMPLES> samples;
+
+// For each sample...
+for (auto i = 0; i < SAMPLES; i++) {
+	// Create random offset within this pixel
+	float offsetX = rand() / (float)RAND_MAX;
+	float offsetY = rand() / (float)RAND_MAX;
+
+	// Sample the color at that offset (converting screen coordinates to
+	// scene coordinates).
+	samples[i] = Sample(x - HALF_WIDTH + offsetX, y - HALF_HEIGHT + offsetY);
+}
+
+// Calculate the average color and draw it.
+color3 color = std::accumulate(samples.begin(), samples.end(), color3()) / SAMPLES;
+Draw(x, y, olc::PixelF(color.x, color.y, color.z));
+```
+
+<fieldset class="note" markdown=1>
+<legend>Note</legend>
+
+Running our project now will display a multisampled scene. **However**, note that since we calculate our sample
+offsets randomly the edges of different features will flicker frame to frame as the average is recalculated.
+
+</fieldset>
+
+To remedy this, we can increase the number of samples, though this increases the number of rays we need to calculate,
+and so slows down our frame times. I've placed my constant defining the number of samples within the same preprocessor
+if as my reflection count to help keep debug runs at an acceptable pace.
+
+```diff
+-constexpr int SAMPLES = 3;
+
+ #ifdef DEBUG
+ constexpr int BOUNCES = 2;
++constexpr int SAMPLES = 2;
+ #else
+ constexpr int BOUNCES = 5;
++constexpr int SAMPLES = 4;
+ #endif
+```
+
+<fieldset class="note" markdown=1>
+<legend>Note</legend>
+
+Running our project now will display a properly multisampled scene. The multisampling will be more stable when running
+in Release mode.
+
+
+*Coming soon: a screenshot.*
+<!-- TODO: ![Multisampling.]() -->
+
+</fieldset>
+
+## All Done!
+
+Check out the [GitHub repo][gh] to see the complete project.
 
 [OLC]: https://community.onelonecoder.com/
 [javid]: https://www.youtube.com/channel/UC-yuWVUplUJZvieEligKBkA

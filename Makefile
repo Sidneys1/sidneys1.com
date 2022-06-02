@@ -20,7 +20,7 @@ publish_online: _site/
 
 publish_tor: _site/
 	tar cz -C _site . | ssh dell-laptop 'cat >_site.tar.gz'
-	ssh -t dell-laptop 'sudo tar xzf _site.tar.gz -C /var/www/html/ && echo done'
+	ssh -t dell-laptop 'sudo tar xzf _site.tar.gz -C /var/www/html/ && echo PUBLISHED SUCCESSFULLY'
 
 clean:
 	rm -rf _site/
