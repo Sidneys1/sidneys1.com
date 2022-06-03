@@ -24,6 +24,12 @@ year I started collecting retro computers, it will also contain a few items that
 
 ### IEC2MicroSD
 
+## Commodore VIC-20
+
+### Invaders
+
+## Sun SPARCStation Haul
+
 ## Compaq DeskPro Retro Battlestation
 
 ### GeForce FX5200
@@ -31,6 +37,10 @@ year I started collecting retro computers, it will also contain a few items that
 ### Microsoft Naturals Keyboard
 
 ### Windows 98 Second Edition *(Third Edition?)*
+
+### Dell Monitor
+
+### Nokia Monitor
 
 ## Compaq Laptop
 
