@@ -6,7 +6,7 @@ layout: default
   <header class="post-header">
     <h1 class="post-title p-name" itemprop="name headline">{{ page.title | escape }}</h1>
 	{%- if page.series -%}
-		<div class="series">This post is part of a series: <a href="/series#{{ page.series | slugify }}">{{ page.series }}</a></div>
+		<div class="series">This post is part of a series: <a href="/series.html#{{ page.series | slugify }}">{{ page.series }}</a></div>
 	{%- endif -%}
     <p class="post-meta">
       <time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
@@ -19,7 +19,7 @@ layout: default
       {%- endif -%}
       {%- if page.tags -%}
         {%- for tag in page.tags -%}
-          &nbsp;•&nbsp;<a href="/tags#{{ tag | slugify }}" style="display: inane;" class="tag">{{ tag | slugify }}</a>
+          &nbsp;•&nbsp;<a href="/tags.html#{{ tag | slugify }}" style="display: inane;" class="tag">{{ tag | slugify }}</a>
         {%- endfor -%}
       {%- endif -%}
     </p>
