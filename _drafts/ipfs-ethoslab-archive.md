@@ -9,9 +9,17 @@ toc: false
 excerpt_separator: <!--more-->
 ---
 
-IPFS: the Interplanetary File System. A decentralized peer-to-peer content-addressable database, open to anyone to
-participate.
-
-Etho's Lab: a Minecraft Let's Play YouTube channel.
+This is a cool little project I did to create a resilient, automatic, and offline archive of the video content from the
+Etho's Lab YouTube channel.
 
 <!--more-->
+
+<dl>
+<dt>IPFS</dt>
+<dd>The Interplanetary File System. A decentralized peer-to-peer content-addressable database, open to anyone to
+participate.</dd>
+
+<dt>Etho's Lab</dt>
+<dd>A Minecraft Let's Play YouTube channel.</dd>
+
+</dl>
