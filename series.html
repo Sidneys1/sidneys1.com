@@ -1,0 +1,57 @@
+---
+layout: default
+title: Series
+---
+
+{% comment %}
+{% endcomment %}
+{% assign rawseries = "" %}
+{% for post in site.posts %}
+	{% assign tseries = post.series | join:'|' | append:'|' %}
+	{% assign rawseries = rawseries | append:tseries %}
+{% endfor %}
+{% assign rawseries = rawseries | split:'|' | sort %}
+
+{% comment %}
+=======================
+The following part removes dulpicated series and invalid series like blank tag.
+=======================
+{% endcomment %}
+{% assign series = "" %}
+{% for tag in rawseries %}
+	{% if tag != "" %}
+		{% if series == "" %}
+			{% assign series = tag | split:'|' %}
+		{% endif %}
+		{% unless series contains tag %}
+			{% assign series = series | join:'|' | append:'|' | append:tag | split:'|' %}
+		{% endunless %}
+	{% endif %}
+{% endfor %}
+
+<h1>All Series</h1>
+
+{% comment %}
+=======================
+The purpose of this snippet is to list all your posts posted with a certain tag.
+=======================
+{% endcomment %}
+{% for tag in series %}
+<ul>
+	<li class="anchor" style="font-size: larger; font-style: italic" id="{{ tag | slugify }}">{{ tag }}</li>
+	<ul>
+	 {% for post in site.posts %}
+		 {% if post.series contains tag %}
+		 <li>
+		 <h3>
+		 <a href="{{ post.url }}">
+		 {{ post.title }}
+		 <small>{{ post.date | date_to_string }}</small>
+		 </a>
+		 </h3>
+		 </li>
+		 {% endif %}
+	 {% endfor %}
+	</ul>
+</ul>
+{% endfor %}

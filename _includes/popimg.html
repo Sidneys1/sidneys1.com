@@ -1,0 +1,12 @@
+
+<div class="popunder">
+	<img class="pop" src="{{ include.src }}" alt="{{ include.alt }}" title="{{ include.alt }}" onclick="document.getElementById('{{ include.alt | slugify }}').showModal()">
+	<em>Click to zoom.</em>
+</div>
+
+<dialog class="popover" id="{{ include.alt | slugify }}">
+	<!-- <form method="dialog">
+		<button class="close">X</button>
+	  </form> -->
+	<img class="pop-in" src="{{ include.src }}" alt="{{ include.alt }}" title="{{ include.alt }}" onclick="document.getElementById('{{ include.alt | slugify }}').close()">
+</dialog>

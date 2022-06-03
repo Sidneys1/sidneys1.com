@@ -54,7 +54,7 @@ The purpose of this snippet is to list all your posts posted with a certain tag.
 {% endcomment %}
 {% for tag in tags %}
 <ul style="list-style-type: none;">
-	<li style="font-size: larger;" id="{{ tag | slugify }}">#{{ tag | slugify }}</li>
+	<li class="anchor" style="font-size: larger;" id="{{ tag | slugify }}">#{{ tag | slugify }}</li>
 	<ul>
 	 {% for post in site.posts %}
 		 {% if post.tags contains tag %}

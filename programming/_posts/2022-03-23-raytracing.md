@@ -2,7 +2,8 @@
 layout: post
 title:  "Raytracing!"
 date:   2022-03-23 13:04:39 -0400
-tags: [programming, raytracing, ongoing projects]
+tags: [programming, raytracing]
+series: Raytracing
 author: Sidneys1
 image: /images/2022-03-23-raytracing/hero.png
 toc: true
@@ -47,7 +48,9 @@ our game class to match our needs.
 <fieldset class="note" markdown=1>
 <legend>Note</legend>
 Running our project will render a default PixelGameEngine scene: a 256x240 canvas of random pixels, magnified 4x:
-![rainbow](/images/2022-03-23-raytracing/rainbow.png)
+
+{% include popimg.html src="/images/2022-03-23-raytracing/rainbow.png" alt="Pixel Barf" %}
+
 </fieldset>
 
 ## Setting the Scene
