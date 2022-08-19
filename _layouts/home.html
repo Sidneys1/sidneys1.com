@@ -27,14 +27,14 @@ layout: default
       <li>
         <span class="post-meta">{{ post.date | date: date_format }}</span>
         <h3>
-          <a class="post-link" href="{{ post.url | relative_url }}">
+          <a class="post-link" href="{{ post.url | absolute_url }}">
             {{ post.title | escape }}
           </a>
         </h3>
         {%- if site.show_excerpts -%}
         <div class="post-excerpt" style="display:flex">
           {%- if post.image -%}
-          <img alt="Thumbnail" src="{{ post.image }}" />
+          <img alt="Thumbnail" src="{{ post.image | absolute_url }}" />
           {%- endif -%}
           <div>{{ post.excerpt }}</div>
         </div>
@@ -47,13 +47,13 @@ layout: default
       <div class="pager">
         <ul class="pagination">
         {%- if paginator.previous_page %}
-          <li><a href="{{ paginator.previous_page_path | relative_url }}" class="previous-page">{{ paginator.previous_page }}</a></li>
+          <li><a href="{{ paginator.previous_page_path | absolute_url }}" class="previous-page">{{ paginator.previous_page }}</a></li>
         {%- else %}
           <li><div class="pager-edge">•</div></li>
         {%- endif %}
           <li><div class="current-page">{{ paginator.page }}</div></li>
         {%- if paginator.next_page %}
-          <li><a href="{{ paginator.next_page_path | relative_url }}" class="next-page">{{ paginator.next_page }}</a></li>
+          <li><a href="{{ paginator.next_page_path | absolute_url }}" class="next-page">{{ paginator.next_page }}</a></li>
         {%- else %}
           <li><div class="pager-edge">•</div></li>
         {%- endif %}

@@ -21,7 +21,7 @@ produced what hopefully is an easy to follow "tutorial" style Git repository. So
 
 <!--more-->
 
-![finished product]({{site.baseurl}}/images/2022-03-23-raytracing/finished.gif)
+![finished product]({{"/images/2022-03-23-raytracing/finished.gif" | absolute_url}})
 
 ## What is Raytracing?
 
@@ -39,7 +39,7 @@ We're going to start with <kbd>Create a new project</kbd> in Visual Studio (I'm 
 Project</kbd> (C++/Windows/Console) template. I also opted for the flat directory structure option <kbd>☑ Place solution
 and project in the same directory</kbd>.
 
-![Create new project]({{site.baseurl}}/images/2022-03-23-raytracing/create-a-new-project.png)
+![Create new project]({{"/images/2022-03-23-raytracing/create-a-new-project.png" | absolute_url}})
 
 We copy in the [`olcPixelGameEngine.h` file][olc-pge-header] and add it to our solution. We also add a blank `main.cpp`
 and populate it with the contents of the template available in the `olcPixelGameEngine.h` header, taking care to rename
@@ -112,7 +112,7 @@ olc::Pixel Sample(float x, float y) const {
 <legend>Note</legend>
 Running our project will now render a 250x250 canvas at 2x magnification. Our magenta fill has been replaced with a
 color pattern converging in the center of the canvas:
-![identity]({{site.baseurl}}/images/2022-03-23-raytracing/identity.png)
+![identity]({{"/images/2022-03-23-raytracing/identity.png" | absolute_url}})
 </fieldset>
 
 ### Add some geometry types, enhance Shape and Sphere
@@ -346,7 +346,7 @@ std::optional<float> intersection(ray r) const override {
 <fieldset class="note" markdown=1>
 <legend>Note</legend>
 Running our project will now render a (highly aliased and flatly-colored) Sphere!
-![flat]({{site.baseurl}}/images/2022-03-23-raytracing/flat.png)
+![flat]({{"/images/2022-03-23-raytracing/flat.png" | absolute_url}})
 </fieldset>
 
 ### Add perspective rendering and depth sorting
@@ -360,7 +360,7 @@ shapes.emplace_back(std::make_unique<Sphere>(vf3d(-150, +75, +300), olc::RED, 10
 shapes.emplace_back(std::make_unique<Sphere>(vf3d(+150, -75, +100), olc::GREEN, 100));
 ```
 
-![Bad Z-depth]({{site.baseurl}}/images/2022-03-23-raytracing/bad-z.png)
+![Bad Z-depth]({{"/images/2022-03-23-raytracing/bad-z.png" | absolute_url}})
 
 To remedy that, we up date our hit check in `SampleRay` to select the object whose intersection is nearest to the `ray`
 origin. Now if we run our project, the Spheres are properly sorted.
@@ -371,7 +371,7 @@ origin. Now if we run our project, the Spheres are properly sorted.
 +                 distance < intersection_distance) {
 ```
 
-![no-perspective]({{site.baseurl}}/images/2022-03-23-raytracing/no-perspective.png)
+![no-perspective]({{"/images/2022-03-23-raytracing/no-perspective.png" | absolute_url}})
 
 However, you'll notice that all three Spheres are the same size, despite being different distances from the camera. To
 fix *this*, we'll need to add perspective to our camera. We'll do this in a very simplistic manner, by having all of the
@@ -424,7 +424,7 @@ By normalizing this ray we get rays properly fanning out in a perspective.
 <legend>Note</legend>
 Running our project will now produce a proper perspective rendering of our three flat-shaded Spheres, at the correct
 depths.
-![Perspective rendering.]({{site.baseurl}}/images/2022-03-23-raytracing/perspective.png)
+![Perspective rendering.]({{"/images/2022-03-23-raytracing/perspective.png" | absolute_url}})
 </fieldset>
 
 ### Add a Plane Shape, and apply fog

@@ -1,5 +1,5 @@
 <footer class="site-footer h-card">
-  <data class="u-url" href="{{ "/" | relative_url }}"></data>
+  <data class="u-url" href="{{ "/" | absolute_url }}"></data>
 
   <div class="wrapper">
 
@@ -8,30 +8,29 @@
     <div class="footer-col-wrapper">
       <div class="footer-col footer-col-1">
         <ul class="contact-list">
-          <li class="p-name">
-            {%- if site.author -%}
-              {{ site.author | escape }}
-            {%- else -%}
-              {{ site.title | escape }}
-            {%- endif -%}
-          </li>
+          <li class="p-name">Contact</li>
           {%- if site.email -%}
             <li>
               <a class="u-email" href="mailto:{{ site.email }}">{{ site.email }}</a>
             </li>
           {%- endif -%}
-        </ul>
-
+		  <li class="p-name" style="margin-top: 1em;">Alternative Access</li>
+		<li style="margin-left: -36px">
+			<a href="http://pa6stp7ojipm64l7d3d3ebkcq57sfzq365po7k4enajgaprnefzeygid.onion/">
+			  <img class="svg-icon" alt="Tor Logo" style="opacity: 50%; width: 26px; height: 16px;" width="26px" height="16px" src="{{ "/assets/tor.svg" | absolute_url }}"></img>
+			  <span>Sidneys1.com on Tor</span>
+			</a>
+		  </li>
+		  <li style="margin-left: -26px;">
+			  <a href="https://ipfs.io/ipns/sidneys1.com">
+				  <img class="svg-icon" alt="IPFS Logo" style="opacity: 50%; width: 16px; height: 16px;" width="16px" height="16px" src="{{ "/assets/ipfs.svg" | absolute_url }}"></img>
+				  <span>Sidneys1.com on IPFS</span>
+			  </a>
+		  </li></ul>
       </div>
 
       <div class="footer-col footer-col-2">
         {%- include social.html -%}
-        <div style="margin-left: -10px; margin-top: -15px">
-          <a href="http://pa6stp7ojipm64l7d3d3ebkcq57sfzq365po7k4enajgaprnefzeygid.onion/">
-            <img class="svg-icon" alt="Tor Logo" style="opacity: 50%; width: 26px; height: 16px;" width="26px" height="16px" src="{{ site.baseurl }}/assets/tor.svg"></img>
-            <span>Sidneys1.com on Tor</span>
-          </a>
-        </div>
       </div>
 
       <div class="footer-col footer-col-3">
