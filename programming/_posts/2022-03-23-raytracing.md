@@ -45,13 +45,13 @@ We copy in the [`olcPixelGameEngine.h` file][olc-pge-header] and add it to our s
 and populate it with the contents of the template available in the `olcPixelGameEngine.h` header, taking care to rename
 our game class to match our needs.
 
-<fieldset class="note" markdown=1>
-<legend>Note</legend>
+<div class="note" markdown=1>
+<div class="note-title">Note</div>
 Running our project will render a default PixelGameEngine scene: a 256x240 canvas of random pixels, magnified 4x:
 
 {% include popimg.html src="/images/2022-03-23-raytracing/rainbow.png" alt="Pixel Barf" %}
 
-</fieldset>
+</div>
 
 ## Setting the Scene
 
@@ -108,12 +108,12 @@ olc::Pixel Sample(float x, float y) const {
 }
 ```
 
-<fieldset class="note" markdown=1>
-<legend>Note</legend>
+<div class="note" markdown=1>
+<div class="note-title">Note</div>
 Running our project will now render a 250x250 canvas at 2x magnification. Our magenta fill has been replaced with a
 color pattern converging in the center of the canvas:
 ![identity]({{"/images/2022-03-23-raytracing/identity.png" | absolute_url}})
-</fieldset>
+</div>
 
 ### Add some geometry types, enhance Shape and Sphere
 
@@ -343,11 +343,11 @@ std::optional<float> intersection(ray r) const override {
 }
 ```
 
-<fieldset class="note" markdown=1>
-<legend>Note</legend>
+<div class="note" markdown=1>
+<div class="note-title">Note</div>
 Running our project will now render a (highly aliased and flatly-colored) Sphere!
 ![flat]({{"/images/2022-03-23-raytracing/flat.png" | absolute_url}})
-</fieldset>
+</div>
 
 ### Add perspective rendering and depth sorting
 
@@ -420,12 +420,12 @@ const vf3d normalize() const {
 
 By normalizing this ray we get rays properly fanning out in a perspective.
 
-<fieldset class="note" markdown=1>
-<legend>Note</legend>
+<div class="note" markdown=1>
+<div class="note-title">Note</div>
 Running our project will now produce a proper perspective rendering of our three flat-shaded Spheres, at the correct
 depths.
 ![Perspective rendering.]({{"/images/2022-03-23-raytracing/perspective.png" | absolute_url}})
-</fieldset>
+</div>
 
 ### Add a Plane Shape, and apply fog
 
@@ -521,8 +521,8 @@ bottom, +Y is down, while -Y is up.
 shapes.emplace_back(std::make_unique<Plane>(vf3d(0, 200, 0 ), vf3d(0, -1, 0), olc::Pixel(204, 204, 204)));
 ```
 
-<fieldset class="note" markdown=1>
-<legend>Note</legend>
+<div class="note" markdown=1>
+<div class="note-title">Note</div>
 
 Running our project now you'll see the checkerboard pattern continue off to the horizon - *however*, it appears
 further up on the canvas than you might expect. *Additionally*, the checkerboard pattern gets very garbled as the
@@ -532,7 +532,7 @@ surfaces *that* far away isn't good...
 *Coming soon: a screenshot.*
 <!-- TODO: ![Plane.]() -->
 
-</fieldset>
+</div>
 
 To remedy this, we'll add the concept of Fog. We already have a Fog color, for when a ray doesn't hit anything. This new
 concept applies the idea of there being some extreme translucency to the nothingness between a ray's origin and the
@@ -583,8 +583,8 @@ olc::Pixel lerp(olc::Pixel from, olc::Pixel to, float by) const {
 }
 ```
 
-<fieldset class="note" markdown=1>
-<legend>Note</legend>
+<div class="note" markdown=1>
+<div class="note-title">Note</div>
 
 Running our project now displays our Spheres as before, plus the checkerboard Plane of the floor, smoothly fading
 into the distance.
@@ -592,7 +592,7 @@ into the distance.
 *Coming soon: a screenshot.*
 <!-- TODO: ![Fog.]() -->
 
-</fieldset>
+</div>
 
 Note that as our scene and renderer grow in complexity we'll begin to see lower and lower frame-rates when running our
 project. Switching our compilation mode to Release and running without debugging can help, as the compiler will more
@@ -729,8 +729,8 @@ if (bounces != 0 && intersected_shape.reflectivity > 0) {
 	final_color = lerp(final_color, reflected_color.value_or(FOG), intersected_shape.reflectivity);
 }
 ```
-<fieldset class="note" markdown=1>
-<legend>Note</legend>
+<div class="note" markdown=1>
+<div class="note-title">Note</div>
 
 Running our project at this point produces a beautifully rendered scene where the center and left `Sphere`s reflect
 their surroundings - and a sharp eye can determine that the left `Sphere` can even see itself in its reflection of the
@@ -739,7 +739,7 @@ center `Sphere`.
 *Coming soon: a screenshot.*
 <!-- TODO: ![Reflections.]() -->
 
-</fieldset>
+</div>
 
 To further highlight the reflections we'll add some simple motion to the scene by accumulating time in the
 `OnUserUpdate` function, and modifying the Y and Z coordinates of the center `Sphere` along a sine/cosine wave
@@ -763,8 +763,8 @@ shape.origin.z = cosf(accumulated_time) * 100 + 100;
 // Iterate over the rows and columns of the scene
 ```
 
-<fieldset class="note" markdown=1>
-<legend>Note</legend>
+<div class="note" markdown=1>
+<div class="note-title">Note</div>
 
 Running our project now will display a smoothly floating `Sphere`, with appropriate reflections of its surrounding
 `Shapes`.
@@ -772,7 +772,7 @@ Running our project now will display a smoothly floating `Sphere`, with appropri
 *Coming soon: a screenshot.*
 <!-- TODO: ![Reflections in motion.]() -->
 
-</fieldset>
+</div>
 
 ### Create and use a `color3` type
 
@@ -831,12 +831,12 @@ function:
  }
 ```
 
-<fieldset class="note" markdown=1>
-<legend>Note</legend>
+<div class="note" markdown=1>
+<div class="note-title">Note</div>
 
 Running our project now produces no difference from our previous commit.
 
-</fieldset>
+</div>
 
 ### Add diffuse lighting
 
@@ -880,8 +880,8 @@ float dot = light_ray.direction * normal.direction;
 final_color = final_color * dot;
 ```
 
-<fieldset class="note" markdown=1>
-<legend>Note</legend>
+<div class="note" markdown=1>
+<div class="note-title">Note</div>
 
 Running our project now will highlight a problem: the top halves of our `Shape`s look correct (towards the light), but
 the bottoms have a corrupted look. You'll remember that the dot product of two vectors lies in the range $$[-1,1]$$. As we
@@ -893,7 +893,7 @@ the range $$[0,1]$$ - this way all negative values are discarded.
 *Coming soon: a screenshot.*
 <!-- TODO: ![Negative colors.]() -->
 
-</fieldset>
+</div>
 
 ```diff
  // Next we'll compute the dot product between our surface normal and the light ray.
@@ -902,8 +902,8 @@ the range $$[0,1]$$ - this way all negative values are discarded.
 +float dot = std::clamp(light_ray.direction * normal.direction, 0.0f, 1.0f);
 ```
 
-<fieldset class="note" markdown=1>
-<legend>Note</legend>
+<div class="note" markdown=1>
+<div class="note-title">Note</div>
 
 Running our project now looks correct! The tops of our `Shape`s are light, while the bottoms are almost pitch black.
 **However**, since darkness isn't terribly interesting, let's add a global ambient light, which we'll implement as a new
@@ -913,7 +913,7 @@ constant.
 *Coming soon: a screenshot.*
 <!-- TODO: ![Too dark.]() -->
 
-</fieldset>
+</div>
 
 By adding our global light value to the dot product we'll ensure that our diffuse lighting never completely
 darkens our scene.
@@ -933,8 +933,8 @@ darkens our scene.
 +float dot = std::clamp(AMBIENT_LIGHT + (light_ray.direction * normal.direction), 0.0f, 1.0f);
 ```
 
-<fieldset class="note" markdown=1>
-<legend>Note</legend>
+<div class="note" markdown=1>
+<div class="note-title">Note</div>
 
 Running our project now displays simple diffuse lighting without darkening any parts of our scene entirely.
 
@@ -942,7 +942,7 @@ Running our project now displays simple diffuse lighting without darkening any p
 *Coming soon: a screenshot.*
 <!-- TODO: ![Just right diffuse lighting.]() -->
 
-</fieldset>
+</div>
 
 ### Add shadow casting
 
@@ -1018,8 +1018,8 @@ if (closest_distance < light_distance) {
 }
 ```
 
-<fieldset class="note" markdown=1>
-<legend>Note</legend>
+<div class="note" markdown=1>
+<div class="note-title">Note</div>
 
 Running our project now will render shadows cast upon other `Shape`s in the scene that dynamically update as the
 `Shape`s or light itself move.
@@ -1028,7 +1028,7 @@ Running our project now will render shadows cast upon other `Shape`s in the scen
 *Coming soon: a screenshot.*
 <!-- TODO: ![Shadows.]() -->
 
-</fieldset>
+</div>
 
 ### Add multisampling
 
@@ -1078,13 +1078,13 @@ color3 color = std::accumulate(samples.begin(), samples.end(), color3()) / SAMPL
 Draw(x, y, olc::PixelF(color.x, color.y, color.z));
 ```
 
-<fieldset class="note" markdown=1>
-<legend>Note</legend>
+<div class="note" markdown=1>
+<div class="note-title">Note</div>
 
 Running our project now will display a multisampled scene. **However**, note that since we calculate our sample
 offsets randomly the edges of different features will flicker frame to frame as the average is recalculated.
 
-</fieldset>
+</div>
 
 To remedy this, we can increase the number of samples, though this increases the number of rays we need to calculate,
 and so slows down our frame times. I've placed my constant defining the number of samples within the same preprocessor
@@ -1102,8 +1102,8 @@ if as my reflection count to help keep debug runs at an acceptable pace.
  #endif
 ```
 
-<fieldset class="note" markdown=1>
-<legend>Note</legend>
+<div class="note" markdown=1>
+<div class="note-title">Note</div>
 
 Running our project now will display a properly multisampled scene. The multisampling will be more stable when running
 in Release mode.
@@ -1112,7 +1112,7 @@ in Release mode.
 *Coming soon: a screenshot.*
 <!-- TODO: ![Multisampling.]() -->
 
-</fieldset>
+</div>
 
 ## All Done!
 

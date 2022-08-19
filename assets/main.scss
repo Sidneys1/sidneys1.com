@@ -120,18 +120,25 @@ kbd {
     overflow-wrap: break-word;
 }
 
-fieldset.note {
+div.note {
+	background-color: #ffc;
     font-size: smaller;
-    border: 0;
-    border-radius: 0.5em;
-    border-left: 2px groove $grey-color-light;
-    border-right: 2px groove $grey-color-light;
     width: fit-content;
-    max-width: 800px;
+    max-width: 400px;
     color: $grey-color;
     margin: 0 auto;
+	border-radius: 5px;
+	box-shadow: 0px 0px 10px #00000033;
+    transition: 250ms linear;
+	.note-title {
+		font-size: larger;
+		font-family: "MV Boli", cursive;
+		background-color: rgb(234, 234, 169);
+		padding: 0.25em 1em;
+		border-radius: 5px 5px 0 0;
+	}
     > p {
-        margin-left: 1em;
+		padding: 1em;
         margin-bottom: 0em;
     }
     > legend {
@@ -139,6 +146,14 @@ fieldset.note {
         font-style: italic;
         font-size: initial;
     }
+	code {
+		background-color: rgb(234, 234, 169);
+	}
+}
+
+div.note:hover {
+	box-shadow: 0px 0px 10px #00000066;
+    transition: 250ms linear;
 }
 
 .post-excerpt {

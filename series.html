@@ -44,7 +44,7 @@ The purpose of this snippet is to list all your posts posted with a certain tag.
 		 {% if post.series contains tag %}
 		 <li>
 		 <h3>
-		 <a href="{{ post.url }}">
+		 <a href="{{ post.url | absolute_url }}">
 		 {{ post.title }}
 		 <small>{{ post.date | date_to_string }}</small>
 		 </a>

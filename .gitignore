@@ -1,4 +1,5 @@
 _site
+_site_tor
 _site_ipfs
 .sass-cache
 .jekyll-cache

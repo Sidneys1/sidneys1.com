@@ -1,6 +1,6 @@
 
 <div class="popunder">
-	<img class="pop" src="{{ include.src }}" alt="{{ include.alt }}" title="{{ include.alt }}" onclick="document.getElementById('{{ include.alt | slugify }}').showModal()">
+	<img class="pop" src="{{ include.src | absolute_url }}" alt="{{ include.alt }}" title="{{ include.alt }}" onclick="document.getElementById('{{ include.alt | slugify }}').showModal()">
 	<em>Click to zoom.</em>
 </div>
 
@@ -8,5 +8,5 @@
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
-	<img class="pop-in" src="{{ include.src }}" alt="{{ include.alt }}" title="{{ include.alt }}" onclick="document.getElementById('{{ include.alt | slugify }}').close()">
+	<img class="pop-in" src="{{ include.src | absolute_rul }}" alt="{{ include.alt }}" title="{{ include.alt }}" onclick="document.getElementById('{{ include.alt | slugify }}').close()">
 </dialog>
