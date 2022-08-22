@@ -5,6 +5,8 @@ date:   2022-06-03 15:26:00 -0400
 tags: [retrocomputing, collecting]
 author: Sidneys1
 series: "Retro Roundups"
+image: /images/2022-06-03-retro-roundup/hero.png
+image_shadow: false
 toc: true
 excerpt_separator: <!--more-->
 ---
