@@ -31,8 +31,9 @@ layout: default
             {{ post.title | escape }}
           </a>
         </h3>
+		<h4>{{post.subtitle | escape}}</h4>
         {%- if site.show_excerpts -%}
-        <div class="post-excerpt" style="display:flex">
+        <div class="post-excerpt" >
           {%- if post.image -%}
           <img alt="Thumbnail" src="{{ post.image | absolute_url }}" />
           {%- endif -%}

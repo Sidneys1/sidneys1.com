@@ -79,14 +79,14 @@ $on-laptop:        800px !default;
     padding: 1rem 1.5rem;
     font-weight: 600;
     margin: 0 0 30px 0;
-    box-shadow: 0px 0px 10px #00000033;
-    transition: 250ms linear;
+    // box-shadow: 0px 0px 10px #00000033;
+    // transition: 250ms linear;
 }
 
-.toc__list:hover {
-    box-shadow: 0px 0px 10px #00000066;
-    transition: 250ms linear;
-}
+// .toc__list:hover {
+//     box-shadow: 0px 0px 10px #00000066;
+//     transition: 250ms linear;
+// }
 
 .toc__sublist li {
     padding-left: 1.25rem;
@@ -103,6 +103,32 @@ $on-laptop:        800px !default;
 
 #toc a:hover {
     color: #9D174D;
+}
+
+h1.post-title {
+	font-weight: 100;
+}
+
+h2.post-title {
+	font-size: 20px;
+	line-height: 1;
+}
+
+ul.post-list > li::after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+ul.post-list ul {
+	clear: both;
+}
+
+ul.post-list h3 {
+	margin-bottom: 0;
+}
+ul.post-list h4 {
+	font-weight: bolder;
 }
 
 kbd {
@@ -161,6 +187,8 @@ div.note:hover {
         max-height: 150px;
         object-fit: cover;
         margin-right: 1em;
+		width: 250px;
+		float:left;
     }
 }
 
@@ -210,6 +238,20 @@ pre.highlight {
 .language-diff {margin-top: -1em;}
 .language-diff::before {
     content: '.diff';
+    color: #f8f8f2;
+    font-size: x-small;
+    font-family: monospace;
+    background-color: #272822;
+    border-radius: 0.5em;
+    padding: 0 0.25em;
+    position: relative;
+    top: 1em;
+    left: 1em;
+}
+
+.language-make {margin-top: -1em;}
+.language-make::before {
+    content: 'Makefile';
     color: #f8f8f2;
     font-size: x-small;
     font-family: monospace;
@@ -314,6 +356,32 @@ div.series {
 	a {
 		font-style: italic;
 	}
+}
+
+div.erratum-notice {
+	font-size: 14px;
+	color: #828282;
+	font-style: italic;
+}
+
+div.multipart {
+	// text-align: center;
+	// margin-top: 0px;
+	font-size: 14px;
+	// font-style: italic;
+	color: #828282;
+	a {
+		font-style: italic;
+	}
+	ul {
+		margin-bottom: 0;
+	}
+}
+
+div.multipart.center {
+	margin-left: auto;
+	margin-right: auto;
+	width: max-content
 }
 
 dl {
@@ -478,4 +546,19 @@ p.c-compare:hover {
 	color: $grey-color;
 	font-style: italic;
 	font-size: small;
+}
+
+hr {
+	height: 1px;
+	border: none;
+	border-top: 1px solid #e8e8e8;
+	margin: 1em 0;
+}
+
+#erratum li {
+	font-style: italic;
+}
+
+summary {
+	cursor: pointer;
 }

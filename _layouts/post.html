@@ -3,46 +3,108 @@ layout: default
 ---
 <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
-  <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">{{ page.title | escape }}</h1>
-	{%- if page.series -%}
-		<div class="series">This post is part of a series: <a href="{{ "/series.html" | absolute_url }}#{{ page.series | slugify }}">{{ page.series }}</a></div>
+	<header class="post-header">
+		<h1 class="post-title p-name" itemprop="name headline">{{ page.title | escape }}</h1>
+		<h2 class="post-title p-name">{{ page.subtitle | escape }}</h1>
+		{%- if page.series -%}
+		<div class="series">This post is part of a series: <a href="{{ " /series.html" | absolute_url }}#{{ page.series
+				| slugify }}">{{ page.series | escape }}</a></div>
+		{%- endif -%}
+		{%- if page.erratum -%}
+		<div class="erratum-notice">This post has <a href="#erratum">erratum</a>.</div>
+		{%- endif -%}
+		<p class="post-meta">
+			<time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
+				{%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+				{{ page.date | date: date_format }}
+			</time>
+			{%- if page.author -%}
+			• <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+				<span class="p-author h-card" itemprop="name">{{ page.author }}</span></span>
+			{%- endif -%}
+			{%- if page.tags -%}
+			{%- for tag in page.tags -%}
+			&nbsp;•&nbsp;<a href="{{ " /tags.html" | absolute_url }}#{{ tag | slugify }}" style="display: inane;"
+				class="tag">{{ tag | slugify }}</a>
+			{%- endfor -%}
+			{%- endif -%}
+		</p>
+		{%- if page.multipart -%}
+		<div class="multipart">
+			<em>This post has multiple parts:</em>
+			<ul>
+				{% assign my_counter = 1 %}
+				{% for post in site.posts reversed %}
+					{% if post.multipart == page.multipart %}
+						{% if post.url != page.url %}
+							<li><a href="{{ post.url | absolute_url}}">{{post.title}}{% if post.subtitle %}&ndash; {{post.subtitle | escape}}{% endif %}</a> (Part {{my_counter | roman}})</li>
+						{% else %}
+							<li><em>{{ post.title | escape }}{% if post.subtitle %} &ndash; {{post.subtitle | escape}}{% endif %}</em> (Part {{my_counter | roman}})</li>
+						{% endif %}
+						{% assign my_counter = my_counter | plus: 1 %}
+					{% endif %}
+				{% endfor %}
+				{% if my_counter == 2 %}
+					<li class="slight">More to come...</li>
+				{% endif %}
+			</ul>
+		</div>
+		{%- endif -%}
+	</header>
+
+	{%- if page.image -%}
+	<div class="post-image"><img src="{{ page.image | absolute_url }}" style="{% if page.image_shadow == false %}box-shadow: none;{% endif %}"></div>
 	{%- endif -%}
-    <p class="post-meta">
-      <time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
-        {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
-        {{ page.date | date: date_format }}
-      </time>
-      {%- if page.author -%}
-        • <span itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <span class="p-author h-card" itemprop="name">{{ page.author }}</span></span>
-      {%- endif -%}
-      {%- if page.tags -%}
-        {%- for tag in page.tags -%}
-          &nbsp;•&nbsp;<a href="{{ "/tags.html" | absolute_url }}#{{ tag | slugify }}" style="display: inane;" class="tag">{{ tag | slugify }}</a>
-        {%- endfor -%}
-      {%- endif -%}
-    </p>
-  </header>
 
-  {%- if page.image -%}
-    <div class="post-image"><img src="{{ page.image | absolute_url }}"></div>
-  {%- endif -%}
+	<!-- <div class="post-toc"> -->
+	{% toc %}
+	<!-- </div> -->
 
-  <!-- <div class="post-toc"> -->
-    {% toc %}
-  <!-- </div> -->
+	<div class="post-content e-content" itemprop="articleBody">
+		{{ content }}
+	</div>
 
-  <div class="post-content e-content" itemprop="articleBody">
-    {{ content }}
-  </div>
+	{% if page.erratum %}
+		<hr/>
+		<details id="erratum">
+			<summary>Erratum</summary>
+			<ul>
+				{% for erratum in page.erratum %}
+					<li>{{erratum}}</li>
+				{% endfor %}
+			</ul>
+		</details>
+	{% endif %}
 
-  {%- if site.disqus.shortname and site.mode == "www" -%}
-    <details>
-      <summary>Disqus Comments</summary>
-      {%- include disqus_comments.html -%}
-    </details>
-  {%- endif -%}
+	{%- if page.multipart -%}
+	<hr/>
+	<div class="multipart center">
+		<em>This post has multiple parts:</em>
+		<ul>
+			{% assign my_counter = 1 %}
+			{% for post in site.posts reversed %}
+				{% if post.multipart == page.multipart %}
+					{% if post.url != page.url %}
+						<li><a href="{{ post.url | absolute_url}}">{{post.title}}{% if post.subtitle %}&ndash; {{post.subtitle | escape}}{% endif %}</a> (Part {{my_counter | roman}})</li>
+					{% else %}
+						<li><em>{{ post.title | escape }}{% if post.subtitle %} &ndash; {{post.subtitle | escape}}{% endif %}</em> (Part {{my_counter | roman}})</li>
+					{% endif %}
+					{% assign my_counter = my_counter | plus: 1 %}
+				{% endif %}
+			{% endfor %}
+			{% if my_counter == 2 %}
+				<li class="slight">More to come...</li>
+			{% endif %}
+		</ul>
+	</div>
+	{%- endif -%}
 
-  <a class="u-url" href="{{ page.url | absolute_url }}" hidden></a>
+	{%- if site.disqus.shortname and site.mode == "www" -%}
+	<details>
+		<summary>Disqus Comments</summary>
+		{%- include disqus_comments.html -%}
+	</details>
+	{%- endif -%}
+
+	<a class="u-url" href="{{ page.url | absolute_url }}" hidden></a>
 </article>

@@ -54,7 +54,7 @@ The purpose of this snippet is to list all your posts posted with a certain tag.
 {% endcomment %}
 {% for tag in tags %}
 <ul style="list-style-type: none;">
-	<li class="anchor" style="font-size: larger;" id="{{ tag | slugify }}">#{{ tag | slugify }}</li>
+	<li class="anchor" style="font-size: larger; padding-left: 0" id="{{ tag | slugify }}">#{{ tag | slugify }}</li>
 	<ul>
 	 {% for post in site.posts %}
 		 {% if post.tags contains tag %}
@@ -62,8 +62,8 @@ The purpose of this snippet is to list all your posts posted with a certain tag.
 		 <h3>
 		 <a href="{{ post.url | absolute_url }}">
 		 {{ post.title }}
-		 <small>{{ post.date | date_to_string }}</small>
-		 </a>
+		</a>
+		<small>{%if post.subtitle %}&ndash; {{post.subtitle}}{% endif %} &mdash; {{ post.date | date_to_string }}</small>
 		 {% for tag in post.tags %}
 			 <a class="tag" href="#{{ tag | slugify }}">{{ tag | slugify }}</a>
 		 {% endfor %}

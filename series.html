@@ -46,8 +46,8 @@ The purpose of this snippet is to list all your posts posted with a certain tag.
 		 <h3>
 		 <a href="{{ post.url | absolute_url }}">
 		 {{ post.title }}
-		 <small>{{ post.date | date_to_string }}</small>
-		 </a>
+		</a>
+		<small>{%if post.subtitle %}&ndash; {{post.subtitle}}{% endif %} &mdash; {{ post.date | date_to_string }}</small>
 		 </h3>
 		 </li>
 		 {% endif %}
