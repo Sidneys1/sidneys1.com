@@ -3,11 +3,14 @@ layout: post
 title:  "Raytracing!"
 date:   2022-03-23 13:04:39 -0400
 tags: [programming, raytracing]
-series: Raytracing
+# series: Raytracing
 author: Sidneys1
 image: /images/2022-03-23-raytracing/hero.png
 toc: true
 excerpt_separator: <!--more-->
+erratum:
+- "2022-07-xx: Various screenshots updated."
+- "2022-08-19: Updated the look of the \"Note\" callouts."
 ---
 
 Since I started programming I've had a dream in the back of my mind: *raytracers are super cool*, and I'd like to build
