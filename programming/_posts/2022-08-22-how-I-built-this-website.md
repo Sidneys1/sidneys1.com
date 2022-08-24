@@ -12,6 +12,8 @@ image_shadow: false
 toc: false
 excerpt_separator: <!--more-->
 multipart: building-this-website
+erratum:
+- "2022-08-24: Added section on modifying the Jekyll configuration."
 ---
 
 Sidneys1.com is built statically using [Jekyll](https://jekyllrb.com/), and then published on the world wide web, Tor,
@@ -52,7 +54,7 @@ all: build
 build: _site/
 
 serve:
-	bundle exec jekyll serve --watch --livereload --force_polling --drafts
+	bundle exec jekyll serve --watch --livereload --force_polling --drafts --destination _site_live/
 
 _site/:
 	env JEKYLL_ENV=production bundle exec jekyll build
@@ -72,6 +74,9 @@ Let's break down each of these sections:
   * `--force_polling`: this is a workaround for some WSL bugs. See
     [this WSL issue](https://github.com/Microsoft/BashOnWindows/issues/216).
   * `--drafts`: include posts under the `_drafts` folder (this is where you can put in-progress posts).
+  * `--destination _site_live/`: this directs the `serve` command to build the static output under a separate folder
+    than the normal `_site/` rule. This way we can't accidentally publish our live preview version of the website - if
+    we did, it would be broken because all links would lead to `localhost` instead of your website's URL!
 * `_site/: ...`: this rule matches a file path, `_site`, which is Jekyll's output folder. Make understands file paths
   and will know that this rule will build the contents of `_site`. Note that we use `env` to tell Jekyll to use the
   ["production" environment](https://jekyllrb.com/docs/configuration/environments/).
@@ -79,6 +84,19 @@ Let's break down each of these sections:
   We'll never run this rule manually (though you could with `make _site/`), but our `build` rule depends on this
   running, and so Make will automatically run it when needed.
 * `clean: ...`: Run `make clean` to invoke this rule - in our case, we just delete the `_site/` folder.
+
+## Modifying the Jekyll Configuration
+
+Jekyll configuration is stored in the `_config.yml` file at the root of our site. There are a couple things in here
+we'll want to adjust before we publish our site to the world wide web. First of course we'll want to set a few basics:
+
+* `title`: The name of your site (shown in the header).
+* `email`: A contact email address (shown in the footer).
+* `url`: This one is important - this sets the url used when clicking on absolute links to other pages within your site!
+* `baseurl`: Used in conjunction with `url`. The format used is `{url}{baseurl}/path/to/page.html`. If you're hosting
+  nothing but Jekyll on your website, then leave this blank.
+
+And that's about it! We'll dig into configuration more when we talk about hosting on Tor and IPFS.
 
 ## Hosting
 

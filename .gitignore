@@ -1,6 +1,7 @@
 _site
 _site_tor
 _site_ipfs
+_site_live
 .sass-cache
 .jekyll-cache
 .jekyll-metadata
