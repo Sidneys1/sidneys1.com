@@ -1,9 +1,9 @@
-SRC = _config.yml $(shell find . -type f \( -iname '*.md' -o -iname '*.html' \) -not -path './_site/*')
+SRC = _config.yml $(shell find . -type f \( -iname '*.md' -o -iname '*.html' -o -iname '*.scss' \) -not -path './_site*/*')
 TIME=$(shell date -Iminutes)
 
 all: build
 
-build: _site/ _site_tor/ _site_ipfs/
+build: _site/ _site_tor/ _site_ipfs/ _site_github/
 
 serve:
 	bundle exec jekyll serve -w -l --force_polling --drafts --destination _site_live/ --config _config.yml,_config.local.yml
@@ -12,19 +12,12 @@ serve-prod:
 	env JEKYLL_ENV=production bundle exec jekyll serve -w -l --force_polling --destination _site_live/ --config _config.yml,_config.local.yml
 
 _site/: ${SRC}
-	env JEKYLL_ENV=production bundle exec jekyll build
+	env JEKYLL_ENV=production bundle exec jekyll build --incremental
 
-_site_github/: ${SRC}
-	env JEKYLL_ENV=production bundle exec jekyll build --destination _site_github/ --config _config.yml,_config.github.yml
+_site_%/: ${SRC}
+	env JEKYLL_ENV=production bundle exec jekyll build --incremental --destination _site_$*/ --config _config.yml,_config.$*.yml
 
-
-_site_ipfs/: ${SRC}
-	env JEKYLL_ENV=production bundle exec jekyll build --destination _site_ipfs/ --config _config.yml,_config.ipfs.yml
-
-_site_tor/: ${SRC}
-	env JEKYLL_ENV=production bundle exec jekyll build --destination _site_tor/ --config _config.yml,_config.tor.yml
-
-publish: publish_online publish_tor publish_ipfs publish_github
+publish: publish_online publish_tor publish_github publish_ipfs
 
 publish_online: _site/
 	rsync -icrz --delete _site/* sidneys1_sidneys1@ssh.phx.nearlyfreespeech.net:.

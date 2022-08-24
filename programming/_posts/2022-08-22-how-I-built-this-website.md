@@ -13,16 +13,17 @@ toc: false
 excerpt_separator: <!--more-->
 multipart: building-this-website
 erratum:
-- "2022-08-24: Added section on modifying the Jekyll configuration."
+- "2022-08-24: Added section on modifying the Jekyll configuration and notes about GitHub Pages."
 ---
 
-Sidneys1.com is built statically using [Jekyll](https://jekyllrb.com/), and then published on the world wide web, Tor,
-and IPFS. How is this all accomplished, and how can you host your own website this way? Let's walk through it step by
-step. We'll be looking into (over the course of several posts):
+Sidneys1.com is built statically using [Jekyll](https://jekyllrb.com/), and then published on the world wide web, GitHub
+Pages, Tor, and IPFS. How is this all accomplished, and how can you host your own website this way? Let's walk through
+it step by step. We'll be looking into (over the course of several posts):
 
 * Building a website with Jekyll
 * Hosting on NearlyFreeSpeech.net
 * Customizing the site layout and adding useful features
+* Hosting on GitHub Pages
 * Hosting on IPFS
 * Hosting on Tor
 
