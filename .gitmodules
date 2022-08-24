@@ -1,0 +1,3 @@
+[submodule "github_pages"]
+	path = github_pages
+	url = git@github.com:Sidneys1/sidneys1.github.io.git

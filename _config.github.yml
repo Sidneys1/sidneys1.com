@@ -1,0 +1,6 @@
+mode: "github"
+url: "https://sidneys1.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+title: Sidneys1.com on GitHub Pages
+
+keep_files:
+- .gitattribues
