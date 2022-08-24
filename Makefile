@@ -1,4 +1,5 @@
 SRC = _config.yml $(shell find . -type f \( -iname '*.md' -o -iname '*.html' \) -not -path './_site/*')
+TIME=$(shell date -Iminutes)
 
 all: build
 
@@ -35,10 +36,11 @@ publish_ipfs: _site_ipfs/
 	tar cz _site_ipfs | ssh ipfs@192.168.6.36 'cat | tar xz && ipfs add -rQ _site_ipfs | xargs -I"!" ipfs name publish --key sidneys1.com "/ipfs/!" && echo PUBLISHED TO IPFS SUCCESSFULLY'
 
 publish_github: _site_github/
-	rsync -icr --delete --exclude .gitattributes _site_github/* github_pages/
-	cd github_pages && git add -A && git commit -m "Updated website at $(date -Iminutes)" && git push
+	rsync -icr --delete _site_github/* github_pages/
+	cd github_pages && git add -A && git commit -m "Updated website at ${TIME}" && git push
 	git add github_pages
 	git commit -m 'Updated github pages'
 
 clean:
 	rm -rf _site/ _site_github/ _site_ipfs/ _site_tor/ _site_live/
+	cd github_pages && git reset --hard HEAD

@@ -72,6 +72,7 @@ toc:
 #
 exclude:
 - Makefile
+- github_pages
 #   - .sass-cache/
 #   - .jekyll-cache/
 #   - gemfiles/
