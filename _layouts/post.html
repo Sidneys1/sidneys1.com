@@ -37,9 +37,9 @@ layout: default
 				{% for post in site.posts reversed %}
 					{% if post.multipart == page.multipart %}
 						{% if post.url != page.url %}
-							<li><a href="{{ post.url | absolute_url}}">{{post.title}}{% if post.subtitle %}&ndash; {{post.subtitle | escape}}{% endif %}</a> (Part {{my_counter | roman}})</li>
+							<li><a href="{{ post.url | absolute_url}}">{{post.title}}{% if post.subtitle %} &ndash; {{post.subtitle | escape}}{% endif %}</a> (Part {{my_counter | roman}})</li>
 						{% else %}
-							<li><em>{{ post.title | escape }}{% if post.subtitle %} &ndash; {{post.subtitle | escape}}{% endif %}</em> (Part {{my_counter | roman}})</li>
+							<li style="list-style-type: disclosure-closed;"><em>{{ post.title | escape }}{% if post.subtitle %} &ndash; {{post.subtitle | escape}}{% endif %}</em> (Part {{my_counter | roman}})</li>
 						{% endif %}
 						{% assign my_counter = my_counter | plus: 1 %}
 					{% endif %}
@@ -85,9 +85,9 @@ layout: default
 			{% for post in site.posts reversed %}
 				{% if post.multipart == page.multipart %}
 					{% if post.url != page.url %}
-						<li><a href="{{ post.url | absolute_url}}">{{post.title}}{% if post.subtitle %}&ndash; {{post.subtitle | escape}}{% endif %}</a> (Part {{my_counter | roman}})</li>
+						<li><a href="{{ post.url | absolute_url}}">{{post.title}}{% if post.subtitle %} &ndash; {{post.subtitle | escape}}{% endif %}</a> (Part {{my_counter | roman}})</li>
 					{% else %}
-						<li><em>{{ post.title | escape }}{% if post.subtitle %} &ndash; {{post.subtitle | escape}}{% endif %}</em> (Part {{my_counter | roman}})</li>
+						<li style="list-style-type: disclosure-closed;"><em>{{ post.title | escape }}{% if post.subtitle %} &ndash; {{post.subtitle | escape}}{% endif %}</em> (Part {{my_counter | roman}})</li>
 					{% endif %}
 					{% assign my_counter = my_counter | plus: 1 %}
 				{% endif %}
