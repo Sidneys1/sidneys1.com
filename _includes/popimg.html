@@ -1,12 +1,16 @@
 
 <div class="popunder">
-	<img class="pop" src="{{ include.src | absolute_url }}" alt="{{ include.alt }}" title="{{ include.alt }}" onclick="document.getElementById('{{ include.alt | slugify }}').showModal()">
+	{% if include.thumb %}
+		<img class="pop" src="{{ include.thumb | absolute_url }}" alt="{{ include.alt }}" title="{{ include.alt }}" onclick="document.getElementById('{{ include.alt | slugify }}').showModal()">
+	{% else %}
+		<img class="pop" src="{{ include.src | absolute_url }}" alt="{{ include.alt }}" title="{{ include.alt }}" onclick="document.getElementById('{{ include.alt | slugify }}').showModal()">
+	{% endif %}
 	<em>Click to zoom.</em>
 </div>
 
-<dialog class="popover" id="{{ include.alt | slugify }}">
+<dialog class="popover" id="{{ include.alt | slugify }}" onclick="document.getElementById('{{ include.alt | slugify }}').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->
-	<img class="pop-in" src="{{ include.src | absolute_rul }}" alt="{{ include.alt }}" title="{{ include.alt }}" onclick="document.getElementById('{{ include.alt | slugify }}').close()">
+	<img class="pop-in" src="{{ include.src | absolute_rul }}" alt="{{ include.alt }}" title="{{ include.alt }}" loading="lazy">
 </dialog>

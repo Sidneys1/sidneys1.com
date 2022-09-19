@@ -1,14 +1,15 @@
-<html><head></head><body><figure class="compare">
-	<p class="c-compare" style="--value:50%;">
-		<img class="c-compare__left" src="{{ include.asrc | absolute_url }}" alt="{{ include.aalt }}">
-		<img class="c-compare__right" src="{{ include.bsrc | absolute_url }}" alt="{{ include.balt }}">
-		<input type="range" class="c-rng c-compare__range" min="0" max="100" value="50" oninput="this.parentNode.style.setProperty(&#x27;--value&#x27;, &#x60;${this.value}%&#x60;)">
-	</p>
-	<figcaption>
-		<span class="slight">Drag splitter to compare.</span>
-		{% if include.caption %}
-			<br>{{ include.caption }}
-		{% endif %}
-	</figcaption>
+<figure class="compare">
+	<div>
+		<p class="c-compare" style="--value:50%;" style="width: {{include.width}}; height: {{include.height}}">
+			<img class="c-compare__left" src="{{ include.asrc | absolute_url }}" alt="{{ include.aalt }}" width="{{ include.width }}" loading="lazy">
+			<img class="c-compare__right" src="{{ include.bsrc | absolute_url }}" alt="{{ include.balt }}" width="{{ include.width }}" loading="lazy">
+			<input type="range" class="c-rng c-compare__range" min="0" max="100" value="50" oninput="this.parentNode.style.setProperty(&#x27;--value&#x27;, &#x60;${this.value}%&#x60;)">
+		</p>
+		<figcaption>
+			<span class="slight">Drag splitter to compare.</span>
+			{% if include.caption %}
+				<br>{{ include.caption }}
+			{% endif %}
+		</figcaption>
+	</div>
 </figure>
-</body></html>

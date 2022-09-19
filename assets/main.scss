@@ -167,6 +167,18 @@ div.note {
 		padding: 1em;
         margin-bottom: 0em;
     }
+	> details {
+		padding: 1em;
+        margin-bottom: 0em;
+		summary {
+			// display: flex;
+			// align-items: center;
+			text-align: center;
+		}
+		summary::marker {
+			// display: block;
+		}
+	}
     > legend {
         color: $text-color;
         font-style: italic;
@@ -175,6 +187,10 @@ div.note {
 	code {
 		background-color: rgb(234, 234, 169);
 	}
+}
+
+div.note-wide {
+	max-width: 600px;
 }
 
 div.note:hover {
@@ -444,6 +460,11 @@ dd {
 	border-right: var(--splitter-size) solid var(--splitter-color);
 }
 
+figure.compare {
+	display: flex;
+	justify-content: center;
+}
+
 .c-compare {
 	--h: 9;
 	--m: 1rem 0;
@@ -455,6 +476,7 @@ dd {
 	margin: var(--m);
 	position: relative;
 	margin-block-end: 0;
+	margin-bottom: 20px;
   }
   .c-compare::after {
 	content: "";
@@ -478,50 +500,53 @@ dd {
 	background-color: transparent;
 	box-sizing: border-box;
 	font-family: inherit;
-	height: 100%;
 	margin: 0;
 	outline: none;
+	// display: block;
 	position: absolute;
-	top: 0;
+	top: 100%;
+	// height: 100%;
 	width: 100%;
   }
-  .c-compare__range::-moz-range-thumb {
-	background-color: var(--thumb-bgc);
-	cursor: ew-resize;
-	height: 100%;
-	width: var(--thumb-w);
-  }
-  .c-compare__range::-webkit-slider-thumb {
-	background-color: var(--thumb-bgc);
-	cursor: ew-resize;
-	height: 100%;
-	width: var(--thumb-w);
-  }
-  .c-compare__range:focus::-webkit-slider-thumb {
-	background-color: var(--thumb-bgc-focus);
-	box-shadow: 0 0 0 3px var(--thumb-bgc);
-  }
-  .c-compare__range:focus::-moz-range-thumb {
-	background-color: var(--thumb-bgc-focus);
-	box-shadow: 0 0 0 3px var(--thumb-bgc);
-  }
-  .c-compare__range::-moz-range-track {
-	background: transparent;
-	background-size: 100%;
-	box-sizing: border-box;
-  }
-  .c-compare__range::-webkit-slider-runnable-track {
-	background: transparent;
-	background-size: 100%;
-	box-sizing: border-box;
-	height: 100%;
-  }
-  .c-compare__range,
-  .c-compare__range::-webkit-slider-runnable-track,
-  .c-compare__range::-webkit-slider-thumb {
-	-webkit-appearance: none;
-	appearance: none;
-  }
+//   .c-compare__range::-moz-range-thumb {
+// 	background-color: var(--thumb-bgc);
+// 	cursor: ew-resize;
+// 	height: 100%;
+// 	width: var(--thumb-w);
+// 	box-shadow: 0 0 3px 0 var(--thumb-bgc);;
+//   }
+//   .c-compare__range::-webkit-slider-thumb {
+// 	background-color: var(--thumb-bgc);
+// 	cursor: ew-resize;
+// 	height: 100%;
+// 	width: var(--thumb-w);
+// 	box-shadow: 0 0 3px 0 var(--thumb-bgc);;
+//   }
+//   .c-compare__range:focus::-webkit-slider-thumb {
+// 	background-color: var(--thumb-bgc-focus);
+// 	box-shadow: 0 0 0 3px var(--thumb-bgc);
+//   }
+//   .c-compare__range:focus::-moz-range-thumb {
+// 	background-color: var(--thumb-bgc-focus);
+// 	box-shadow: 0 0 0 3px var(--thumb-bgc);
+//   }
+//   .c-compare__range::-moz-range-track {
+// 	background: transparent;
+// 	background-size: 100%;
+// 	box-sizing: border-box;
+//   }
+//   .c-compare__range::-webkit-slider-runnable-track {
+// 	background: transparent;
+// 	background-size: 100%;
+// 	box-sizing: border-box;
+// 	height: 100%;
+//   }
+//   .c-compare__range,
+//   .c-compare__range::-webkit-slider-runnable-track,
+//   .c-compare__range::-webkit-slider-thumb {
+// 	-webkit-appearance: none;
+// 	appearance: none;
+//   }
 
 figure figcaption {
 	text-align: center;

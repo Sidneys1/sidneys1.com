@@ -11,6 +11,7 @@ excerpt_separator: <!--more-->
 erratum:
 - "2022-07-xx: Various screenshots updated."
 - "2022-08-19: Updated the look of the \"Note\" callouts."
+- "2022-09-19: Updated many screenshots, added image comparisons."
 ---
 
 Since I started programming I've had a dream in the back of my mind: *raytracers are super cool*, and I'd like to build
@@ -52,7 +53,9 @@ our game class to match our needs.
 <div class="note-title">Note</div>
 Running our project will render a default PixelGameEngine scene: a 256x240 canvas of random pixels, magnified 4x:
 
-{% include popimg.html src="/images/2022-03-23-raytracing/rainbow.png" alt="Pixel Barf" %}
+{% capture pixel_barf %}{{ "/images/2022-03-23-raytracing/01-Add PGE header and create a game from template.PNG" | absolute_url }}{% endcapture %}
+{% capture pixel_barf_thumb %}{{ "/images/2022-03-23-raytracing/thumbs/th-01-Add PGE header and create a game from template.PNG" | absolute_url }}{% endcapture %}
+{% include popimg.html src=pixel_barf thumb=pixel_barf_thumb alt="Pixel Barf" %}
 
 </div>
 
@@ -115,7 +118,10 @@ olc::Pixel Sample(float x, float y) const {
 <div class="note-title">Note</div>
 Running our project will now render a 250x250 canvas at 2x magnification. Our magenta fill has been replaced with a
 color pattern converging in the center of the canvas:
-![identity]({{"/images/2022-03-23-raytracing/identity.png" | absolute_url}})
+{% capture coordinate_identity %}{{ "/images/2022-03-23-raytracing/03-Add constants and a way to Sample single pixels.PNG" | absolute_url }}{% endcapture %}
+{% capture coordinate_identity_thumb %}{{ "/images/2022-03-23-raytracing/thumbs/th-03-Add constants and a way to Sample single pixels.PNG" | absolute_url }}{% endcapture %}
+{% include popimg.html src=coordinate_identity thumb=coordinate_identity_thumb alt="Coordinate Identity" %}
+
 </div>
 
 ### Add some geometry types, enhance Shape and Sphere
@@ -349,7 +355,10 @@ std::optional<float> intersection(ray r) const override {
 <div class="note" markdown=1>
 <div class="note-title">Note</div>
 Running our project will now render a (highly aliased and flatly-colored) Sphere!
-![flat]({{"/images/2022-03-23-raytracing/flat.png" | absolute_url}})
+{% capture flat_sphere %}{{ "/images/2022-03-23-raytracing/07-Implement ray-Sphere intersection.PNG" | absolute_url }}{% endcapture %}
+{% capture flat_sphere_thumb %}{{ "/images/2022-03-23-raytracing/thumbs/th-07-Implement ray-Sphere intersection.PNG" | absolute_url }}{% endcapture %}
+{% include popimg.html src=flat_sphere thumb=flat_sphere_thumb alt="Flat Sphere" %}
+
 </div>
 
 ### Add perspective rendering and depth sorting
@@ -423,11 +432,19 @@ const vf3d normalize() const {
 
 By normalizing this ray we get rays properly fanning out in a perspective.
 
-<div class="note" markdown=1>
+<div class="note note-wide" markdown=1>
 <div class="note-title">Note</div>
 Running our project will now produce a proper perspective rendering of our three flat-shaded Spheres, at the correct
 depths.
-![Perspective rendering.]({{"/images/2022-03-23-raytracing/perspective.png" | absolute_url}})
+{% capture perspective %}{{ "/images/2022-03-23-raytracing/08-Add perspective rendering and depth sorting.PNG" | absolute_url }}{% endcapture %}
+{% capture perspective_thumb %}{{ "/images/2022-03-23-raytracing/thumbs/th-08-Add perspective rendering and depth sorting.PNG" | absolute_url }}{% endcapture %}
+{% include popimg.html src=perspective thumb=perspective_thumb alt="Perspective Rendering" %}
+
+<details>
+<summary>Open Image Comparison</summary>
+{% include imgcomp.html asrc=flat_sphere_thumb aalt="" bsrc=perspective_thumb balt="" width="471px" height="500px" %}
+</details>
+
 </div>
 
 ### Add a Plane Shape, and apply fog
@@ -586,14 +603,19 @@ olc::Pixel lerp(olc::Pixel from, olc::Pixel to, float by) const {
 }
 ```
 
-<div class="note" markdown=1>
+<div class="note note-wide" markdown=1>
 <div class="note-title">Note</div>
 
 Running our project now displays our Spheres as before, plus the checkerboard Plane of the floor, smoothly fading
 into the distance.
+{% capture floor %}{{ "/images/2022-03-23-raytracing/09-Add a Plane Shape, and apply Fog.PNG" | absolute_url }}{% endcapture %}
+{% capture floor_thumb %}{{ "/images/2022-03-23-raytracing/thumbs/th-09-Add a Plane Shape, and apply Fog.PNG" | absolute_url }}{% endcapture %}
+{% include popimg.html src=floor thumb=floor_thumb alt="Floor and Fog" %}
 
-*Coming soon: a screenshot.*
-<!-- TODO: ![Fog.]() -->
+<details>
+<summary>Open Image Comparison</summary>
+{% include imgcomp.html asrc=perspective_thumb aalt="" bsrc=floor_thumb balt="" width="471px" height="500px" %}
+</details>
 
 </div>
 
@@ -732,15 +754,21 @@ if (bounces != 0 && intersected_shape.reflectivity > 0) {
 	final_color = lerp(final_color, reflected_color.value_or(FOG), intersected_shape.reflectivity);
 }
 ```
-<div class="note" markdown=1>
+
+<div class="note note-wide" markdown=1>
 <div class="note-title">Note</div>
 
 Running our project at this point produces a beautifully rendered scene where the center and left `Sphere`s reflect
 their surroundings - and a sharp eye can determine that the left `Sphere` can even see itself in its reflection of the
 center `Sphere`.
+{% capture reflect %}{{ "/images/2022-03-23-raytracing/10-Add reflections.png" | absolute_url }}{% endcapture %}
+{% capture reflect_thumb %}{{ "/images/2022-03-23-raytracing/thumbs/th-10-Add reflections.png" | absolute_url }}{% endcapture %}
+{% include popimg.html src=reflect thumb=reflect_thumb alt="Reflections" %}
 
-*Coming soon: a screenshot.*
-<!-- TODO: ![Reflections.]() -->
+<details>
+<summary>Open Image Comparison</summary>
+{% include imgcomp.html asrc=floor_thumb aalt="" bsrc=reflect_thumb balt="" width="471px" height="500px" %}
+</details>
 
 </div>
 
@@ -771,9 +799,6 @@ shape.origin.z = cosf(accumulated_time) * 100 + 100;
 
 Running our project now will display a smoothly floating `Sphere`, with appropriate reflections of its surrounding
 `Shapes`.
-
-*Coming soon: a screenshot.*
-<!-- TODO: ![Reflections in motion.]() -->
 
 </div>
 
@@ -936,14 +961,18 @@ darkens our scene.
 +float dot = std::clamp(AMBIENT_LIGHT + (light_ray.direction * normal.direction), 0.0f, 1.0f);
 ```
 
-<div class="note" markdown=1>
+<div class="note note-wide" markdown=1>
 <div class="note-title">Note</div>
 
 Running our project now displays simple diffuse lighting without darkening any parts of our scene entirely.
+{% capture diffuse %}{{ "/images/2022-03-23-raytracing/12-Add diffuse lighting.png" | absolute_url }}{% endcapture %}
+{% capture diffuse_thumb %}{{ "/images/2022-03-23-raytracing/thumbs/th-12-Add diffuse lighting.png" | absolute_url }}{% endcapture %}
+{% include popimg.html src=diffuse thumb=diffuse_thumb alt="Diffuse Lighting" %}
 
-
-*Coming soon: a screenshot.*
-<!-- TODO: ![Just right diffuse lighting.]() -->
+<details>
+<summary>Open Image Comparison</summary>
+{% include imgcomp.html asrc=reflect_thumb aalt="" bsrc=diffuse_thumb balt="" width="471px" height="500px" %}
+</details>
 
 </div>
 
@@ -1021,15 +1050,19 @@ if (closest_distance < light_distance) {
 }
 ```
 
-<div class="note" markdown=1>
+<div class="note note-wide" markdown=1>
 <div class="note-title">Note</div>
 
 Running our project now will render shadows cast upon other `Shape`s in the scene that dynamically update as the
 `Shape`s or light itself move.
+{% capture shadow %}{{ "/images/2022-03-23-raytracing/13-Add shadow casting.png" | absolute_url }}{% endcapture %}
+{% capture shadow_thumb %}{{ "/images/2022-03-23-raytracing/thumbs/th-13-Add shadow casting.png" | absolute_url }}{% endcapture %}
+{% include popimg.html src=shadow thumb=shadow_thumb alt="Shadow Casting" %}
 
-
-*Coming soon: a screenshot.*
-<!-- TODO: ![Shadows.]() -->
+<details>
+<summary>Open Image Comparison</summary>
+{% include imgcomp.html asrc=diffuse_thumb aalt="" bsrc=shadow_thumb balt="" width="471px" height="500px" %}
+</details>
 
 </div>
 
@@ -1110,10 +1143,14 @@ if as my reflection count to help keep debug runs at an acceptable pace.
 
 Running our project now will display a properly multisampled scene. The multisampling will be more stable when running
 in Release mode.
+{% capture multisampling %}{{ "/images/2022-03-23-raytracing/14-Add multisampling.png" | absolute_url }}{% endcapture %}
+{% capture multisampling_thumb %}{{ "/images/2022-03-23-raytracing/thumbs/th-14-Add multisampling.png" | absolute_url }}{% endcapture %}
+{% include popimg.html src=multisampling thumb=multisampling_thumb alt="Multisampling" %}
 
-
-*Coming soon: a screenshot.*
-<!-- TODO: ![Multisampling.]() -->
+<details>
+<summary>Open Image Comparison</summary>
+{% include imgcomp.html asrc=shadow_thumb aalt="" bsrc=multisampling_thumb balt="" width="471px" height="500px" %}
+</details>
 
 </div>
 
