@@ -53,8 +53,8 @@ our game class to match our needs.
 <div class="note-title">Note</div>
 Running our project will render a default PixelGameEngine scene: a 256x240 canvas of random pixels, magnified 4x:
 
-{% capture pixel_barf %}{{ "/images/2022-03-23-raytracing/01-Add PGE header and create a game from template.PNG" | absolute_url }}{% endcapture %}
-{% capture pixel_barf_thumb %}{{ "/images/2022-03-23-raytracing/thumbs/th-01-Add PGE header and create a game from template.PNG" | absolute_url }}{% endcapture %}
+{% capture pixel_barf %}{{ "/images/2022-03-23-raytracing/01-Add PGE header and create a game from template.png" | absolute_url }}{% endcapture %}
+{% capture pixel_barf_thumb %}{{ "/images/2022-03-23-raytracing/thumbs/th-01-Add PGE header and create a game from template.png" | absolute_url }}{% endcapture %}
 {% include popimg.html src=pixel_barf thumb=pixel_barf_thumb alt="Pixel Barf" %}
 
 </div>
@@ -118,8 +118,8 @@ olc::Pixel Sample(float x, float y) const {
 <div class="note-title">Note</div>
 Running our project will now render a 250x250 canvas at 2x magnification. Our magenta fill has been replaced with a
 color pattern converging in the center of the canvas:
-{% capture coordinate_identity %}{{ "/images/2022-03-23-raytracing/03-Add constants and a way to Sample single pixels.PNG" | absolute_url }}{% endcapture %}
-{% capture coordinate_identity_thumb %}{{ "/images/2022-03-23-raytracing/thumbs/th-03-Add constants and a way to Sample single pixels.PNG" | absolute_url }}{% endcapture %}
+{% capture coordinate_identity %}{{ "/images/2022-03-23-raytracing/03-Add constants and a way to Sample single pixels.png" | absolute_url }}{% endcapture %}
+{% capture coordinate_identity_thumb %}{{ "/images/2022-03-23-raytracing/thumbs/th-03-Add constants and a way to Sample single pixels.png" | absolute_url }}{% endcapture %}
 {% include popimg.html src=coordinate_identity thumb=coordinate_identity_thumb alt="Coordinate Identity" %}
 
 </div>
@@ -355,8 +355,8 @@ std::optional<float> intersection(ray r) const override {
 <div class="note" markdown=1>
 <div class="note-title">Note</div>
 Running our project will now render a (highly aliased and flatly-colored) Sphere!
-{% capture flat_sphere %}{{ "/images/2022-03-23-raytracing/07-Implement ray-Sphere intersection.PNG" | absolute_url }}{% endcapture %}
-{% capture flat_sphere_thumb %}{{ "/images/2022-03-23-raytracing/thumbs/th-07-Implement ray-Sphere intersection.PNG" | absolute_url }}{% endcapture %}
+{% capture flat_sphere %}{{ "/images/2022-03-23-raytracing/07-Implement ray-Sphere intersection.png" | absolute_url }}{% endcapture %}
+{% capture flat_sphere_thumb %}{{ "/images/2022-03-23-raytracing/thumbs/th-07-Implement ray-Sphere intersection.png" | absolute_url }}{% endcapture %}
 {% include popimg.html src=flat_sphere thumb=flat_sphere_thumb alt="Flat Sphere" %}
 
 </div>
@@ -436,8 +436,8 @@ By normalizing this ray we get rays properly fanning out in a perspective.
 <div class="note-title">Note</div>
 Running our project will now produce a proper perspective rendering of our three flat-shaded Spheres, at the correct
 depths.
-{% capture perspective %}{{ "/images/2022-03-23-raytracing/08-Add perspective rendering and depth sorting.PNG" | absolute_url }}{% endcapture %}
-{% capture perspective_thumb %}{{ "/images/2022-03-23-raytracing/thumbs/th-08-Add perspective rendering and depth sorting.PNG" | absolute_url }}{% endcapture %}
+{% capture perspective %}{{ "/images/2022-03-23-raytracing/08-Add perspective rendering and depth sorting.png" | absolute_url }}{% endcapture %}
+{% capture perspective_thumb %}{{ "/images/2022-03-23-raytracing/thumbs/th-08-Add perspective rendering and depth sorting.png" | absolute_url }}{% endcapture %}
 {% include popimg.html src=perspective thumb=perspective_thumb alt="Perspective Rendering" %}
 
 <details>
@@ -608,8 +608,8 @@ olc::Pixel lerp(olc::Pixel from, olc::Pixel to, float by) const {
 
 Running our project now displays our Spheres as before, plus the checkerboard Plane of the floor, smoothly fading
 into the distance.
-{% capture floor %}{{ "/images/2022-03-23-raytracing/09-Add a Plane Shape, and apply Fog.PNG" | absolute_url }}{% endcapture %}
-{% capture floor_thumb %}{{ "/images/2022-03-23-raytracing/thumbs/th-09-Add a Plane Shape, and apply Fog.PNG" | absolute_url }}{% endcapture %}
+{% capture floor %}{{ "/images/2022-03-23-raytracing/09-Add a Plane Shape, and apply Fog.png" | absolute_url }}{% endcapture %}
+{% capture floor_thumb %}{{ "/images/2022-03-23-raytracing/thumbs/th-09-Add a Plane Shape, and apply Fog.png" | absolute_url }}{% endcapture %}
 {% include popimg.html src=floor thumb=floor_thumb alt="Floor and Fog" %}
 
 <details>

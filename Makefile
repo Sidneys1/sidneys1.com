@@ -1,5 +1,9 @@
-SRC = _config.yml $(shell find . -type f \( -iname '*.md' -o -iname '*.html' -o -iname '*.scss' \) -not -path './_site*/*')
-TIME=$(shell date -Iminutes)
+SRC := _config.yml $(shell find . -type f \( -iname '*.md' -o -iname '*.html' -o -iname '*.scss' \) -not -path './_site*/*')
+TIME:=$(shell date -Iminutes)
+
+ONLINE_SSH_HOST:=sidneys1_sidneys1@ssh.phx.nearlyfreespeech.net
+TOR_SSH_HOST:=dell-laptop
+IPFS_SSH_HOST:=192.168.6.160
 
 all: build
 
@@ -20,13 +24,13 @@ _site_%/: ${SRC}
 publish: publish_online publish_tor publish_github publish_ipfs
 
 publish_online: _site/
-	rsync -icrz --delete _site/* sidneys1_sidneys1@ssh.phx.nearlyfreespeech.net:.
+	rsync -icrz --delete _site/* ${ONLINE_SSH_HOST}:.
 
 publish_tor: _site_tor/
-	tar cz -C _site_tor . | ssh dell-laptop 'cat | sudo tar xz -C /var/www/html/ && echo PUBLISHED TO TOR SUCCESSFULLY'
+	tar cz -C _site_tor . | ssh ${TOR_SSH_HOST} 'cat | sudo tar xz -C /var/www/html/ && echo PUBLISHED TO TOR SUCCESSFULLY'
 
 publish_ipfs: _site_ipfs/
-	tar cz _site_ipfs | ssh ipfs@192.168.6.36 'cat | tar xz && ipfs add -rQ _site_ipfs | xargs -I"!" ipfs name publish --key sidneys1.com "/ipfs/!" && echo PUBLISHED TO IPFS SUCCESSFULLY'
+	tar cz _site_ipfs | ssh ipfs@${IPFS_SSH_HOST} 'cat | tar xz && ipfs add -rQ _site_ipfs | xargs -I"!" ipfs name publish --key sidneys1.com "/ipfs/!" && echo PUBLISHED TO IPFS SUCCESSFULLY'
 
 publish_github: _site_github/
 	rsync -icr --delete _site_github/* github_pages/
