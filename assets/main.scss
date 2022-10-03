@@ -19,6 +19,7 @@ $brand-color:      #2a7ae2 !default;
 $grey-color:       #828282 !default;
 $grey-color-light: lighten($grey-color, 40%) !default;
 $grey-color-dark:  darken($grey-color, 25%) !default;
+$grey-color-lightish:  lighten($grey-color, 20%) !default;
 
 $table-text-align: left !default;
 
@@ -53,6 +54,22 @@ $on-laptop:        800px !default;
 ;
 
 @import url(monokai.css);
+
+figure {
+	background-color: $grey-color-light;
+	border-radius: 1em;
+	padding: 1em;
+	blockquote {
+		border-left-color: $grey-color-lightish;
+	}
+}
+
+details.snowflake > summary {
+	font-size: larger;
+	> img {
+		height: 1em;
+	}
+}
 
 .site-header .wrapper {
 	display: flex;
