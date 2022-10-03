@@ -62,9 +62,8 @@ $on-laptop:        800px !default;
 		text-align: center;
 
 		img {
-			max-height: 25px;
 			opacity: 50%;
-		transition: 250ms linear;
+			transition: 250ms linear;
 		}
 		img:hover {
 			opacity: 100%;
