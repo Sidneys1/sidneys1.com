@@ -401,13 +401,10 @@ li.anchor {
 }
 
 li.anchor:target {
-	background-color: yellow;
+	// background-color: yellow;
+	font-weight: bolder;
 	border-radius: 1em;
 	text-decoration: underline dotted black;
-}
-
-li.anchor:target::before {
-	content: '¶ ';
 }
 
 div.series {
