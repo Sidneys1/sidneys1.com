@@ -54,6 +54,39 @@ $on-laptop:        800px !default;
 
 @import url(monokai.css);
 
+.site-header .wrapper {
+	display: flex;
+	align-items: center;
+	.coffee {
+		flex-grow: 1;
+		text-align: center;
+
+		img {
+			max-height: 25px;
+			opacity: 50%;
+		transition: 250ms linear;
+		}
+		img:hover {
+			opacity: 100%;
+			transition: 250ms linear;
+		}
+	}
+}
+
+.donate {
+	text-align: center;
+	img {
+		max-height: 50px;
+		opacity: 75%;
+		transition: 250ms linear;
+	}
+	img:hover {
+		opacity: 100%;
+		transition: 250ms linear;
+		cursor: pointer;
+	}
+}
+
 .tag {
     font-size: small;
     // border: 1px solid black;
