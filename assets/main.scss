@@ -647,3 +647,7 @@ hr {
 summary {
 	cursor: pointer;
 }
+
+#mastodon-logo:first-of-type(path) {
+	fill: green;
+}

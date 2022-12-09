@@ -26,9 +26,8 @@ description: >- # this means to ignore newlines until "baseurl:"
   photography, videography, video games, and whatever else I see fit.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://sidneys1.com" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: sidneys1
-github_username:  sidneys1
-youtube_username: sidneys1
+github_username:  Sidneys1
+youtube_username: Sidneys1
 disqus:
   shortname: sidneys1
 
