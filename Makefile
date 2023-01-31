@@ -2,7 +2,7 @@ SRC := _config.yml $(shell find . -type f \( -iname '*.md' -o -iname '*.html' -o
 TIME:=$(shell date -Iminutes)
 
 ONLINE_SSH_HOST:=sidneys1_sidneys1@ssh.phx.nearlyfreespeech.net
-TOR_SSH_HOST:=192.168.6.67
+TOR_SSH_HOST:=192.168.6.36
 IPFS_SSH_HOST:=192.168.6.160
 
 all: build
