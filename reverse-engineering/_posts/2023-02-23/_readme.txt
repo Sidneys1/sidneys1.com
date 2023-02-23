@@ -141,6 +141,3 @@ TECHNICAL SUPPORT
 We hope that your experience with Math Invaders will be problem-free.
 But if you have any technical problems, please call Technical Support at
 (303) 739-4020.
-
-
-

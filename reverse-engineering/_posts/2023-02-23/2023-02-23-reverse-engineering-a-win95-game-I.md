@@ -2,8 +2,8 @@
 layout: post
 title:  "Reverse Engineering a Windows 95 Game"
 subtitle: Reversing Asset Storage
-categories: [programming, reverse engineering]
-tags: [programming, reverse engineering]
+categories: [reverse-engineering]
+tags: [programming, reverse-engineering]
 author: Sidneys1
 image: images/reverse-engineering-a-win95-game-I/hero.jpg
 image_shadow: true

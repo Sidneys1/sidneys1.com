@@ -1,4 +1,4 @@
-SRC := _config.yml $(shell find . -type f \( -iname '*.md' -o -iname '*.html' -o -iname '*.scss' \) -not -path './_site*/*')
+SRC := _config.yml $(shell find . -type f \( -iname '*.md' -o -iname '*.html' -o -iname '*.scss' \) -not \( -path './_site*/*' -o -path './github_pages/*' \))
 TIME:=$(shell date -Iminutes)
 
 ONLINE_SSH_HOST:=sidneys1_sidneys1@ssh.phx.nearlyfreespeech.net
