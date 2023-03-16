@@ -82,8 +82,9 @@ blockquote {
 }
 
 blockquote cite::before {
-	content: "— ";
+	content: "—";
 	font-size: small;
+	margin-right: 1ex;
 }
 
 details {

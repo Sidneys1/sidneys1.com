@@ -47,7 +47,7 @@ find the main MFC module initializer by searching for something we know happens 
 When first run, the game checks that DirectX, DirectPlay, and the game CD are inserted. Using Ghidra's <kbd>Search</kbd>
 &rarr; <kbd>For Strings...</kbd> tool we'll find the "Please insert CD" message.
 
-![string search]({{ /images/reverse-engineering-a-win95-game-II/string-search.png | absolute_url }})
+![string search]({{ '/images/reverse-engineering-a-win95-game-II/string-search.png' | absolute_url }})
 
 Clicking the result will select the data in the CodeBrowser, and right-clicking the automatically created symbol allows
 us to click <kbd>References</kbd> &rarr; <kbd>Find references to s_Please_insert...</kbd> to find all references to this
@@ -135,8 +135,7 @@ file does not exist, it will return the default value.
 
 And, using Ghidra's Symbol Tree, we can find all calls to the `GetPrivateProfileXxx` APIs and the parameters used. Doing
 so provides us with this list of parameters, expected to be found in `.\3d.ini` (relative to the CWD). These are mostly
-loaded in another function (``):
-<!-- TODO: describe where the rest of this is loaded, and why gFullscreen is of interest to us. -->
+loaded in another function called by `CWinAppEntrypoint`: `FUN_0042e2e0`, which we can rename to `LoadSettings`:
 
 ```ini
 [MazePath]
@@ -161,7 +160,34 @@ Let's see if this works. Let's just create a `C:\MathInvaders\3d.ini` and as a s
 
 Well... Sort of. Ok, the game doesn't actually run, and there's a weird white space at the bottom of the window. But
 we've proven it works! But what's intriguing to me is the `[MazePath]` section of the config... I wonder what we could
-use *those* settings for. Next time!
+use *those* settings for. In particular, the `fullscreen` setting is loaded into a global variable that we'll call
+`gFullscreen` - this factors into to code processing some very interesting strings about an "editor mode"... I wonder
+if we can activate that?
+
+```c
+if (gFullscreen == 0) {
+	if (*(int *)(param_1 + 0x334) == 0) {
+		_sprintf(local_104,s__Math_Invaders_-_NO_ACTIVE_LEVEL_0049585c);
+	}
+	else {
+		__splitpath(&DAT_0049c7c8,local_1fc,local_1f4,local_12c,local_10c);
+		_sprintf(local_104,s__Math_Invaders_-_'%s'_004957f4,local_12c);
+		if (*(int *)(param_1 + 0x3714) == 0) {
+			FID_conflict:_strcat(local_104,s__-_***_EDITOR_MODE_***_00495810);
+		}
+		iVar1 = CSplitterWnd::IsTracking((CSplitterWnd *)(param_1 + 0x2e0));
+		if (iVar1 == 0) {
+			FID_conflict:_strcat(local_104,s__-_Running..._0049584c);
+		}
+		else {
+			FID_conflict:_strcat(local_104,s__-_Paused,_press_'p'_to_resume._00495828);
+		}
+	}
+	CWnd::SetWindowTextA(param_1,local_104);
+}
+```
+
+Next time!
 
 
 <!-- References -->
