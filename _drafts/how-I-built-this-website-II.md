@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "How I Built This Website, And How to Do It Yourself II"
+title:  "How I Built This Website, And How to Do It Yourself"
 subtitle: Customizing Jekyll and Publishing to GitHub Pages
 categories: [programming]
 # date:   2022-03-24 13:04:39 -0400

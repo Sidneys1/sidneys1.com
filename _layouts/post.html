@@ -24,7 +24,7 @@ layout: default
 			{%- endif -%}
 			{%- if page.tags -%}
 			{%- for tag in page.tags -%}
-			&nbsp;•&nbsp;<a href="{{ "/tags.html" | absolute_url }}#{{ tag | slugify }}" style="display: inane;"
+			&nbsp;•&nbsp;<a href="{{ "/tags.html" | absolute_url }}#{{ tag | slugify }}" style="display: inline;"
 				class="tag">{{ tag | slugify }}</a>
 			{%- endfor -%}
 			{%- endif -%}

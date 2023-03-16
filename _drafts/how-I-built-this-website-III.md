@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "How I Built This Website, And How to Do It Yourself III"
+title:  "How I Built This Website, And How to Do It Yourself"
 subtitle: Custom Jekyll Widgets and Publishing to IPFS and Tor
 categories: [programming]
 # date:   2022-03-24 13:04:39 -0400
