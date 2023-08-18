@@ -16,8 +16,8 @@ kramdown:
       line_numbers: true
 ---
 
-<!-- cSpell:words Schuster DirectX autorun pakrat -->
-<!-- cSpell:ignore PAKS AMOVIE DSETUP DSETUPE DSETUPJ MATHINV SSPUNINS Bmps Ihighsco RIFFÀ -->
+<!-- cSpell:words Schuster DirectX autorun Ghidra -->
+<!-- cSpell:ignore sspyth MATHINV mbscpy strcmp -->
 
 I recently rediscovered an obscure 1997 Simon & Schuster / Marshall Media edutainment game for Windows 95 that I played
 as a kid: [Math Invaders](https://archive.org/details/MathInvaders). In this part, we'll investigate disassembling and
@@ -41,7 +41,7 @@ PE Property[FileDescription]: SSPYTH MFC Application
 Interesting - the project in visual studio seems to have originally been called "sspyth", short for "S.S. Pythagoras",
 the name of the protagonist's ship within the game. Let's try and identify the entrypoint. This is a Windows MFC program,
 which means the actual entrypoint is "runtime code" that will identify the main MFC module within the program and
-initialize it. So instead of looking for this enrtypoint (which Ghidra finds for us and names `entry`), we will try and
+initialize it. So instead of looking for this entrypoint (which Ghidra finds for us and names `entry`), we will try and
 find the main MFC module initializer by searching for something we know happens early in the program's execution.
 
 When first run, the game checks that DirectX, DirectPlay, and the game CD are inserted. Using Ghidra's <kbd>Search</kbd>
