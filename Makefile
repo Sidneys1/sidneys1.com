@@ -13,7 +13,7 @@ serve:
 	bundle exec jekyll serve -w -l --force_polling --drafts --destination _site_live/ --config _config.yml,_config.local.yml
 
 serve-prod:
-	env JEKYLL_ENV=production bundle exec jekyll serve -w -l --force_polling --destination _site_live/ --config _config.yml,_config.local.yml
+	env JEKYLL_ENV=production bundle exec jekyll serve -w -l --force_polling --destination _site_live/ --config _config.yml,_config.local.yml,_config.local-prod.yml
 
 _site/: ${SRC}
 	env JEKYLL_ENV=production bundle exec jekyll build --incremental

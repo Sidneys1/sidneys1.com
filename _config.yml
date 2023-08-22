@@ -28,8 +28,8 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://sidneys1.com" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  Sidneys1
 youtube_username: Sidneys1
-disqus:
-  shortname: sidneys1
+# disqus:
+#   shortname: sidneys1
 
 markdown: kramdown
 kramdown:

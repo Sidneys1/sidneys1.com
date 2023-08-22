@@ -10,6 +10,7 @@ image_shadow: true
 toc: false
 excerpt_separator: <!--more-->
 multipart: reverse-engineering-win95-game
+mastodon_comment_url: https://infosec.exchange/@Sidneys1/109915286285001721
 ---
 
 <!-- cSpell:words Schuster DirectX autorun pakrat -->

@@ -7,8 +7,8 @@ tags: [linguistics]
 author: Sidneys1
 toc: false
 excerpt_separator: <!--more-->
+mastodon_comment_url: https://infosec.exchange/@Sidneys1/110912235539100255
 ---
-
 
 <!-- cSpell:words skeuomorph -->
 <!-- cSpell:ignore ˈskyo͞oəˌmôrf -->

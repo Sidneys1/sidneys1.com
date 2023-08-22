@@ -60,7 +60,7 @@ layout: default
 	{% toc %}
 	<!-- </div> -->
 
-	<div class="post-content e-content" itemprop="articleBody">
+	<div class="post-content e-content{% if page.hanging %} hanging{% endif %}" itemprop="articleBody">
 		{{ content }}
 	</div>
 
@@ -112,11 +112,31 @@ layout: default
 		</a>
 	</div>
 
-	{%- if site.disqus.shortname and site.mode == "www" -%}
-	<details>
-		<summary>Disqus Comments</summary>
-		{%- include disqus_comments.html -%}
-	</details>
+	{%- if site.mode == "www" or site.mode == "local-prod" -%}
+	<section id="comments" data-url="{{ page.mastodon_comment_url }}">
+		<h2>Comments from Mastodon <span id="stats"></span></h2>
+		{% if page.mastodon_comment_url -%}
+		<p>
+			You can leave a comment by replying to <a target="_blank" href="{{ page.mastodon_comment_url }}">this
+			Mastodon post</a> from any ActivityPub-capable social network that can exchange replies with Mastodon.
+		</p>
+		<noscript><p class="disabled">Scripts are disabled.</p></noscript>
+		<template><article class="comment">
+			<div class="avatar"><img class="avatar"></div>
+			<div class="header">
+				<a class="user"><span class="displayname"></span><span class="handle"></span></a>
+				<a target="_blank" class="link"><span class="timestamp"></span></a>
+			</div>
+			<div class="content"></div>
+			<div class="tidbits"></div>
+		</article></template>
+		{%- else -%}
+		<p class="disabled">This post has not had comments enabled (yet).</p>
+		{%- endif -%}
+		<p id="comment-credit" class="disabled">Comment support inspired by <a href="https://blaede.family/@cassidy" target="_blank">Cassidy James <span class="social-handle">(@cassidy@blaede.family)</span></a> and some code borrowed from <a target="_blank" href="https://fietkau.social/@julian">Julian Fietkau <span class="social-handle">(@julian@fietkau.social)</span></a>.</p>
+	</section>
+	{%- else -%}
+	<p class="todo">Comments only visible under <code>site.mode == "www" or site.mode == "local-prod"</code>!</p>
 	{%- endif -%}
 
 	<a class="u-url" href="{{ page.url | absolute_url }}" hidden></a>

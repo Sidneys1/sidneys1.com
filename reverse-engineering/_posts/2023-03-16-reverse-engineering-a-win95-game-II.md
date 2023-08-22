@@ -14,6 +14,7 @@ kramdown:
   syntax_highlighter_opts:
     block:
       line_numbers: true
+mastodon_comment_url: https://infosec.exchange/@Sidneys1/110035116373587702
 ---
 
 <!-- cSpell:words Schuster DirectX autorun Ghidra -->
