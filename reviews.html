@@ -1,0 +1,14 @@
+---
+layout: default
+title: Reviews
+---
+<h1>Reviews, Microblogging, Etc.</h1>
+
+<ul>
+  {% for review in site.reviews %}
+    <li>
+      <h2><a href="{{ review.url }}">{{ review.title }}</a></h2>
+      <p>{{ review.description | markdownify }}</p>
+    </li>
+  {% endfor %}
+</ul>

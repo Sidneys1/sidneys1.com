@@ -1,0 +1,5 @@
+<section id="dynamic_content">
+  {% for content in include.dynamic_content %}
+    {% include dynamic-review-content.html content=content %}
+  {% endfor %}
+</section>
