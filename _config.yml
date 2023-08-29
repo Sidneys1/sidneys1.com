@@ -51,6 +51,7 @@ header_pages:
   - tags.html
   - categories.html
   - series.html
+  - reviews.html
 show_excerpts: true
 
 # TOC Settings
@@ -82,3 +83,15 @@ exclude:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+
+collections:
+  reviews:
+    output: true
+
+defaults:
+  -
+    scope:
+      path: ""
+      type: "reviews"
+    values:
+      layout: "review"
