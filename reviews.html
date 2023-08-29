@@ -1,0 +1,23 @@
+---
+layout: base
+title: Reviews
+permalink: '/reviews/index.html'
+---
+<h1>Reviews & Essays</h1>
+
+<ul class="review-list">
+  {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+  {% for review in site.posts %}
+	{% unless review.categories contains 'reviews' %}{%continue%}{%endunless%}
+	<li>
+		<h3>
+			<a class="review-link review-title" href="{{ review.url | absolute_url }}">{{ review.title }}</a><span class="review-meta">{{ review.date | date: date_format }}</span>
+		</h3>
+		{% include review-subjectbox.html info=review.info %}
+		<div class="review-details">
+			{%- if review.subtitle -%}<div class="review-description">{{ review.subtitle }}</div>{%- endif -%}
+			<div class="review-excerpt">{{ review.excerpt }}</div>
+		</div>
+	</li>
+  {% endfor %}
+</ul>

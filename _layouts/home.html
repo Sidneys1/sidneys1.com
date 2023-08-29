@@ -45,7 +45,7 @@ layout: base
       <li>
         <h3>
 			<div style="display: flex; flex-wrap: wrap; align-items: center;"><a class="post-link" href="{{ post.url | absolute_url }}">
-				{{ post.title | escape }}
+				{{ post.title }}
 			</a>
 				{%- if post.multipart -%}
 				{% assign multipart_counter = 1 %}
@@ -64,7 +64,7 @@ layout: base
 			</div>
         </h3>
 		<div style="display: flex; flex-wrap: wrap; align-items: baseline;">
-			{%- if post.subtitle -%}<h4 style="display: inline">{{post.subtitle | escape}}&nbsp;</h4>{%- endif -%}<span class="post-meta">{{ post.date | date: date_format }}</span>
+			{%- if post.subtitle -%}<h4 style="display: inline">{{post.subtitle}}&nbsp;</h4>{%- endif -%}<span class="post-meta">{{ post.date | date: date_format }}</span>
 		</div>
         {%- if site.show_excerpts -%}
           <div class="post-excerpt">

@@ -2,18 +2,17 @@
 layout: base
 ---
 <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
-
 	<header class="post-header">
-		<h1 class="post-title p-name" itemprop="name headline">{{ page.title | escape }}</h1>
-		<h2 class="post-title p-name">{{ page.subtitle | escape }}</h1>
+		<h1 class="post-title review-title p-name" itemprop="name headline">{{ page.title }}</h1>
+		{%- if page.description -%}<h2 class="review-description">{{ page.description | escape }}</h2>{%- endif -%}
 		{%- if page.series -%}
 		<div class="series">This post is part of a series: <a href="{{ "/series.html" | absolute_url }}#{{ page.series
 				| slugify }}">{{ page.series | escape }}</a></div>
 		{%- endif -%}
 		{%- if page.erratum -%}
-		<div class="erratum-notice">This post has <a href="#erratum">erratum</a>.</div>
+		<div class="erratum-notice">This review has <a href="#erratum">erratum</a>.</div>
 		{%- endif -%}
-		<p class="post-meta">
+		<div class="post-meta">
 			<time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
 				{%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
 				{{ page.date | date: date_format }}
@@ -21,35 +20,8 @@ layout: base
 			{%- if page.author -%}
 			• <span itemprop="author" itemscope itemtype="http://schema.org/Person">
 				<span class="p-author h-card" itemprop="name">{{ page.author }}</span></span>
-			{%- endif -%}
-			{%- if page.tags -%}
-			{%- for tag in page.tags -%}
-			&nbsp;•&nbsp;<a href="{{ "/tags.html" | absolute_url }}#{{ tag | slugify }}" style="display: inline;"
-				class="tag">{{ tag | slugify }}</a>
-			{%- endfor -%}
-			{%- endif -%}
-		</p>
-		{%- if page.multipart -%}
-		<div class="multipart">
-			<em>This post has multiple parts:</em>
-			<ul>
-				{% assign my_counter = 1 %}
-				{% for post in site.posts reversed %}
-					{% if post.multipart == page.multipart %}
-						{% if post.url != page.url %}
-							<li><a href="{{ post.url | absolute_url}}">{{post.title}}{% if post.subtitle %} &ndash; {{post.subtitle | escape}}{% endif %}</a> (Part {{my_counter | roman}})</li>
-						{% else %}
-							<li style="list-style-type: disclosure-closed;"><em>{{ post.title | escape }}{% if post.subtitle %} &ndash; {{post.subtitle | escape}}{% endif %}</em> (Part {{my_counter | roman}})</li>
-						{% endif %}
-						{% assign my_counter = my_counter | plus: 1 %}
-					{% endif %}
-				{% endfor %}
-				{% if my_counter == 2 %}
-					<li class="slight">More to come...</li>
-				{% endif %}
-			</ul>
+				{%- endif -%}
 		</div>
-		{%- endif -%}
 	</header>
 
 	{%- if page.image -%}
@@ -60,12 +32,17 @@ layout: base
 	{% toc %}
 	<!-- </div> -->
 
-	<div class="post-content e-content{% if page.hanging %} hanging{% endif %}" itemprop="articleBody">
-		{{ content }}
+
+	<div class="post-content e-content" itemprop="articleBody">
+		{{ page.excerpt }}
+		{% include at-a-glance.html pros=page.pros cons=page.cons %}
+		{% assign slice_start = page.excerpt.size | plus: page.excerpt_separator.size %}
+		{% assign slice_end = content.size | minus: slice_start %}
+		{{ content | slice: slice_start, slice_end }}
 	</div>
 
 	{% if page.erratum %}
-		<hr/>
+		<hr style="clear: both;">
 		<details id="erratum">
 			<summary>Erratum</summary>
 			<ul>
@@ -76,30 +53,7 @@ layout: base
 		</details>
 	{% endif %}
 
-	{%- if page.multipart -%}
-	<hr/>
-	<div class="multipart center">
-		<em>This post has multiple parts:</em>
-		<ul>
-			{% assign my_counter = 1 %}
-			{% for post in site.posts reversed %}
-				{% if post.multipart == page.multipart %}
-					{% if post.url != page.url %}
-						<li><a href="{{ post.url | absolute_url}}">{{post.title}}{% if post.subtitle %} &ndash; {{post.subtitle | escape}}{% endif %}</a> (Part {{my_counter | roman}})</li>
-					{% else %}
-						<li style="list-style-type: disclosure-closed;"><em>{{ post.title | escape }}{% if post.subtitle %} &ndash; {{post.subtitle | escape}}{% endif %}</em> (Part {{my_counter | roman}})</li>
-					{% endif %}
-					{% assign my_counter = my_counter | plus: 1 %}
-				{% endif %}
-			{% endfor %}
-			{% if my_counter == 2 %}
-				<li class="slight">More to come...</li>
-			{% endif %}
-		</ul>
-	</div>
-	{%- endif -%}
-
-	<hr>
+	<hr style="clear: both;">
 
 	<div class="donate">
 		Like what you read?
@@ -134,14 +88,9 @@ layout: base
 			<div class="tidbits"></div>
 		</article></template>
 		{%- else -%}
-		<p class="disabled">This post has not had comments enabled (yet).</p>
+		<p class="disabled">This review has not had comments enabled (yet).</p>
 		{%- endif -%}
 		<p id="comment-credit" class="disabled">Comment support inspired by <a href="https://blaede.family/@cassidy" target="_blank">Cassidy James <span class="social-handle">(@cassidy@blaede.family)</span></a> and some code borrowed from <a target="_blank" href="https://fietkau.social/@julian">Julian Fietkau <span class="social-handle">(@julian@fietkau.social)</span></a>.</p>
-	</section>
-	<section id="webmention">
-		<h2>Webmentions <span id="webmention-stats"><span>♥️{% webmention_count page.url likes %}</span></span></h2>
-		{% webmentions page.url %}
-		<p id="webmention-comment-credit" class="disabled">Webmention support enabled by <a href="https://webmention.io" target="_blank">webmention.io</a> and <a href="https://aarongustafson.github.io/jekyll-webmention_io/" target="_blank">Webmentions for Jekyll</a>.</p>
 	</section>
 	{%- else -%}
 	<p class="todo">Comments only visible under <code>site.mode == "www" or site.mode == "local-prod"</code>!</p>
@@ -149,4 +98,3 @@ layout: base
 
 	<a class="u-url" href="{{ page.url | absolute_url }}" hidden></a>
 </article>
-{% webmentions_js %}

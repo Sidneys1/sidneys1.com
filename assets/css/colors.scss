@@ -33,17 +33,17 @@ $blue-accent-visited: var(--sidneys1-blue-accent-visited);
 
 $colors: (
     "red-accent": darkred #BF3D7C,
-    "red-accent-subtle": color.adjust(darkred, $whiteness: 50%) color.adjust(#BF3D7C, $blackness: 50%),
+    "red-accent-subtle": color.adjust(darkred, $blackness: 10%) color.adjust(#BF3D7C, $lightness: -30%),
     "red-accent-compliment": color.adjust(darkred, $hue: 180) color.adjust(#BF3D7C, $hue: 180),
     "red-accent-visited": color.adjust(darkred, $lightness: -15%) color.adjust(#BF3D7C, $lightness: 5%),
 
     "green-accent": darkgreen #7b914d,
-    "green-accent-subtle": color.adjust(darkgreen, $whiteness: 50%) color.adjust(#7b914d, $blackness: 50%),
+    "green-accent-subtle": color.adjust(darkgreen, $blackness: 10%) color.adjust(#7b914d, $lightness: -30%),
     "green-accent-compliment": color.adjust(darkgreen, $hue: 180) color.adjust(#7b914d, $hue: 180),
     "green-accent-visited": color.adjust(darkgreen, $lightness: -15%) color.adjust(#7b914d, $lightness: 5%),
 
     "blue-accent": #2a7ae2 #5c8bc9,
-    "blue-accent-subtle": color.adjust(#2a7ae2, $whiteness: 50%) color.adjust(#5c8bc9, $blackness: 50%),
+    "blue-accent-subtle": color.adjust(#2a7ae2, $blackness: 10%) color.adjust(#5c8bc9, $lightness: -30%),
     "blue-accent-compliment": color.adjust(#2a7ae2, $hue: 180) color.adjust(#5c8bc9, $hue: 180),
     "blue-accent-visited": color.adjust(#2a7ae2, $lightness: -15%) color.adjust(#5c8bc9, $lightness: 5%),
 

@@ -6,7 +6,9 @@ title: Series
 {% comment %}
 {% endcomment %}
 {% assign rawseries = "" %}
-{% for post in site.posts %}
+{% assign pages = site.posts  %}
+<!-- | concat: site.reviews -->
+{% for post in pages %}
 	{% assign tseries = post.series | join:'|' | append:'|' %}
 	{% assign rawseries = rawseries | append:tseries %}
 {% endfor %}
@@ -40,13 +42,11 @@ The purpose of this snippet is to list all your posts posted with a certain tag.
 <ul>
 	<li class="anchor" style="font-size: larger; font-style: italic" id="{{ tag | slugify }}">{{ tag }}</li>
 	<ul>
-	 {% for post in site.posts %}
+	 {% for post in pages %}
 		 {% if post.series contains tag %}
 		 <li>
-		 <h3>
-		 <a href="{{ post.url | absolute_url }}">
-		 {{ post.title }}
-		</a>
+		 <h3>{%- if post.collection == 'reviews' -%}<span class="pill review">Review</span>
+		{%- endif -%}<a href="{{ post.url | absolute_url }}">{{ post.title }}</a>
 		<small>{%if post.subtitle %}&ndash; {{post.subtitle}}{% endif %} &mdash; {{ post.date | date_to_string }}</small>
 		 </h3>
 		 </li>

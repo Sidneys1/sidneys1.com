@@ -1,0 +1,3 @@
+- Static search with lunr.js
+  - [Just-The-Docs Index Build Liquid Template](https://github.com/just-the-docs/just-the-docs/blob/main/assets/js/zzzz-search-data.json
+  - [Lunr.js Guides](https://lunrjs.com/guides/getting_started.html)

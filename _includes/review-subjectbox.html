@@ -1,0 +1,26 @@
+{%- assign date_formatzz = site.minima.date_format | default: "%b %-d, %Y" -%}
+<div class="review-subjectbox">
+	{%- if include.info.cover -%}
+	<img class="review-subject-cover" alt="Cover" src="{{ include.info.cover | absolute_url }}" />
+	{%- endif -%}
+	<cite>{{ include.info.title }}</cite>
+
+	{%- if include.info.rating -%}
+	<div class="rating">{{ include.info.rating | round: 1 }}<span>/10</span></div>
+	{%- endif -%}
+
+	{%- if include.info.date -%}
+	<div class="label">Published:</div>
+	<div class="value">{{ include.info.date | date: date_formatzz }}</div>
+	{%- endif -%}
+
+	{%- if include.info.author -%}
+	<div class="label">Author:</div>
+	<div class="value">{{ include.info.author }}</div>
+	{%- endif -%}
+
+	{%- if include.info.publisher -%}
+	<div class="label">Publisher:</div>
+	<div class="value">{{ include.info.publisher }}</div>
+	{%- endif -%}
+</div>

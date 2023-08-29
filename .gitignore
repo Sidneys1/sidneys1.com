@@ -1,9 +1,9 @@
-_site
-_site_tor
-_site_ipfs
-_site_live
-_site_github
-_site_preview
+.site
+.site_tor
+.site_ipfs
+.site_live
+.site_github
+.site_preview
 .sass-cache
 .jekyll-cache
 .jekyll-metadata

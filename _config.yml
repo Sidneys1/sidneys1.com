@@ -30,6 +30,8 @@ url: "https://sidneys1.com" # the base hostname & protocol for your site, e.g. h
 markdown: kramdown
 kramdown:
    math_engine: mathjax
+   footnote_backlink: '🔙'
+   footnote_backlink_inline: false
 
 # Build settings
 theme: minima
@@ -74,6 +76,9 @@ header_pages:
     title: Series
   - url: /links/
     title: Links
+  - url: reviews.html
+    title: Reviews
+
 show_excerpts: true
 
 # TOC Settings
@@ -116,6 +121,11 @@ defaults:
       path: "assets/404"
     values:
       "404": true
+  - scope:
+      path: ""
+      type: "reviews"
+    values:
+      layout: "review"
 
 webmention:
   username: "sidneys1.com"
@@ -125,6 +135,8 @@ webmention:
 collections:
   links:
     output: false
+  reviews:
+    output: true
 
 pagination:
   enabled: true
@@ -132,5 +144,3 @@ pagination:
   sort_reverse: true
 
 feed:
-  # collections:
-  #   - links

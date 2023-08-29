@@ -3,6 +3,8 @@
         "Battlestation",
         "bmatrix",
         "constexpr",
+        "Gameplay",
+        "inarguably",
         "Inspiron",
         "IPFS",
         "javidx",
@@ -17,5 +19,15 @@
         "struct",
         "videography"
     ],
-    "terminal.integrated.defaultProfile.windows": "Ubuntu (WSL)"
+    "terminal.integrated.defaultProfile.windows": "Ubuntu (WSL)",
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/.site*": true,
+        "**/.jekyll-cache": true
+    }
 }

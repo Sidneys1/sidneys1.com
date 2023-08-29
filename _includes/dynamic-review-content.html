@@ -1,0 +1,19 @@
+{% if include.content.type == "mastodon" %}
+  <section
+    class="mastodon-thread"
+    data-url="{{ include.content.url | jsonify | escape }}"
+    data-exclude="{{ include.content.exclude | join: ';' }}"
+	data-notes="{{ include.content.notes | jsonify | escape }}">
+	<!-- {% for foo in include.content.notes %}{{foo.index}}:{{foo.text | jsonify | escape}};{% endfor %} -->
+	<template><article class="comment">
+		<div class="avatar"><img class="avatar"></div>
+		<div class="header">
+			<a class="user"><span class="displayname"></span><span class="handle"></span></a>
+			<a target="_blank" class="link"><span class="timestamp"></span></a>
+		</div>
+		<div class="spoiler" title="Content Warning (CW)"></div>
+		<div class="content"></div>
+		<div class="tidbits"></div>
+	</article></template>
+</section>
+{% endif %}
