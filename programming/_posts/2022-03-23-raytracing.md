@@ -39,8 +39,8 @@ the canvas.
 
 ### Creating a new `olc::PixelGameEngine` Project
 
-We're going to start with <kbd>Create a new project</kbd> in Visual Studio (I'm using 2022). Select the <kbd>Empty
-Project</kbd> (C++/Windows/Console) template. I also opted for the flat directory structure option <kbd>☑ Place solution
+We're going to start with <kbd class="ui">Create a new project</kbd> in Visual Studio (I'm using 2022). Select the <kbd class="ui">Empty
+Project</kbd> (C++/Windows/Console) template. I also opted for the flat directory structure option <kbd class="ui">☑ Place solution
 and project in the same directory</kbd>.
 
 ![Create new project]({{"/images/2022-03-23-raytracing/create-a-new-project.png" | absolute_url}})
