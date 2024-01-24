@@ -1,14 +1,16 @@
+{% assign randomNumber = "now" | date: "%N" | modulo: 255 %}
+{% capture popid %}{{ randomNumber | append: "-" }}{{ include.alt | slugify }}{% endcapture %}
 
 <div class="popunder">
 	{% if include.thumb %}
-		<img class="pop" src="{{ include.thumb | absolute_url }}" alt="{{ include.alt }}" title="{{ include.alt }}" onclick="document.getElementById('{{ include.alt | slugify }}').showModal()">
+		<img class="pop" src="{{ include.thumb | absolute_url }}" alt="{{ include.alt }}" title="{{ include.alt }}" onclick="document.getElementById('{{ popid }}').showModal()">
 	{% else %}
-		<img class="pop" src="{{ include.src | absolute_url }}" alt="{{ include.alt }}" title="{{ include.alt }}" onclick="document.getElementById('{{ include.alt | slugify }}').showModal()">
+		<img class="pop" src="{{ include.src | absolute_url }}" alt="{{ include.alt }}" title="{{ include.alt }}" onclick="document.getElementById('{{ popid }}').showModal()">
 	{% endif %}
 	<em>Click to zoom.</em>
 </div>
 
-<dialog class="popover" id="{{ include.alt | slugify }}" onclick="document.getElementById('{{ include.alt | slugify }}').close()">
+<dialog class="popover" id="{{ popid }}" onclick="document.getElementById('{{ popid }}').close()">
 	<!-- <form method="dialog">
 		<button class="close">X</button>
 	  </form> -->

@@ -45,17 +45,17 @@ which means the actual entrypoint is "runtime code" that will identify the main 
 initialize it. So instead of looking for this entrypoint (which Ghidra finds for us and names `entry`), we will try and
 find the main MFC module initializer by searching for something we know happens early in the program's execution.
 
-When first run, the game checks that DirectX, DirectPlay, and the game CD are inserted. Using Ghidra's <kbd>Search</kbd>
-&rarr; <kbd>For Strings...</kbd> tool we'll find the "Please insert CD" message.
+When first run, the game checks that DirectX, DirectPlay, and the game CD are inserted. Using Ghidra's
+<kbd class="menu"><kbd>Search</kbd><kbd>For Strings...</kbd></kbd> tool we'll find the "Please insert CD" message.
 
 ![string search]({{ '/images/reverse-engineering-a-win95-game-II/string-search.png' | absolute_url }})
 
 Clicking the result will select the data in the CodeBrowser, and right-clicking the automatically created symbol allows
-us to click <kbd>References</kbd> &rarr; <kbd>Find references to s_Please_insert...</kbd> to find all references to this
-particular value within the codebase. Doing so brings up one result at 0x0042cb86. Clicking the result takes us to the
-relevant address. The disassembly shows us a function called `FUN_0042ca2f(CWinApp *param_1)`, which we'll renamed to
-`CWinAppEntrypoint`. As this function is not called anywhere else in the code, we can be fairly confident that this is
-only called by runtime code that gets its address programmatically.
+us to click <kbd class="menu"><kbd>References</kbd><kbd>Find references to s_Please_insert...</kbd></kbd> to find all
+references to this particular value within the codebase. Doing so brings up one result at 0x0042cb86. Clicking the
+result takes us to the relevant address. The disassembly shows us a function called `FUN_0042ca2f(CWinApp *param_1)`,
+which we'll renamed to `CWinAppEntrypoint`. As this function is not called anywhere else in the code, we can be fairly
+confident that this is only called by runtime code that gets its address programmatically.
 
 <details markdown="1">
 <summary>Disassembly of <code>CWinAppEntrypoint</code> (click to expand).</summary>
