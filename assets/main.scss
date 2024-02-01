@@ -498,104 +498,75 @@ div.note:hover {
 pre.highlight {
     border-radius: 5px;
 	tab-size: 4;
+	margin-bottom: 0;
 }
 
-.language-diff {margin-top: -1em;}
-.language-diff::before {
-    content: '.diff';
-    color: #f8f8f2;
-    font-size: x-small;
-    font-family: monospace;
-    background-color: #272822;
-    border-radius: 0.5em;
-    padding: 0 0.25em;
-    position: relative;
-    top: 1em;
-    left: 1em;
+div.highlighter-rouge {
+	position: relative;
+	margin-bottom: $spacing-unit / 2;
 }
 
-.language-make {margin-top: -1em;}
-.language-make::before {
-    content: 'Makefile';
-    color: #f8f8f2;
-    font-size: x-small;
-    font-family: monospace;
-    background-color: #272822;
-    border-radius: 0.5em;
-    padding: 0 0.25em;
-    position: relative;
-    top: 1em;
-    left: 1em;
-}
+:not(.code-split) {
+	&[class^="language-"]::before {
+		color: #f8f8f2;
+		font-size: x-small;
+		font-family: monospace;
+		background-color: #272822;
+		border-radius: 0.5em;
+		padding: 0 0.25em;
+		position: absolute;
+		top: -1ex;
+		left: 1em;
+		// display: none;
+	}
 
-.language-cpp {margin-top: -1em;}
-.language-cpp::before {
-    content: '.cpp';
-    color: #f8f8f2;
-    font-size: x-small;
-    font-family: monospace;
-    background-color: #272822;
-    border-radius: 0.5em;
-    padding: 0 0.25em;
-    position: relative;
-    top: 1em;
-    left: 1em;
-}
+	&.language-diff::before {
+		content: attr(data-file-name, '.diff');
+		// display: block;
+	}
 
-.language-c {margin-top: -1em;}
-.language-c::before {
-    content: '.c';
-    color: #f8f8f2;
-    font-size: x-small;
-    font-family: monospace;
-    background-color: #272822;
-    border-radius: 0.5em;
-    padding: 0 0.25em;
-    position: relative;
-    top: 1em;
-    left: 1em;
-}
+	&.language-make::before {
+		content: attr(data-file-name, 'Makefile');
+		// display: block;
+	}
 
-.language-powershell {margin-top: -1em;}
-.language-powershell::before {
-    content: '.ps1';
-    color: #f8f8f2;
-    font-size: x-small;
-    font-family: monospace;
-    background-color: #272822;
-    border-radius: 0.5em;
-    padding: 0 0.25em;
-    position: relative;
-    top: 1em;
-    left: 1em;
-}
+	&.language-cpp::before {
+		content: attr(data-file-name, '.cpp');
+		// display: block;
+	}
 
-.language-c\+\+ {margin-top: -1em;}
-.language-c\+\+::before {
-    content: '.cpp';
-    color: #f8f8f2;
-    font-size: x-small;
-    font-family: monospace;
-    background-color: #272822;
-    border-radius: 0.5em;
-    padding: 0 0.25em;
-    position: relative;
-    top: 1em;
-    left: 1em;
-}
+	&.language-c::before {
+		content: attr(data-file-name, '.c');
+		// display: block;
+	}
 
-.language-ini {margin-top: -1em;}
-.language-ini::before {
-    content: '.ini';
-    color: #f8f8f2;
-    font-size: x-small;
-    font-family: monospace;
-    background-color: #272822;
-    border-radius: 0.5em;
-    padding: 0 0.25em;
-    position: relative;
-    top: 1em;
-    left: 1em;
+	&.language-powershell::before {
+		content: attr(data-file-name, '.ps1');
+		// display: block;
+	}
+
+	&.language-c\+\+::before {
+		content: attr(data-file-name, '.cpp');
+		// display: block;
+	}
+
+	&.language-ini::before {
+		content: attr(data-file-name, '.ini');
+		display: block;
+	}
+
+	&[data-file-name]::before {
+		content: attr(data-file-name);
+		color: #f8f8f2;
+		font-size: x-small;
+		font-family: monospace;
+		background-color: #272822;
+		border-radius: 0.5em;
+		padding: 0 0.25em;
+		position: absolute;
+		top: -1ex;
+		left: 1em;
+	}
 }
 
 div.popunder {
@@ -1352,7 +1323,7 @@ span.redacted {
 
 .aside-attn {
 	// border-bottom: 2px dotted rgb(198, 198, 142);
-	// border-radius: 0.25em;
+	border-radius: 5px;
 	outline: 2px solid transparent;
 	padding: 0 0.25em;
 	// box-shadow: 0 4px 3px -3px black;
@@ -1407,13 +1378,11 @@ span.redacted {
 
 		margin-bottom: $spacing-unit / 2;
 
-
-
 		> aside {
 			opacity: 0.9;
 			position: absolute;
-			max-width: calc(((100vw - 1140px - 5em) / 2));
-			left: calc(100% + 1em);
+			max-width: calc((100vw - (#{$content-width} + (#{$spacing-unit} * 2))) / 3);
+			left: calc(100% + #{$spacing-unit});
 			width: max-content;
 			margin: 1em 0;
 			padding: 0.25em;
@@ -1425,6 +1394,7 @@ span.redacted {
 			border-radius: 5px;
 			box-shadow: 0px 0px 10px #00000033;
 			transition: 250ms linear;
+			z-index: 2;
 			&::before {
 				content: "💭";
 				font-size: 200%;
@@ -1513,7 +1483,6 @@ span.redacted {
 	div:has(> aside) {
 		display: flex;
 		flex-direction: column-reverse;
-		margin-bottom: 1em;
 		&::after {
 			content: '';
 			clear: both;
@@ -1531,7 +1500,6 @@ span.redacted {
 			border-radius: 5px;
 			box-shadow: 0px 0px 10px #00000033;
 			margin-bottom: 1em;
-			margin-top: 1em;
 			&::before {
 				content: "💭";
 				font-size: 200%;
@@ -1570,4 +1538,77 @@ div.footnotes::before {
   margin: 1em 0;
   margin-bottom: 15px;
   display: block;
+}
+
+///////////////////// Code splits
+
+div.highlighter-rouge:has(+ div.code-split) {
+	margin-bottom: 0;
+	& > div.highlight > pre {
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+		border-bottom: 1px dashed $grey-color;
+		padding-bottom: 1.25em;
+		margin-bottom: 0;
+	}
+	&::after {
+		content: attr(data-split-text, "");
+		width: max-content;
+		text-align: center;
+		position: absolute;
+		bottom: -25px;
+		// font-size: 200%;
+		font-family: monospace;
+		font-size: 15px;
+		left: calc(var(--left, 0) * 0.625em + 8px);
+		color: #75715e;
+		&::first-letter {
+			font-size: 200%;
+		}
+		padding-left: 2.5em;
+		padding-bottom: 5px;
+		background-position: left;
+		height: 45px;
+		background-size: auto 45px;
+		background-repeat: no-repeat;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		// font-style: italic;
+		background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='45px' width='35px'><text x='50%' y='50%' fill='%2375715e' text-anchor='middle' dominant-baseline='middle' font-size='24pt'>✁\FE0E</text></svg>");
+		text-shadow: 1px 1px 2px #272822, -1px -1px 2px #272822, 1px -1px #272822, -1px 1px #272822;
+		z-index: 1;
+	}
+}
+
+div.code-split > div.highlight > pre {
+	// border-top: none;
+	border-top: 1px dashed $grey-color;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+	// padding-top: 1em;
+}
+
+@media screen and (min-width: 1800px) {
+	.rfloat {
+		float: right;
+		margin: 0 0 $spacing-unit / 2 1em;
+		max-width: 40%;
+		min-width: max-content;
+	}
+	.lfloat {
+		float: left;
+		margin: 0 1em $spacing-unit / 2 0;
+		max-width: 40%;
+		min-width: max-content;
+	}
+}
+
+@media screen and (max-width: 1800px) {
+	.float-reverse {
+		display: flex;
+		flex-flow: column;
+		flex-direction: column-reverse;
+	}
 }

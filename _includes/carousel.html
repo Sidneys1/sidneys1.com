@@ -1,7 +1,7 @@
 {% assign letterstring = "a,b,c,d,e,f,g,h,i,j,k,l,m,n" %}
 {% assign letters = letterstring | split: ',' %}
 {% assign number = include.number | minus: 1 %}
-<div class="carousel__holder">
+<div class="carousel__holder" style="{{include.style}}">
     <div id="carousel{{ number }}" class="carousel">
         {% for item in page.carousels[number].images %}
           <input class="carousel__activator" type="radio" name="carousel{{ number }}" id="{{ number }}{{ letters[forloop.index0] }}" {% if forloop.first %}checked="checked"{% endif %} />
@@ -27,7 +27,7 @@
         <div class="carousel__track">
           <ul>
             {% for item in page.carousels[number].images %}
-            <li class="carousel__slide" style="background-image: url('{{ item.image | absolute_url }}');"></li>
+            <li class="carousel__slide"><img alt="{{ item.image }}" src="{{ item.image | absolute_url }}" style="{{ item.style }}"></li>
             {% endfor %}
           </ul>
         </div>
@@ -172,9 +172,17 @@
   position: absolute;
   opacity: 0;
   overflow: hidden;
-  background-size: contain;
+
+  /* background-size: contain;
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: center; */
+}
+.carousel__slide img {
+	display: block;
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	max-height: {{ include.height }}{{ include.unit }};
 }
 .carousel__slide .overlay {height: 100%;}
 .carousel--thumb .carousel__indicator {
