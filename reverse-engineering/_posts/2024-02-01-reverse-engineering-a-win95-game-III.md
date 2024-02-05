@@ -10,6 +10,7 @@ author: Sidneys1
 toc: false
 excerpt_separator: <!--more-->
 multipart: reverse-engineering-win95-game
+mastodon_comment_url: https://infosec.exchange/@Sidneys1/111858306377371679
 carousels:
   - images: # "launching dev studio" carousel
     - image: "/images/reverse-engineering-a-win95-game-III/dev-studio-opt.png"
@@ -149,16 +150,7 @@ as it keeps a buffer of the last 20 key presses. All cheat codes begin with <kbd
 
 </div>
 
-<div markdown=1>
-
-<aside markdown=1>
-
-The strings `Add Key`, `Add Everything`, and `Problem Debug Mode %s` do actually exist in the release binary, but the
-code to activate them (as well as the `KHJ#L` code) is not present. The source code I have does not have any mechanism
-to remove it (e.g., a preprocessor directive), so my assumption is that some of the cheat codes were removed from the
-"final" build of the game, but that these changes were not committed to the version of the source code I have access to.
-
-</aside>
+<div class="no-reverse" markdown=1>
 
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cheat&nbsp;Code | Message | Description |
 |-----------------------:|:-------:|:------------|
@@ -169,6 +161,15 @@ to remove it (e.g., a preprocessor directive), so my assumption is that some of 
 | <span class="aside-attn"><kbd><kbd>K</kbd><kbd>Y</kbd><kbd>H</kbd><kbd>R</kbd><kbd>L</kbd></kbd></span> | <samp>Add Everything</samp> | Adds all keys, weapons, and allowed items. |
 | <span class="aside-attn"><kbd><kbd>K</kbd><kbd>N</kbd><kbd>N</kbd><kbd>L</kbd></kbd></span> | <samp>Problem Debug Mode ON</samp><br/><samp>Problem Debug Mode OFF</samp> | Toggles a mode in which math problems' expected answers are printed. |
 | <kbd><kbd>K</kbd><kbd>01-27</kbd><kbd>L</kbd></kbd> | *None* | Go to level 01-27. |
+
+<aside markdown=1>
+
+The strings `Add Key`, `Add Everything`, and `Problem Debug Mode %s` do actually exist in the release binary, but the
+code to activate them (as well as the `KHJ#L` code) is not present. The source code I have does not have any mechanism
+to remove it (e.g., a preprocessor directive), so my assumption is that some of the cheat codes were removed from the
+"final" build of the game, but that these changes were not committed to the version of the source code I have access to.
+
+</aside>
 
 </div>
 

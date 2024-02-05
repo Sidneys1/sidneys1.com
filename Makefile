@@ -1,7 +1,7 @@
 SRC := _config.yml $(shell find . -type f \( -iname '*.md' -o -iname '*.html' -o -iname '*.scss' \) -not \( -path './_site*/*' -o -path './github_pages/*' \))
 TIME:=$(shell date -Iminutes)
 
-ONLINE_SSH_HOST:=sidneys1_sidneys1@ssh.phx.nearlyfreespeech.net
+ONLINE_SSH_HOST:=sidneys1_sidneys1@ssh.nyc1.nearlyfreespeech.net
 TOR_SSH_HOST:=192.168.6.36
 IPFS_SSH_HOST:=192.168.6.160
 
