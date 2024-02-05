@@ -1386,6 +1386,7 @@ span.redacted {
 			width: max-content;
 			margin: 1em 0;
 			padding: 0.25em;
+			bottom: 0px;
 
 			background-color: #ffc;
 			font-size: smaller;
@@ -1481,8 +1482,10 @@ span.redacted {
 @media screen and (max-width: 1800px) and (orientation: portrait) {
 	// Screen is narrow and portrait
 	div:has(> aside) {
-		display: flex;
-		flex-direction: column-reverse;
+		&:not(.no-reverse) {
+			display: flex;
+			flex-direction: column-reverse;
+		}
 		&::after {
 			content: '';
 			clear: both;
