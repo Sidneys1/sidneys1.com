@@ -354,7 +354,7 @@ div.note {
 	&.aside {
 		margin: 0;
 		margin-top: 0.5lh;
-		margin-bottom: $spacing-unit / 2;
+		margin-bottom: calc($spacing-unit / 2);
 		box-shadow: 0px 0px 5px #00000033;
 		.note-title {
 			padding: 0 0.5em;
@@ -503,7 +503,7 @@ pre.highlight {
 
 div.highlighter-rouge {
 	position: relative;
-	margin-bottom: $spacing-unit / 2;
+	margin-bottom: calc($spacing-unit / 2);
 }
 
 :not(.code-split) {
@@ -1376,7 +1376,7 @@ span.redacted {
 			}
 		}
 
-		margin-bottom: $spacing-unit / 2;
+		margin-bottom: calc($spacing-unit / 2);
 
 		> aside {
 			opacity: 0.9;
@@ -1596,13 +1596,13 @@ div.code-split > div.highlight > pre {
 @media screen and (min-width: 1800px) {
 	.rfloat {
 		float: right;
-		margin: 0 0 $spacing-unit / 2 1em;
+		margin: 0 0 calc($spacing-unit / 2) 1em;
 		max-width: 40%;
 		min-width: max-content;
 	}
 	.lfloat {
 		float: left;
-		margin: 0 1em $spacing-unit / 2 0;
+		margin: 0 1em calc($spacing-unit / 2) 0;
 		max-width: 40%;
 		min-width: max-content;
 	}
