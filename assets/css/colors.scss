@@ -1,0 +1,42 @@
+@use "theme";
+@use "sass:color";
+
+$lm-link-compliment-color: #9D174D;
+$dm-link-compliment-color: #9E3B63;
+
+$link-compliment-color: $lm-link-compliment-color;
+
+:root {
+    --sidneys1-link-compliment-color: #{$lm-link-compliment-color};
+}
+
+@media (prefers-color-scheme: dark) {
+    $link-compliment-color: $lm-link-compliment-color;
+    :root {
+        --sidneys1-link-compliment-color: #{$dm-link-compliment-color};
+    }
+}
+
+$link-compliment-color: var(--sidneys1-link-compliment-color);
+
+$lm-accent-color: theme.$lm-link-base-color;
+$dm-accent-color: theme.$lm-link-base-color;
+$lm-accent-compliment-color: color.adjust($lm-accent-color, $hue: 180);
+$dm-accent-compliment-color: color.adjust($dm-accent-color, $hue: 180);
+
+$accent-color: $lm-accent-color;
+$accent-compliment-color: $lm-accent-compliment-color;
+
+:root {
+    --sidneys1-accent-color: #{$lm-accent-color};
+    --sidneys1-accent-compliment-color: #{$lm-accent-compliment-color};
+}
+
+@media (prefers-color-scheme: dark) {
+    $accent-color: $lm-accent-color;
+    $accent-compliment-color: $lm-accent-compliment-color;
+    :root {
+        --sidneys1-accent-compliment-color: #{$dm-accent-compliment-color};
+        --sidneys1-accent-color: #{$dm-accent-color};
+    }
+}

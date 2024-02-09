@@ -1,0 +1,33 @@
+---
+---
+@charset "utf-8";
+
+/*** Base Minima theme. ***/
+@use "theme";
+
+/*** Additional colors. ***/
+@use "colors";
+
+/*** Home customization rules. ***/
+@use "home";
+
+/*** Header customization rules. ***/
+@use "header";
+
+/*** Post layout rules. ***/
+@use "post";
+
+/*** Markdown customization rules. ***/
+@use "markdown";
+
+/*** Misc widgets. ***/
+@use "widgets";
+
+/*** Footer customization rules. ***/
+@use "footer";
+
+/*** Footer snowflake. ***/
+@use "snowflake";
+
+/*** Syntax highlighting. ***/
+@import "monokai";

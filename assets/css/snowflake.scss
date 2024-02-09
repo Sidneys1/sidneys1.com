@@ -1,0 +1,47 @@
+@use "theme";
+
+details.snowflake {
+    >summary {
+        // font-size: larger;
+
+        >div {
+            display: inline-flex;
+            align-items: baseline;
+
+            img.snowflake {
+                opacity: 50%;
+                height: 1em;
+                margin-right: 4px;
+                position: relative;
+                top: 2px;
+            }
+        }
+    }
+
+    blockquote {
+        font-size: 15px;
+        margin-left: 3px;
+    }
+
+    button#load-snowflake {
+        background: none !important;
+        border: none;
+        padding: 0 !important;
+        /*optional*/
+        font-family: arial, sans-serif;
+        /*input has OS specific font-family*/
+        color: theme.$brand-color;
+        // text-decoration: underline;
+        cursor: pointer;
+        font-size: larger;
+    }
+
+    button#load-snowflake:hover {
+        color: #111;
+        text-decoration: underline;
+    }
+
+    iframe#snowflake-iframe {
+        margin: 0 auto;
+    }
+}

@@ -1,91 +1,92 @@
 ---
-layout: default
+layout: base
 ---
 
 <div class="home">
-	{%- if page.title -%}
-	<h1 class="page-heading">{{ page.title }}</h1>
-	{%- endif -%}
+  {%- if page.title -%}
+    <h1 class="page-heading">{{ page.title }}</h1>
+  {%- endif -%}
 
-	{{ content }}
-
-
-	{% if site.paginate %}
-	{% assign posts = paginator.posts %}
-	{% else %}
-	{% assign posts = site.posts %}
-	{% endif %}
+  {{ content }}
 
 
-	{%- if posts.size > 0 -%}
-	{%- if page.list_title -%}
-	<h2 class="post-list-heading">{{ page.list_title }}</h2>
-	{%- endif -%}
-	<ul class="post-list">
-		{%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
-		{%- for post in posts -%}
-		<li>
-			<h3>
-				<div style="display: flex; flex-wrap: wrap; align-items: center;"><a class="post-link" href="{{ post.url | absolute_url }}">
-					{{ post.title | escape }}
-				</a>
-					{%- if post.multipart -%}
-					{% assign multipart_counter = 1 %}
-					{% for post2 in site.posts reversed %}
-						{% if post2.multipart == post.multipart %}
-							{% if post2.url == post.url %}{% break %}{% endif %}
-							{% assign multipart_counter = multipart_counter | plus: 1 %}
-						{% endif %}
-					{% endfor %}
-					<span class="pill multipart">Part {{multipart_counter | roman}}</span>
-					{%- endif -%}
-					{%- for tag in post.tags -%}
-					<a href="{{ "/tags.html" | absolute_url }}#{{ tag | slugify }}" style="display: inline;"
-						class="tag pill clickable">{{ tag | slugify }}</a>
-					{%- endfor -%}
-				</div>
-			</h3>
-			<div style="display: flex; flex-wrap: wrap; align-items: baseline;">
-				{%- if post.subtitle -%}<h4 style="display: inline">{{post.subtitle | escape}}&nbsp;</h4>{%- endif -%}<span class="post-meta">{{ post.date | date: date_format }}</span>
+  {% if site.paginate %}
+    {% assign posts = paginator.posts %}
+  {% else %}
+    {% assign posts = site.posts %}
+  {% endif %}
+
+
+  {%- if posts.size > 0 -%}
+    {%- if page.list_title -%}
+      <h2 class="post-list-heading">{{ page.list_title }}</h2>
+    {%- endif -%}
+    <ul class="post-list">
+      {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+      {%- for post in posts -%}
+      <li>
+        <h3>
+			<div style="display: flex; flex-wrap: wrap; align-items: center;"><a class="post-link" href="{{ post.url | absolute_url }}">
+				{{ post.title | escape }}
+			</a>
+				{%- if post.multipart -%}
+				{% assign multipart_counter = 1 %}
+				{% for post2 in site.posts reversed %}
+					{% if post2.multipart == post.multipart %}
+						{% if post2.url == post.url %}{% break %}{% endif %}
+						{% assign multipart_counter = multipart_counter | plus: 1 %}
+					{% endif %}
+				{% endfor %}
+				<span class="pill multipart">Part {{multipart_counter | roman}}</span>
+				{%- endif -%}
+				{%- for tag in post.tags -%}
+				<a href="{{ "/tags.html" | absolute_url }}#{{ tag | slugify }}" style="display: inline;"
+					class="tag pill clickable">{{ tag | slugify }}</a>
+				{%- endfor -%}
 			</div>
-			{%- if site.show_excerpts -%}
-			<div class="post-excerpt">
-				{%- if post.image -%}
+        </h3>
+		<div style="display: flex; flex-wrap: wrap; align-items: baseline;">
+			{%- if post.subtitle -%}<h4 style="display: inline">{{post.subtitle | escape}}&nbsp;</h4>{%- endif -%}<span class="post-meta">{{ post.date | date: date_format }}</span>
+		</div>
+        {%- if site.show_excerpts -%}
+          <div class="post-excerpt">
+			{%- if post.image -%}
 				<img alt="Thumbnail" src="{{ post.image | absolute_url }}" />
 				{%- endif -%}
-				<div>{{ post.excerpt }}</div>
-			</div>
-			{%- endif -%}
-		</li>
-		{%- endfor -%}
-	</ul>
+			<div>{{ post.excerpt }}</div>
+		  </div>
+        {%- endif -%}
+      </li>
+      {%- endfor -%}
+    </ul>
 
-	{% if site.paginate %}
-	<div class="pager">
-		<ul class="pagination">
-			{%- if paginator.previous_page %}
-			<li><a href="{{ paginator.previous_page_path | absolute_url }}" class="previous-page">{{
-					paginator.previous_page }}</a></li>
-			{%- else %}
-			<li>
-				<div class="pager-edge">•</div>
-			</li>
-			{%- endif %}
-			<li>
-				<div class="current-page">{{ paginator.page }}</div>
-			</li>
-			{%- if paginator.next_page %}
-			<li><a href="{{ paginator.next_page_path | absolute_url }}" class="next-page">{{ paginator.next_page }}</a>
-			</li>
-			{%- else %}
-			<li>
-				<div class="pager-edge">•</div>
-			</li>
-			{%- endif %}
-		</ul>
-	</div>
-	{%- endif %}
+    {% if site.paginate and paginator.total_pages > 1 %}
+      <div class="pager">
+        <ul class="pagination">
+		{%- if paginator.page > 2 -%}
+		<li><a href="{{ "/" | absolute_url }}" class="previous-page">1</a></li>
+		<li style="padding: 10px 12px;">...</li>
+		{%- endif -%}
+        {%- if paginator.previous_page %}
+          <li><a href="{{ paginator.previous_page_path | absolute_url }}" class="previous-page">{{ paginator.previous_page }}</a></li>
+        {%- else %}
+          <li><div class="pager-edge">•</div></li>
+        {%- endif %}
+          <li><div class="current-page">{{ paginator.page }}</div></li>
+        {%- if paginator.next_page %}
+          <li><a href="{{ paginator.next_page_path | absolute_url }}" class="next-page">{{ paginator.next_page }}</a></li>
+        {%- else %}
+          <li><div class="pager-edge">•</div></li>
+        {%- endif %}
+        {% assign secondToLast = paginator.total_pages | minus: 1 %}
+        {%- if paginator.page < secondToLast -%}
+            <li style="padding: 10px 12px;">...</li>
+            <li><a href="{{ site.root | append: "page" | append: paginator.total_pages | append: "/" | absolute_url }}" class="previous-page">{{ paginator.total_pages }}</a></li>
+        {%- endif -%}
+        </ul>
+      </div>
+    {%- endif %}
 
-	{%- endif -%}
+  {%- endif -%}
 
 </div>

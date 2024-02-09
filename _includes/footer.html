@@ -3,99 +3,31 @@
 
 	<div class="wrapper">
 
-		<h2 class="footer-heading">{{ site.title | escape }}</h2>
-
 		<div class="footer-col-wrapper">
-			<div class="footer-col footer-col-1">
+			<div class="footer-col">
 				<ul class="contact-list">
 					<li class="p-name">Contact</li>
-					{%- if site.email -%}
-					<li>
-						<a class="u-email" href="mailto:{{ site.email }}">{{ site.email }}</a>
-					</li>
-					{%- endif -%}
-					<li>
-						<a class="u-email" href="mailto:sidneys1@proton.me">sidneys1@proton.me</a>
-					</li>
-					<li>
-						<a class="u-email" href="https://matrix.to/#/@sidneys1:matrix.org">
-							Matrix Chat
-						</a>
-					</li>
-					<li>
-						<a class="u-email"
-							href="https://simplex.chat/contact#/?v=1-2&smp=smp%3A%2F%2FSkIkI6EPd2D63F4xFKfHk7I1UGZVNn6k1QWZ5rcyr6w%3D%40smp9.simplex.im%2FQwoc8ketLODmigLCuVhCt8Eio_ruJFnj%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAtEpK9f8ocpGt_MYmDVj0FrCIorSk7PSIVI-BmxLHUHE%253D%26srv%3Djssqzccmrcws6bhmn77vgmhfjmhwlyr3u7puw4erkyoosywgl67slqqd.onion">
-							SimpleX Chat
-						</a>
-					</li>
-					<li class="p-name" style="margin-top: 1em;">Alternative Access</li>
-					<li>
-						<a href="http://sidneys77crlfslcr7zmj3msmxchgnxhrxlp3p3kbaswo7twchjnicid.onion/">
-							<img class="svg-icon" alt="Tor Logo" style="opacity: 50%; width: 26px; height: 16px;"
-								width="26px" height="16px" src="{{ '/assets/tor.svg' | absolute_url }}"></img>
-							<span>Sidneys1.com on Tor</span>
-						</a>
-					</li>
-					<li>
-						<a href="https://ipfs.io/ipns/sidneys1.com">
-							<img class="svg-icon" alt="IPFS Logo" style="opacity: 50%; width: 26px; height: 16px;"
-								width="16px" height="16px" src="{{ '/assets/ipfs.svg' | absolute_url }}"></img>
-							<span>Sidneys1.com on IPFS</span>
-						</a>
-					</li>
-					<li>
-						<a href="https://sidneys1.github.io">
-							<img class="svg-icon" alt="GitHub Logo" style="opacity: 50%; width: 26px; height: 16px;"
-								width="16px" height="16px" src="{{ '/assets/github.svg' | absolute_url }}"></img>
-							<span>Sidneys1.com on GitHub Pages</span>
-						</a>
-					</li>
+					{%- for entry in site.author.contact -%}
+					{%- include contact-item.html item = entry -%}
+					{%- endfor -%}
 				</ul>
 			</div>
-
-			<div class="footer-col footer-col-2">
-				<ul class="social-media-list" style="margin-bottom: 5px;">
-					<li>
-						<a rel="me" href="https://infosec.exchange/@Sidneys1">
-							<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px"
-								viewBox="0 0 216.4144 232.00976">
-								<path fill="#828282"
-									d="M211.80734 139.0875c-3.18125 16.36625-28.4925 34.2775-57.5625 37.74875-15.15875 1.80875-30.08375 3.47125-45.99875 2.74125-26.0275-1.1925-46.565-6.2125-46.565-6.2125 0 2.53375.15625 4.94625.46875 7.2025 3.38375 25.68625 25.47 27.225 46.39125 27.9425 21.11625.7225 39.91875-5.20625 39.91875-5.20625l.8675 19.09s-14.77 7.93125-41.08125 9.39c-14.50875.7975-32.52375-.365-53.50625-5.91875C9.23234 213.82 1.40609 165.31125.20859 116.09125c-.365-14.61375-.14-28.39375-.14-39.91875 0-50.33 32.97625-65.0825 32.97625-65.0825C49.67234 3.45375 78.20359.2425 107.86484 0h.72875c29.66125.2425 58.21125 3.45375 74.8375 11.09 0 0 32.975 14.7525 32.975 65.0825 0 0 .41375 37.13375-4.59875 62.915" />
-								<path fill="#fff"
-									d="M177.50984 80.077v60.94125h-24.14375v-59.15c0-12.46875-5.24625-18.7975-15.74-18.7975-11.6025 0-17.4175 7.5075-17.4175 22.3525v32.37625H96.20734V85.42325c0-14.845-5.81625-22.3525-17.41875-22.3525-10.49375 0-15.74 6.32875-15.74 18.7975v59.15H38.90484V80.077c0-12.455 3.17125-22.3525 9.54125-29.675 6.56875-7.3225 15.17125-11.07625 25.85-11.07625 12.355 0 21.71125 4.74875 27.8975 14.2475l6.01375 10.08125 6.015-10.08125c6.185-9.49875 15.54125-14.2475 27.8975-14.2475 10.6775 0 19.28 3.75375 25.85 11.07625 6.36875 7.3225 9.54 17.22 9.54 29.675" />
-							</svg>
-							<span class="username">Sidneys1</span>
-						</a>
-					</li>
-				</ul>
-				{%- include social.html -%}
+			<div class="footer-col site-desc">
+				<p>{{ site.description | escape }}</p>
+				<hr>
 			</div>
-
-			<div class="footer-col footer-col-3">
-				<p>{{- site.description | escape -}}</p>
-				<details class="snowflake">
-					<summary><div><img class="snowflake" src="{{ '/assets/snowflake.svg' | absolute_url }}" /> Tor Snowflake</div></summary>
-						<blockquote>Snowflake is a system that <strong>allows people from all over the world to access
-								censored websites and applications</strong>. Similar to how VPNs assist users in getting
-							around Internet censorship, Snowflake helps you avoid being noticed by Internet censors by
-							making your Internet activity appear as though you're using the Internet for a regular video
-							or voice call.
-							<cite><a href="https://snowflake.torproject.org/" target="_blank"
-									rel="noreferrer">The Tor Project</a></cite>
-						</blockquote>
-					<script>
-						function load_snowflake() {
-							const button = document.getElementById('load-snowflake');
-							button.remove();
-							const iframe = document.getElementById('snowflake-iframe');
-							iframe.style.display = 'block';
-							iframe.setAttribute('src', 'https://snowflake.torproject.org/embed.html')
-							return false;
-						}
-					</script>
-					<div style="text-align: center;"><button id="load-snowflake" onclick="return load_snowflake()">Help Stifle Censorship - Load Snowflake</button></div>
-					<iframe id="snowflake-iframe" style="display: none;" src="" width="320" height="240" frameborder="0" scrolling="no"></iframe>
-				</details>
+			<div class="footer-col">
+				<ul class="access-list">
+					<li class="p-name">Alternative Access</li>
+					{%- for entry in site.alternative_access -%}
+					{%- include access-item.html item = entry -%}
+					{%- endfor -%}
+				</ul>
+			</div>
+			<div class="footer-col">
+				<div class="social-links">
+					{%- include social.html -%}
+				</div>
 			</div>
 		</div>
 

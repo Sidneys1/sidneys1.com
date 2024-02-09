@@ -1,0 +1,347 @@
+@use "theme";
+@use "colors";
+
+//// Center align a div
+.center {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+//// Donation block
+.donate {
+    text-align: center;
+
+    img {
+        max-height: 50px;
+        opacity: 75%;
+        transition: 250ms linear;
+    }
+
+    img:hover {
+        opacity: 100%;
+        transition: 250ms linear;
+        cursor: pointer;
+    }
+}
+
+//// Table of contents (from frontmatter toc: true)
+
+.toc__list:before {
+    content: "Table Of Contents";
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.toc__list {
+    border-radius: 4px;
+    line-height: 1.8rem;
+    padding: 1rem 1.5rem;
+    font-weight: 600;
+    margin: 0 0 30px 0;
+}
+
+.toc__sublist li {
+    padding-left: 1.25rem;
+}
+
+#toc a {
+    color: colors.$link-compliment-color;
+    text-decoration: underline;
+}
+
+#toc a:hover {
+    color: theme.$text-color;
+}
+
+h1.post-title {
+    font-weight: 100;
+}
+
+h2.post-title {
+    font-size: 20px;
+    line-height: 1;
+}
+
+//// Notes
+div.note {
+    background-color: #ffc;
+    font-size: smaller;
+    width: fit-content;
+    max-width: 400px;
+    color: theme.$brand-color;
+    margin: 0 auto;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px #00000033;
+    transition: 250ms linear;
+
+    &:hover {
+        color: black;
+        box-shadow: 0px 0px 10px #00000066;
+        transition: 250ms linear;
+    }
+
+    &.note-wide {
+        max-width: 600px;
+    }
+
+    &.aside {
+        margin: 0;
+        margin-top: 0.5lh;
+        margin-bottom: calc(theme.$spacing-unit / 2);
+        box-shadow: 0px 0px 5px #00000033;
+
+        .note-title {
+            padding: 0 0.5em;
+            font-size: small;
+        }
+
+        >p {
+            padding: 0.5em;
+            padding-top: 0;
+            font-style: italic;
+        }
+
+        code {
+            font-size: smaller;
+        }
+    }
+
+    .note-title {
+        font-size: larger;
+        font-family: "MV Boli", cursive;
+        background-color: rgb(234, 234, 169);
+        padding: 0.25em 1em;
+        border-radius: 5px 5px 0 0;
+    }
+
+    .popunder {
+        padding: 1em;
+    }
+
+    >p {
+        padding: 1em;
+        margin-bottom: 0em;
+    }
+
+    >details {
+        padding: 1em;
+        margin-bottom: 0em;
+
+        summary {
+            // display: flex;
+            // align-items: center;
+            text-align: center;
+        }
+
+        summary::marker {
+            // display: block;
+        }
+    }
+
+    >legend {
+        color: theme.$text-color;
+        font-style: italic;
+        font-size: initial;
+    }
+
+    code {
+        background-color: rgb(234, 234, 169);
+        font-size: small;
+    }
+
+}
+
+.post-image {
+    border-radius: 4px;
+    margin: 0 0 30px 0;
+    text-align: center;
+
+    >img {
+        box-shadow: 0px 0px 10px #00000033;
+        transition: 250ms linear;
+        max-height: 600px;
+
+        &:hover {
+            box-shadow: 0px 0px 10px #00000066;
+            transition: 250ms linear;
+        }
+    }
+}
+
+// Header
+
+div.series {
+    font-size: 14px;
+    color: #828282;
+
+    a {
+        font-style: italic;
+    }
+}
+
+div.erratum-notice {
+    font-size: 14px;
+    color: #828282;
+    font-style: italic;
+}
+
+div.multipart {
+    font-size: 14px;
+    color: #828282;
+
+    a {
+        font-style: italic;
+    }
+
+    ul {
+        margin-bottom: 0;
+    }
+
+    &.center {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+#erratum li {
+    font-style: italic;
+}
+
+//// Comments
+
+section#comments {
+    ol.comments {
+        list-style-type: none;
+        margin: 0 0 0 5%;
+        padding: 0;
+        display: inline-block;
+    }
+
+    >ol.comments {
+        margin: 0 auto
+    }
+
+    article.comment {
+        margin-bottom: 1em;
+        display: grid;
+        gap: .25em;
+        grid-template-columns: 3.5em 1fr
+    }
+
+    div.avatar {
+        grid-column: 1;
+        grid-row: 1 / 4
+    }
+
+    img.avatar {
+        width: 3em;
+        aspect-ratio: 1 / 1;
+        border-radius: 50%;
+        box-shadow: 0 0 3px #0004
+    }
+
+    .header {
+        grid-column: 2;
+        grid-row: 1;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: .1em .4em;
+
+        .displayname {
+            font-weight: bold
+        }
+
+        .handle {
+            margin-left: .4em;
+            font-size: .8em
+        }
+
+        .link {
+            opacity: .7;
+            font-size: .8em;
+            transition: opacity 0.5s ease-in-out;
+
+            &:hover {
+                color: colors.$accent-color;
+                opacity: 1;
+                font-size: .8em;
+                transition: opacity 0.5s ease-in-out;
+            }
+        }
+    }
+
+
+    div.content {
+        grid-column: 2;
+        grid-row: 2
+    }
+
+    picture.emoji {
+        vertical-align: baseline;
+        img {
+            width: 1em;
+            aspect-ratio: 1 / 1;
+            vertical-align: middle
+        }
+    }
+
+
+    div.content {
+        p {
+            margin: .6em 0;
+
+            &:first-child {
+                margin-top: 0
+            }
+
+            &:last-child {
+                margin-bottom: 0
+            }
+        }
+
+        .ellipsis::after {
+            content: '…'
+        }
+    }
+
+    .tidbits {
+        grid-column: 2;
+        grid-row: 3;
+        display: flex;
+        gap: 1em;
+        flex-wrap: wrap;
+        font-size: .8em;
+
+        &:empty {
+            display: none
+        }
+
+        >* {
+            display: flex;
+            gap: .4em
+        }
+    }
+
+    #stats {
+        grid-column: 2;
+        grid-row: 3;
+        display: inline-flex;
+        gap: 0.5em;
+        flex-wrap: wrap;
+        font-size: .8em;
+        &:empty {
+            display: none
+        }
+    }
+
+    span.social-handle {
+        font-size: .8em;
+    }
+}
+
+#comment-credit {
+    font-style: inherit;
+    font-size: x-small;
+}

@@ -16,7 +16,7 @@ carousels:
     - image: "/images/reverse-engineering-a-win95-game-III/dev-studio-opt.png"
     - image: "/images/reverse-engineering-a-win95-game-III/open-workspace-opt.png"
     - image: "/images/reverse-engineering-a-win95-game-III/select-project.png"
-      style: "image-rendering: pixelated;"
+    #   style: "image-rendering: pixelated;"
     - image: "/images/reverse-engineering-a-win95-game-III/rebuild-all.png"
     #   style: "image-rendering: pixelated;"
      # TODO: more images
@@ -34,6 +34,8 @@ enter an "editor mode", hinted at within the `strings` contained within the prog
 
 Here's where we left off, investigating the disassembly of a function that references a mysterious string:
 `*** EDITOR MODE ***`. Cleaning the disassembly up and commenting to be a bit to be more readable gives us:
+
+<div class="code-split-root" data-file-name=".cpp" ><div markdown=1 class="code-split-scroll">
 
 ```cpp
 // Because `param_1` from the disassembly (aka `this`) is passed to
@@ -72,6 +74,8 @@ void CGameWnd::_updateWindowTitle() {
 }
 ```
 {:.code-split}
+
+</div></div>
 
 Ok! So to activate editor mode, we need to **1)** not be fullscreen, **2)** have `CGameWnd->unknown_334` be non-zero,
 and **3)** have `CGameWnd->unknown_3714` be zero. Enabling fullscreen (via the <samp>3d.ini</samp> file described in
@@ -175,7 +179,9 @@ to remove it (e.g., a preprocessor directive), so my assumption is that some of 
 
 ### Building a 27 Year Old Game
 
-{% include carousel.html height="460" unit="px" number="1" style="float: right; max-width: 50%; margin: 0 0 0 1em;" %}
+<div markdown=1 class="clearfix">
+
+{% include carousel.html height="300" unit="px" number="1" class="rfloat" %}
 
 Of course, the pièces de résistance of having access to the source code: editor mode! Let's see what it takes to get it
 working. First, we'll need to get the source code building. Thanks to the lovely project [DOSBox-X][dbx], emulating
@@ -198,11 +204,16 @@ Microsoft Developer Studio IDE - which we'll need), the DirectX SDK, and the Act
 an `.mdp` file, which is a Developer Studio project, so let's open it and build the default project with
 <kbd><kbd>Ctrl</kbd>+<kbd>B</kbd></kbd>!
 
+</div>
+
+
+<div class="code-split-root" data-file-name=".log" ><div markdown=1 class="code-split-scroll">
+
 ```
 --------------------Configuration: 3dlib - Win32 Debug--------------------
 Compiling...
 ```
-{:data-file-name=".log" style="clear: both;"}
+{:style="clear: both;"}
 
 <div class="language-plaintext highlighter-rouge code-split"><div class="highlight">
 <pre class="highlight">
@@ -212,6 +223,8 @@ Compiling...
 Error executing cl.exe.
 Sspyth.exe - 1 error(s), 4 warning(s)
 </code></pre></div></div>
+
+</div></div>
 
 Alright, some errors, but nothing we can't solve. The first thing we notice is we're missing a file
 <samp>3DLIB\DECOMP.CPP</samp>. Poking around, we find there's a file named <samp>3DLIB\aviDECOMP.CPP</samp>. A simple
@@ -300,12 +313,12 @@ void CMainFrame::ShowPauseState(void)
 
 <div markdown=1 class="float-reverse">
 
-<div markdown=1 class="rfloat">
+<div class="rfloat"><div class="code-split-root" data-file-name="GAME.CPP" ><div markdown=1 class="code-split-scroll">
 
 ```c++
 void CGame::Update(CKeyboard& keys) {
 ```
-{:style="--left: 4" data-file-name="GAME.CPP"}
+{:style="--left: 4"}
 
 ```c++
 	if (keys.KeyDownWasUp('G'))	{
@@ -320,7 +333,7 @@ void CGame::Update(CKeyboard& keys) {
 ```
 {:.code-split}
 
-</div>
+</div></div></div>
 
 Awesome, my guesses were *really* close. `unknown_334` is `m_game.m_pscene`, and `unknown_3714` is `m_game.m_GameMode`.
 Let's see if I'm right, and `m_GameMode` is changed with a `#ifdef EDITOR`-surrounded key input. `m_GameMode` is only
@@ -333,11 +346,12 @@ Ok, this isn't surrounded by `#ifdef EDITOR`... I suspect again that the "final"
 changes that weren't included in the copy of the code I have. But a little digging shows that `m_GameMode` alone has no
 real effect, because just a little further down is the code to actually *perform* editor mode:
 
+<div class="code-split-root" data-file-name="GAME.CPP" ><div markdown=1 class="code-split-scroll">
+
 ```c++
 ////////////////////////////////////////// EDITOR
 #ifdef EDITOR
 ```
-{:data-file-name="GAME.CPP"}
 
 ```c++
 if (keys.KeyDownWasUp('I')) {
@@ -351,6 +365,8 @@ if (keys.KeyDownWasUp('I')) {
 #endif
 ```
 {:.code-split}
+
+</div></div>
 
 <div markdown=1>
 

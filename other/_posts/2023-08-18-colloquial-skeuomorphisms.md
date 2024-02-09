@@ -32,21 +32,21 @@ I'll be updating this page as I come across more!
 # Telecommunications
 ---
 
-*📞* *"Hang up the Phone"*
+*📞* *"<u>Hang</u> up the Phone"*
 : Wall-mounted landline telephones had a hook to "hang" the receiver on.
 
-*🗣️* *"Call"*
+*🗣️* *"<u>Call</u> me"*
 : You don't have to shout anymore.
 
-*☎️* (Re)dial
+*☎️* (Re)<u>dial</u>
 : Early telephones had an actual rotary dial to select the numbers you would call.
 
-*🛎️* *"The Phone is Ringing"*
-*🔊* Ringtone
+*🛎️* *"The Phone is <u>Ringing</u>"*
+*🔊* <u>Ring</u>tone
 : Early telephones had an actual bell that would ring when a specific "[ringing tone][ringing-tone]" was received (in
-  North America this is alternating 440 Hz and 480 Hz tones). As the ringing tone required to set off the bell
-  [differed from region to region][national-characteristics], the term "ringtone" became synonymous with being able to
-  [change the sound][personalized-ringtones] of an electronic telephone's "ringing" audio.
+  North America this is alternating 440 Hz and 480 Hz tones). The ringing tone required to set off the bell
+  [differed from region to region][national-characteristics]. The term "ringtone" eventually became synonymous with
+  being able to [change the sound][personalized-ringtones] of an electronic telephone's "ringing" audio.
 
 [ringing-tone]: https://en.wikipedia.org/wiki/Ringing_tone
 [national-characteristics]: https://en.wikipedia.org/wiki/Ringing_tone#National_characteristics
@@ -55,16 +55,16 @@ I'll be updating this page as I come across more!
 # Computers and the Internet
 ---
 
-*✂️* Cut and Paste
+*✂️* <u>Cut</u> and <u>Paste</u>
 : Editing on paper involved actual scissors and glue.
 
-*📰* Message "Board"
+*📰* Message <u>Board</u>
 : A community message board is often a literal corkboard.
 
-*🌎* *"Get Online"*
+*🌎* *"Get On<u>line</u>"*
 : Before Wi-Fi, computers needed to be physically connected to a phone line and modem to access the Internet.
 
-*📧* Email "CC"
+*📧* Email <u>CC</u>
 : To send a physical letter in duplicate, you would need to create a <dfn><abbr title="Carbon Copy">CC</abbr></dfn>,
   or "[Carbon Copy][cc]".
 
@@ -73,29 +73,29 @@ I'll be updating this page as I come across more!
 # Media and Electronics
 ---
 
-*⏪* Rewind
-*📼* *"Tape it"*
-*📹* *"Get it on Tape"*
+*⏪* Re<u>wind</u>
+*📼* *"<u>Tape</u> it"*
+*📹* *"Get it on <u>Tape</u>"*
 : Cassettes, the primary storage medium before optical disks, contained magnetic tape wound around two spindles.
 
-*📻* *"Stay Tuned"*
-*🎛️* Tune In / Tune Out
+*📻* *"Stay <u>Tune</u>d"*
+*🎛️* <u>Tune</u> In / <u>Tune</u> Out
 : Radio and television broadcasts require frequency matching (just like tuning an instrument).
 
-*📴* "Turn" On/Off
+*📴* <u>Turn</u> On/Off
 : Most early electronic devices featured a rotating power selector.
 
 # Home
 ---
 
-*🧊* Icebox
+*🧊* <u>Ice</u>box
 : Before refrigeration, keeping food fresh involved actual blocks of ice.
 
-*🪔* *"Turn out the Light"*
+*🪔* *"<u>Turn</u> out the Light"*
 : Gas and oil lamps had a dial which, when turned, would snuff out the flame.
 
 # Transportation
 ---
 
-*🚗* *"Roll the Window Up/Down"*
+*🚗* *"<u>Roll</u> the Window Up/Down"*
 : Sliding automobile passenger windows used to be operated via a hand crank.

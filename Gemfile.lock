@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/jekyll/minima.git
+  revision: 10124515953527c8990a2de99ae4ddb2a81ffee3
+  specs:
+    minima (3.0.0.dev)
+      jekyll (>= 3.5, < 5.0)
+      jekyll-feed (~> 0.9)
+      jekyll-seo-tag (~> 2.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -33,6 +42,7 @@ GEM
       webrick (~> 1.7)
     jekyll-feed (0.17.0)
       jekyll (>= 3.7, < 5.0)
+    jekyll-paginate (1.1.0)
     jekyll-sass-converter (3.0.0)
       sass-embedded (~> 1.54)
     jekyll-seo-tag (2.8.0)
@@ -51,10 +61,6 @@ GEM
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     mercenary (0.4.0)
-    minima (2.5.1)
-      jekyll (>= 3.5, < 5.0)
-      jekyll-feed (~> 0.9)
-      jekyll-seo-tag (~> 2.1)
     nokogiri (1.16.2-x86_64-linux)
       racc (~> 1.4)
     pathutil (0.16.2)
@@ -81,9 +87,10 @@ DEPENDENCIES
   http_parser.rb (~> 0.6.0)
   jekyll (~> 4.3.3)
   jekyll-feed (~> 0.12)
+  jekyll-paginate
   jekyll-seo-tag
   jekyll-toc
-  minima (~> 2.5)
+  minima!
   tzinfo (~> 1.2)
   tzinfo-data
   wdm (~> 0.1.1)

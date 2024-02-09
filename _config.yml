@@ -26,10 +26,8 @@ description: >- # this means to ignore newlines until "baseurl:"
   photography, videography, video games, and whatever else I see fit.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://sidneys1.com" # the base hostname & protocol for your site, e.g. http://example.com
-github_username:  Sidneys1
-youtube_username: Sidneys1
-# disqus:
-#   shortname: sidneys1
+
+paginate: 10
 
 markdown: kramdown
 kramdown:
@@ -37,14 +35,35 @@ kramdown:
 
 # Build settings
 theme: minima
+minima:
+  social_links:
+    - { platform: github, user_url: "https://github.com/Sidneys1", title: "GitHub" }
+    - { platform: rss, user_url: "/feed.xml", title: "Sidneys1.com RSS Feed" }
+    - { platform: youtube, user_url: "https://www.youtube.com/channel/UCoCiN9Yd8ifG1PeVb6wY0jg", title: "YouTube Channel" }
+    - { platform: mastodon, user_url: "https://infosec.exchange/@Sidneys1", title: "Mastodon (infosec.exchange)" }
 plugins:
   - jekyll-feed
   - jekyll-toc
   - jekyll-seo-tag
+  - jekyll-paginate
+
+alternative_access:
+  - { platform: tor, user_url: "http://sidneys77crlfslcr7zmj3msmxchgnxhrxlp3p3kbaswo7twchjnicid.onion", title: "Tor" }
+  - { platform: ipfs, user_url: "https://ipfs.io/ipns/sidneys1.com", title: "IPFS (IPFS.io)" }
+  - { platform: ipfs, user_url: "https://cloudflare-ipfs.com/ipns/sidneys1.com", title: "IPFS (Cloudflare)" }
+  - { platform: github, user_url: "https://sidneys1.github.io", title: "GitHub Pages" }
+
+author:
+  name: Sidneys1
+  contact:
+    - { platform: protonmail, user_url: "mailto:Sidneys1@proton.me", title: "ProtonMail"}
+    - { platform: email, user_url: "mailto:admin@sSidneys1.com", title: "Site Support"}
+    - { platform: matrix, user_url: "https://matrix.to/#/@sidneys1:matrix.org", title: "Matrix Chat" }
+    - { platform: simplex, user_url: "https://simplex.chat/contact#/?v=1-2&smp=smp%3A%2F%2FSkIkI6EPd2D63F4xFKfHk7I1UGZVNn6k1QWZ5rcyr6w%3D%40smp9.simplex.im%2FQwoc8ketLODmigLCuVhCt8Eio_ruJFnj%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAtEpK9f8ocpGt_MYmDVj0FrCIorSk7PSIVI-BmxLHUHE%253D%26srv%3Djssqzccmrcws6bhmn77vgmhfjmhwlyr3u7puw4erkyoosywgl67slqqd.onion", title: "SimpleX Chat"}
 
 # Theme settings
-minima:
-  skin: dark
+# minima:
+  # skin: dark
   #
 header_pages:
   - about.markdown
