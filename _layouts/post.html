@@ -107,8 +107,11 @@ layout: base
 			Consider buying me a coffee.
 		</a>
 		<br/>
-		<a href="https://ko-fi.com/sidneys1" target="_blank" rel="noreferrer"></a>
-			<img height="50px" title="Buy me a Coffee" src="{{"/assets/coffee-cup-1.svg" | absolute_url}}"/>
+		<a title="Consider buying me a coffee." href="https://ko-fi.com/sidneys1" target="_blank" rel="noreferrer" style="display: inline-block;">
+			<!-- <img height="50px" title="Buy me a Coffee" src="{{"/assets/coffee-cup-1.svg" | absolute_url}}"/> -->
+			<svg class="svg-icon grey">
+				<use xlink:href="{{"/assets/coffee-cup-1.svg#coffee" | relative_url}}"></use>
+			</svg>
 		</a>
 	</div>
 

@@ -387,7 +387,7 @@ specified file path, leaving me with invalid PCX files. The actual format, as st
 struct {
   // Width and height of the data:
   int columns, rows;
-  // The data itself (pretend C supports this):
+  // The data itself (pretend):
   unsigned char[columns * rows];
   // The width, height, and x-y offset
   // of the desired sub-image:
