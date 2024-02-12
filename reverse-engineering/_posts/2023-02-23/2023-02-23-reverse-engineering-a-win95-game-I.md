@@ -322,22 +322,22 @@ release:
 Now, attentive readers may have noticed something; If the `PAK` prelude is 4+(68×86)=5852 Bytes, but the first asset
 (`Waves\Click.wav`) starts at `0x1720` (Byte 5920), then what is in the interstitial 68 bytes? Let's take a look:
 
-* Last entry <span style="background: #C649B6; color: white">name</span> and <span style="background: #7E48C4; color: white">offset</span>.
-* Fist <span style="background: #47B5C1; color: white">file data</span>.
+* Last entry <span class="highlight-1">name</span> and <span class="highlight-2">offset</span>.
+* Fist <span class="highlight-3">file data</span>.
 
 <div class="language-plaintext highlighter-rouge">
 <div class="highlight">
 <pre class="highlight">
-<code>1690h  00 00 00 00 D5 91 50 01 <span style="background: #C649B6">57 61 76 65 73 5C 47 6C</span>  ....Õ‘P.<span style="background: #C649B6">Waves\Gl</span>
-16A0h  <span style="background: #C649B6">6F 73 65 33 62 2E 77 61 76 00 00 00 00 00 00 00</span>  <span style="background: #C649B6">ose3b.wav.......</span>
-16B0h  <span style="background: #C649B6">00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</span>  <span style="background: #C649B6">................</span>
-16C0h  <span style="background: #C649B6">00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</span>  <span style="background: #C649B6">................</span>
-16D0h  <span style="background: #C649B6">00 00 00 00 00 00 00 00</span> <span style="background: #7E48C4">B7 21 5A 01</span> 00 00 00 00  <span style="background: #C649B6">........</span><span style="background: #7E48C4">·!Z.</span>....
+<code>1690h  00 00 00 00 D5 91 50 01 <span class="highlight-1">57 61 76 65 73 5C 47 6C</span>  ....Õ‘P.<span class="highlight-1">Waves\Gl</span>
+16A0h  <span class="highlight-1">6F 73 65 33 62 2E 77 61 76 00 00 00 00 00 00 00</span>  <span class="highlight-1">ose3b.wav.......</span>
+16B0h  <span class="highlight-1">00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</span>  <span class="highlight-1">................</span>
+16C0h  <span class="highlight-1">00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</span>  <span class="highlight-1">................</span>
+16D0h  <span class="highlight-1">00 00 00 00 00 00 00 00</span> <span class="highlight-2">B7 21 5A 01</span> 00 00 00 00  <span class="highlight-1">........</span><span class="highlight-2">·!Z.</span>....
 16E0h  BC 42 59 81 00 00 00 00 8C 83 59 81 8C 83 59 81  ¼BY.....ŒƒY.ŒƒY.
 16F0h  88 83 59 81 3B AE F7 BF 00 20 56 81 00 00 00 00  ˆƒY�;®÷¿. V.....
 1700h  8C 83 59 81 DB AE F7 BF 8C 83 59 81 DE DA F7 BF  ŒƒY.Û®÷¿ŒƒY.ÞÚ÷¿
 1710h  8C 83 59 81 8C 83 59 81 E2 13 F7 BF 59 B7 5E 01  ŒƒY.ŒƒY.â.÷¿Y·^.
-1720h  <span style="background: #47B5C1">52 49 46 46 C0 1B 00 00 57 41 56 45 66 6D 74 20</span>  <span style="background: #47B5C1">RIFFÀ...WAVEfmt</span></code>
+1720h  <span class="highlight-3">52 49 46 46 C0 1B 00 00 57 41 56 45 66 6D 74 20</span>  <span class="highlight-3">RIFFÀ...WAVEfmt</span></code>
 </pre>
 </div>
 </div>

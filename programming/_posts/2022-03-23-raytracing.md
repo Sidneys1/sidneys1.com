@@ -39,9 +39,10 @@ the canvas.
 
 ### Creating a new `olc::PixelGameEngine` Project
 
-We're going to start with <kbd class="ui">Create a new project</kbd> in Visual Studio (I'm using 2022). Select the <kbd class="ui">Empty
-Project</kbd> (C++/Windows/Console) template. I also opted for the flat directory structure option <kbd class="ui">☑ Place solution
-and project in the same directory</kbd>.
+We're going to start with <button>Create a new project</button> in Visual Studio (I'm using 2022). Select the
+<button>Empty Project</button> (C++/Windows/Console) template. I also opted for the flat directory structure option:
+<input type="checkbox" checked disabled id="same-dir" /><label for="same-dir" disabled>Place solution and project in the
+same directory</label>.
 
 ![Create new project]({{"/images/2022-03-23-raytracing/create-a-new-project.png" | absolute_url}})
 
@@ -118,8 +119,9 @@ olc::Pixel Sample(float x, float y) const {
 <div class="note-title">Note</div>
 Running our project will now render a 250x250 canvas at 2x magnification. Our magenta fill has been replaced with a
 color pattern converging in the center of the canvas:
-{% capture coordinate_identity %}{{ "/images/2022-03-23-raytracing/03-Add constants and a way to Sample single pixels.png" | absolute_url }}{% endcapture %}
-{% capture coordinate_identity_thumb %}{{ "/images/2022-03-23-raytracing/thumbs/th-03-Add constants and a way to Sample single pixels.png" | absolute_url }}{% endcapture %}
+
+{% capture coordinate_identity %}{{ "/images/2022-03-23-raytracing/03-Add constants and a way to Sample single pixels.PNG" | absolute_url }}{% endcapture %}
+{% capture coordinate_identity_thumb %}{{ "/images/2022-03-23-raytracing/thumbs/th-03-Add constants and a way to Sample single pixels.PNG" | absolute_url }}{% endcapture %}
 {% include popimg.html src=coordinate_identity thumb=coordinate_identity_thumb alt="Coordinate Identity" %}
 
 </div>

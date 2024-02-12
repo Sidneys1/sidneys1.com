@@ -1,42 +1,44 @@
 @use "theme";
 @use "sass:color";
+@use "sass:map";
+@use "sass:list";
 
-$lm-link-compliment-color: #9D174D;
-$dm-link-compliment-color: #9E3B63;
+$highlight-1-dark: rgba(#d65cc6, 0.5);
+$highlight-2-dark: rgba(#956bcd, 0.5);
+$highlight-3-dark: rgba(#4db1bc, 0.5);
 
-$link-compliment-color: $lm-link-compliment-color;
+$colors: (
+    "sticky-note": #ffc rgb(79, 79, 50),
+    "sticky-note-title": rgb(234, 234, 169) rgb(104, 104, 77),
+    "link-compliment-color": #9D174D #9E3B63,
+    "accent-color": theme.$lm-link-base-color theme.$dm-link-base-color,
+    "accent-compliment-color": color.adjust(theme.$lm-link-base-color, $hue: 180) color.adjust(theme.$dm-link-base-color, $hue: 180),
+
+    "highlight-1": rgba(#d65cc6, 0.5) $highlight-1-dark,
+    "highlight-2": rgba(#834ccb, 0.5) $highlight-2-dark,
+    "highlight-3": rgba(#4db1bc, 0.5) $highlight-3-dark,
+);
+
+$accent-color: var(--sidneys1-accent-color);
+$accent-compliment-color: var(--sidneys1-accent-compliment-color);
+$sticky-note: var(--sidneys1-sticky-note);
+$sticky-note-title: var(--sidneys1-sticky-note-title);
+$link-compliment-color: var(--sidneys1-link-compliment-color);
+
+$highlight-1: var(--sidneys1-highlight-1);
+$highlight-2: var(--sidneys1-highlight-2);
+$highlight-3: var(--sidneys1-highlight-3);
 
 :root {
-    --sidneys1-link-compliment-color: #{$lm-link-compliment-color};
-}
-
-@media (prefers-color-scheme: dark) {
-    $link-compliment-color: $lm-link-compliment-color;
-    :root {
-        --sidneys1-link-compliment-color: #{$dm-link-compliment-color};
+    @each $name, $color in $colors {
+        --sidneys1-#{$name}: #{nth($color, 1)};
     }
 }
 
-$link-compliment-color: var(--sidneys1-link-compliment-color);
-
-$lm-accent-color: theme.$lm-link-base-color;
-$dm-accent-color: theme.$lm-link-base-color;
-$lm-accent-compliment-color: color.adjust($lm-accent-color, $hue: 180);
-$dm-accent-compliment-color: color.adjust($dm-accent-color, $hue: 180);
-
-$accent-color: $lm-accent-color;
-$accent-compliment-color: $lm-accent-compliment-color;
-
-:root {
-    --sidneys1-accent-color: #{$lm-accent-color};
-    --sidneys1-accent-compliment-color: #{$lm-accent-compliment-color};
-}
-
 @media (prefers-color-scheme: dark) {
-    $accent-color: $lm-accent-color;
-    $accent-compliment-color: $lm-accent-compliment-color;
     :root {
-        --sidneys1-accent-compliment-color: #{$dm-accent-compliment-color};
-        --sidneys1-accent-color: #{$dm-accent-color};
+        @each $name, $color in $colors {
+            --sidneys1-#{$name}: #{nth($color, 2)};
+        }
     }
 }

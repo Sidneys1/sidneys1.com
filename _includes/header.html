@@ -6,8 +6,11 @@
     {%- assign titles_size = site.pages | map: 'title' | join: '' | size -%}
     <a class="site-title" rel="author" href="{{ "/" | absolute_url }}">{{ site.title | escape }}</a>
 
-	<span class="coffee"><a href="https://ko-fi.com/sidneys1" target="_blank" rel="noreferrer">
-		<img height="24px" title="Buy me a Coffee" src="{{"/assets/coffee-cup-1.svg" | absolute_url}}"/>
+	<span class="coffee"><a title="Buy me a Coffee" href="https://ko-fi.com/sidneys1" target="_blank" rel="noreferrer">
+    <svg class="svg-icon">
+			<use xlink:href="{{"/assets/coffee-cup-1.svg#coffee" | relative_url}}"></use>
+    </svg>
+
 	</a></span>
 
     {%- if titles_size > 0 -%}

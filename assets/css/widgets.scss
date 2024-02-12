@@ -3,7 +3,7 @@
 
 //// Post tags
 .tag {
-    font-size: small;
+    font-size: smaller;
 }
 
 .tag::before {
@@ -234,7 +234,7 @@ p.c-compare:hover {
 	color: white;
 	padding: 0 0.5ex;
 	font-weight: initial;
-	font-size: x-small;
+	font-size: smaller;
 	vertical-align: middle;
 	margin-right: 1ex;
 	margin-bottom: 1ex;
@@ -270,28 +270,29 @@ p.c-compare:hover {
 
 
 /////////////////////// Shimmer
-
-.shimmer {
-	color: rgba(black, 0.1);
-	background-color: black;
-	background: linear-gradient(135deg, rgba(34,34,34,1) 0%, rgba(34,34,34,1) 40%, rgba(248,236,100,1) 49%, rgba(255,255,255,1) 50%, rgba(248,236,100,1) 51%, rgba(34,34,34,1) 60%, rgba(34,34,34,1) 100%);
-	background-size: 125px 100%;
-	background-clip: text;
-	animation-name: shimmer;
-	animation-duration: 2s;
-	animation-iteration-count: infinite;
-	animation-timing-function: ease-in-out;
-	background-repeat: no-repeat;
-	background-position: 0 0;
-	background-color: #222;
-}
-
-@keyframes shimmer {
-	0% {
-		background-position: top 0 left -130px;
+@supports (background-clip: text) {
+	.shimmer {
+		color: transparent;
+		background-color: black;
+		background: linear-gradient(135deg, theme.$text-color 0%, theme.$text-color 40%, rgba(248,236,100,1) 49%, white 50%, rgba(248,236,100,1) 51%, theme.$text-color 60%, theme.$text-color 100%);
+		background-size: 125px 100%;
+		background-clip: text;
+		animation-name: shimmer;
+		animation-duration: 2s;
+		animation-iteration-count: infinite;
+		animation-timing-function: ease-in-out;
+		background-repeat: no-repeat;
+		background-position: 0 0;
+		background-color: theme.$text-color;
 	}
-	100% {
-		background-position: top 0 right -130px;
+
+	@keyframes shimmer {
+		0% {
+			background-position: top 0 left -130px;
+		}
+		100% {
+			background-position: top 0 right -130px;
+		}
 	}
 }
 
@@ -403,7 +404,7 @@ div.chat {
 			width: 0px;
 		}
 		&::after {
-			background-color: #fff;
+			background-color: theme.$background-color;
 			border-bottom-right-radius: 0.5rem;
 			left: -0.5rem;
 			width: .5rem;
@@ -415,8 +416,9 @@ div.chat {
 
 span.blur {
 	user-select: none;
-	color:transparent;
-	text-shadow: 0 0 6px black;
+	// color:transparent;
+	// text-shadow: 0 0 6px black;
+	filter: blur(4px);
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Solway:wght@800&display=swap');
@@ -446,13 +448,52 @@ span.redacted {
 
 .aside-attn {
 	border-radius: 5px;
-	outline: 2px solid transparent;
+	// outline: 2px solid transparent;
 	padding: 0 0.25em;
 	transition: 250ms linear;
-	background: #ffc;
+	// background-color: color-mix(in srgb, colors.$sticky-note, theme.$background-color);
+	border: 1px dashed color-mix(in srgb, theme.$brand-color, theme.$background-color); 
 
 	&::before {
 		content: '💭 ';
+	}
+}
+
+aside {
+	opacity: 0.9;
+	width: max-content;
+	margin: 0 auto;
+	padding: 0.5em;
+
+	background-color: colors.$sticky-note;
+	font-size: smaller;
+	color: rgba(theme.$text-color, 0.8);
+	border-radius: 5px;
+	box-shadow: 0px 0px 10px #00000033;
+	transition: 250ms linear;
+	:last-child {
+		margin-bottom: 0;
+	}
+	&::before {
+		content: "💭";
+		font-size: 200%;
+		float:left;
+		margin: 0;
+		margin-right: 0.25em;
+	}
+}
+
+div:has(aside:hover, .aside-attn:hover) {
+	.aside-attn {
+		background-color: color-mix(in srgb, colors.$sticky-note 90%, theme.$background-color);
+		border: 1px dashed color-mix(in srgb, theme.$brand-color, theme.$text-color);
+		transition: 250ms linear;
+	}
+	> aside {
+		opacity: 1;
+		color: theme.$text-color;
+		box-shadow: 0px 0px 10px #00000066;
+		transition: 250ms linear;
 	}
 }
 
@@ -475,61 +516,24 @@ span.redacted {
 		}
 
 		&:has(> aside:hover, .aside-attn:hover) {
-			.aside-attn {
-				outline: 2px solid rgb(198, 198, 142);
-				transition: 250ms linear;
-			}
+			
 			&::before {
-				box-shadow: 0 0 0px 100000px rgba(0,0,0,0.25), inset 0 0 10px 5px rgba(0,0,0,0.25);
+				box-shadow: 0 0 0px 100000px rgba(0,0,0,0.75), inset 0 0 10px 5px rgba(0,0,0,0.75);
 				transition: box-shadow 500ms linear;
 			}
-			> aside {
-				opacity: 1;
-				color: black;
-				box-shadow: 0px 0px 10px #00000066;
-				transition: 250ms linear;
-			}
+			
 		}
 
 		margin-bottom: calc(theme.$spacing-unit / 2);
 
 		> aside {
-			opacity: 0.9;
 			position: absolute;
-			max-width: calc((100vw - (#{theme.$content-width} + (#{theme.$spacing-unit} * 2))) / 3);
+			max-width: calc((100vw - (#{theme.$content-width} + (#{theme.$spacing-unit} * 2))) / 2);
 			left: calc(100% + #{theme.$spacing-unit});
-			width: max-content;
-			margin: 1em 0;
-			padding: 0.25em;
 			bottom: 0px;
-
-			background-color: #ffc;
-			font-size: smaller;
-			color: theme.$brand-color;
-			margin: 0 auto;
-			border-radius: 5px;
-			box-shadow: 0px 0px 10px #00000033;
 			transition: 250ms linear;
 			z-index: 2;
-			&::before {
-				content: "💭";
-				font-size: 200%;
-				float:left;
-				margin: 0 0.25em;
-			}
-			> p {
-				margin: 0em 0.5em;
-				margin-top: 0;
-				margin-bottom: 0.5em;
-			}
-			code {
-				background-color: rgb(234, 234, 169);
-				font-size: small;
-			}
-			> div[class^='language-'] {
-				margin: 0.25em 0.5em;
-				margin-top: 0;
-			}
+			
 		}
 	}
 }
@@ -557,40 +561,11 @@ span.redacted {
 			}
 		}
 		> aside {
-			opacity: 0.9;
 			float: right;
 			max-width: 40%;
-			width: max-content;
 
-			background-color: #ffc;
-			font-size: smaller;
-			color: theme.$brand-color;
-			// margin: 0 auto;
 			margin-left: 1em;
-
-			border-radius: 5px;
-			box-shadow: 0px 0px 10px #00000033;
-			transition: 250ms linear;
 			margin-bottom: 1em;
-			&::before {
-				content: "💭";
-				font-size: 200%;
-				float:left;
-				margin: 0 0.25em;
-			}
-			> p {
-				margin: 0.25em 0.5em;
-				margin-top: 0;
-				margin-bottom: 0.5em;
-			}
-			code {
-				background-color: rgb(234, 234, 169);
-				font-size: small;
-			}
-			> div[class^='language-'] {
-				margin: 0.25em 0.5em;
-				margin-top: 0;
-			}
 		}
 	}
 }
@@ -612,31 +587,7 @@ span.redacted {
 		> aside {
 			max-width: 100%;
 
-			background-color: #ffc;
-			font-size: smaller;
-
-			border-radius: 5px;
-			box-shadow: 0px 0px 10px #00000033;
 			margin-bottom: 1em;
-			&::before {
-				content: "💭";
-				font-size: 200%;
-				float:left;
-				margin: 0 0.25em;
-			}
-			> p {
-				margin: 0.25em 0.5em;
-				margin-top: 0;
-				margin-bottom: 0.5em;
-			}
-			code {
-				background-color: rgb(234, 234, 169);
-				font-size: small;
-			}
-			> div[class^='language-'] {
-				margin: 0.25em 0.5em;
-				margin-top: 0;
-			}
 		}
 	}
 }

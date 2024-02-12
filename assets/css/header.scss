@@ -14,12 +14,15 @@
         flex-grow: 1;
         text-align: center;
 
-        img {
+        svg {
+            width: unset;
+            height: 24px;
             opacity: 50%;
             transition: 250ms linear;
+            color: theme.$text-color;
         }
 
-        img:hover {
+        svg:hover {
             opacity: 100%;
             transition: 250ms linear;
         }
