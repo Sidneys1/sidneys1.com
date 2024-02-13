@@ -1,0 +1,114 @@
+@use 'theme';
+@use 'colors';
+
+$od-font-path: "" !default;
+$od-mono-font-path: "" !default;
+
+@font-face {
+    font-family: opendyslexic;
+    src: url($od-font-path) format('opentype');
+}
+
+@font-face {
+    font-family: opendyslexicmono;
+    src: url($od-mono-font-path) format('opentype');
+}
+
+@mixin root-has($key, $value) {
+    :root:has(input:checked[name=#{$key}][value=#{$value}]) {
+        @content;
+    }
+}
+
+@each $name in "red", "green", "blue" {
+    @include root-has("color", $name) {
+        --minima-link-base-color: var(--sidneys1-#{$name}-accent);
+        --minima-link-visited-color: var(--sidneys1-#{$name}-accent-visited);
+        --sidneys1-accent-color: var(--sidneys1-#{$name}-accent);
+        --sidneys1-accent-subtle: var(--sidneys1-#{$name}-accent-subtle);
+        --sidneys1-accent-compliment-color: var(--sidneys1-#{$name}-accent-compliment);
+    }
+}
+
+@include root-has("font", "od") {
+    --minima-base-font-family: opendyslexic, #{theme.$base-font-family};
+    --minima-code-font-family: opendyslexicmono, #{theme.$code-font-family};
+}
+
+@include root-has("align", "justify") {
+    --sidneys1-text-align: justify;
+}
+
+@include root-has("mode", "light") {
+    color-scheme: only light;
+
+    --minima-brand-color: #{theme.$lm-brand-color};
+    --minima-brand-color-light: #{theme.$lm-brand-color-light};
+    --minima-brand-color-dark: #{theme.$lm-brand-color-dark};
+
+    --minima-site-title-color: #{theme.$lm-site-title-color};
+
+    --minima-text-color: #{theme.$lm-text-color};
+    --minima-background-color: #{theme.$lm-background-color};
+    --minima-code-background-color: #{theme.$lm-code-background-color};
+
+    // --minima-link-base-color: #{theme.$lm-link-base-color};
+    // --minima-link-visited-color: #{theme.$lm-link-visited-color};
+    // --minima-link-hover-color: #{theme.$lm-link-hover-color};
+
+    --minima-border-color-01: #{theme.$lm-border-color-01};
+    --minima-border-color-02: #{theme.$lm-border-color-02};
+    --minima-border-color-03: #{theme.$lm-border-color-03};
+
+    --minima-table-text-color: #{theme.$lm-table-text-color};
+    --minima-table-zebra-color: #{theme.$lm-table-zebra-color};
+    --minima-table-header-bg-color: #{theme.$lm-table-header-bg-color};
+    --minima-table-header-border: #{theme.$lm-table-header-border};
+    --minima-table-border-color: #{theme.$lm-table-border-color};
+}
+
+@mixin dark-mode {
+    color-scheme: only dark;
+
+    --minima-brand-color: #{theme.$dm-brand-color};
+    --minima-brand-color-light: #{theme.$dm-brand-color-light};
+    --minima-brand-color-dark: #{theme.$dm-brand-color-dark};
+
+    --minima-site-title-color: #{theme.$dm-site-title-color};
+    // --minima-link-base-color: #{theme.$dm-link-base-color};
+    // --minima-link-visited-color: #{theme.$dm-link-visited-color};
+    // --minima-link-hover-color: #{theme.$dm-link-hover-color};
+
+    --minima-border-color-01: #{theme.$dm-border-color-01};
+    --minima-border-color-02: #{theme.$dm-border-color-02};
+    --minima-border-color-03: #{theme.$dm-border-color-03};
+
+    --minima-table-text-color: #{theme.$dm-table-text-color};
+    --minima-table-zebra-color: #{theme.$dm-table-zebra-color};
+    --minima-table-header-bg-color: #{theme.$dm-table-header-bg-color};
+    --minima-table-header-border: #{theme.$dm-table-header-border};
+    --minima-table-border-color: #{theme.$dm-table-border-color};
+    --minima-code-background-color: #{theme.$dm-code-background-color};
+}
+
+@include root-has("mode", "dark") {
+    @include dark-mode;
+    --minima-text-color: #{theme.$dm-text-color};
+    --minima-background-color: #{theme.$dm-background-color};
+}
+
+@include root-has("mode", "black") {
+    @include dark-mode;
+
+    --minima-text-color: white;
+    --minima-background-color: black;
+}
+
+// @include color-set("red");
+// @include color-set("green");
+// @include color-set("blue");
+
+// @include root-has("color", "red") {
+//     --sidneys1-accent-color: #{colors.$red-accent};
+//     --sidneys1-accent-subtle: #{colors.$red-accent-subtle};
+// }

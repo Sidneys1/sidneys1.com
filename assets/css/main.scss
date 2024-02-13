@@ -8,6 +8,12 @@
 /*** Additional colors. ***/
 @use "colors";
 
+/*** User-selectable themes. ***/
+@use "user-theme" with (
+    $od-font-path: "{{ "/assets/OpenDyslexic3-Regular.otf" | absolute_url }}",
+    $od-mono-font-path: "{{ "/assets/OpenDyslexicMono-Regular.otf" | absolute_url }}"
+);
+
 /*** Home customization rules. ***/
 @use "home";
 
@@ -26,12 +32,16 @@
 /*** Footer customization rules. ***/
 @use "footer";
 
-/*** Footer snowflake. ***/
-@use "snowflake";
+// /*** Footer snowflake. ***/
+// @use "snowflake";
 
 /*** Syntax highlighting. ***/
 @import "monokai";
 
 :root {
     color-scheme: light dark;
+}
+
+body {
+    display: block;
 }

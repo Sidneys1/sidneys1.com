@@ -107,7 +107,7 @@ kbd {
 	&.menu {
 		font-size: initial;
 		display: inline-block;
-		font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+		// font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 		line-height: 10px;
 		color: theme.$text-color;
 		overflow-wrap: break-word;
@@ -166,7 +166,7 @@ kbd {
 			box-shadow: 0px 0px 10px #00000033;
 			color: #f8f8f2;
 			font-size: x-small;
-			font-family: monospace;
+			font-family: var(--minima-code-font-family);
 			background-color: #272822;
 			border-radius: 0.5em;
 			padding: 0 0.25em;
@@ -217,7 +217,7 @@ kbd {
 			content: attr(data-file-name);
 			color: #f8f8f2;
 			font-size: x-small;
-			font-family: monospace;
+			font-family: var(--minima-code-font-family);
 			background-color: #272822;
 			border-radius: 0.5em;
 			padding: 0 0.25em;
@@ -229,8 +229,13 @@ kbd {
 	}
 }
 
+.highlight pre code {
+	background: theme.$code-background-color !important;
+}
+
 div.highlighter-rouge {
 	position: relative;
+	// z-index: -1;
 	margin-bottom: calc(theme.$spacing-unit / 2);
 
 	box-shadow: 0px 0px 10px #00000033;
@@ -270,7 +275,7 @@ div.highlighter-rouge {
 			position: absolute;
 			bottom: -25px;
 			// font-size: 200%;
-			font-family: monospace;
+			font-family: var(--minima-code-font-family);
 			font-size: 15px;
 			left: calc(var(--left, 0) * 0.625em + 8px);
 			color: #75715e;
@@ -305,10 +310,10 @@ div.code-split-root {
 	position: relative;
 	box-shadow: 0px 0px 10px #00000033;
 	transition: box-shadow 250ms linear;
-	background-color: #272822;
+	background-color: theme.$code-background-color;
 	border-radius: 5px;
 	margin-bottom: calc(theme.$spacing-unit / 2);
-	;
+	// z-index: -1;
 
 	&:hover {
 		box-shadow: 0px 0px 10px #00000066;
@@ -372,7 +377,6 @@ dd+dt {
 }
 
 dt {
-	font-family: sans-serif;
 	font-weight: bold;
 	vertical-align: text-top;
 	line-height: 1.2;

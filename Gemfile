@@ -36,3 +36,6 @@ gem 'jekyll-toc'
 gem "webrick", "~> 1.7"
 gem 'jekyll-seo-tag'
 gem 'jekyll-paginate'
+gem 'csv'
+gem 'base64'
+gem 'bigdecimal'

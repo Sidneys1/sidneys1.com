@@ -35,4 +35,33 @@
       </nav>
     {%- endif -%}
   </div>
+
 </header>
+
+<div id="theme-parent">
+	<div id="theme-select">
+		<fieldset id="color-select">
+			<legend align="bottom">Accent</legend>
+			<input id="color-blue" type="radio" name="color" value="blue" checked /><label for="color-blue" title="Blue">💧</label>
+			<input id="color-green" type="radio" name="color" value="green" /><label for="color-green" title="Green">🌳</label>
+			<input id="color-red" type="radio" name="color" value="red" /><label for="color-red" title="Red">❤️</label>
+		</fieldset>
+		<fieldset id="mode-select">
+			<legend>mode</legend>
+			<input id="mode-auto" type="radio" name="mode" value="auto" checked /><label for="mode-auto" title="Auto">🪄</label>
+			<input id="mode-light" type="radio" name="mode" value="light" /><label for="mode-light" title="Light">☀️</label>
+			<input id="mode-dark" type="radio" name="mode" value="dark" /><label for="mode-dark" title="Dark">🌕</label>
+			<input id="mode-black" type="radio" name="mode" value="black" /><label for="mode-black" title="Black (AMOLED)">🌑</label>
+		</fieldset>
+		<fieldset id="align-select">
+			<legend>Align</legend>
+			<input id="align-left" type="radio" name="align" value="left" checked /><label for="align-left" title="Left">⬅️</label>
+			<input id="align-justify" type="radio" name="align" value="justify" /><label for="align-justify" title="Justify">↔️</label>
+		</fieldset>
+		<fieldset id="font-select">
+			<legend>Font</legend>
+			<input id="font-default" type="radio" name="font" value="default" checked /><label for="font-default" style="font-family: system-ui;" title="System Font">Aa</label>
+			<input id="font-od" type="radio" name="font" value="od" /><label for="font-od" style="font-family: opendyslexic;" title="OpenDyslexic">OpenDyslexic</label>
+		</fieldset>
+	</div>
+</div>

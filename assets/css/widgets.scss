@@ -317,16 +317,6 @@ div.chat {
 	padding: 0.1rem .5rem;
 	position: relative;
 	word-wrap: break-word;
-	font-family:
-		-apple-system,
-		BlinkMacSystemFont,
-		"Segoe UI",
-		Roboto,
-		Oxygen-Sans,
-		Ubuntu,
-		Cantarell,
-		"Helvetica Neue",
-		sans-serif;
 
 	q {
 		&::before { content: initial;}
@@ -452,7 +442,7 @@ span.redacted {
 	padding: 0 0.25em;
 	transition: 250ms linear;
 	// background-color: color-mix(in srgb, colors.$sticky-note, theme.$background-color);
-	border: 1px dashed color-mix(in srgb, theme.$brand-color, theme.$background-color); 
+	border: 1px dashed color-mix(in srgb, theme.$brand-color, theme.$background-color);
 
 	&::before {
 		content: '💭 ';
@@ -516,12 +506,12 @@ div:has(aside:hover, .aside-attn:hover) {
 		}
 
 		&:has(> aside:hover, .aside-attn:hover) {
-			
+
 			&::before {
 				box-shadow: 0 0 0px 100000px rgba(0,0,0,0.75), inset 0 0 10px 5px rgba(0,0,0,0.75);
 				transition: box-shadow 500ms linear;
 			}
-			
+
 		}
 
 		margin-bottom: calc(theme.$spacing-unit / 2);
@@ -533,11 +523,11 @@ div:has(aside:hover, .aside-attn:hover) {
 			bottom: 0px;
 			transition: 250ms linear;
 			z-index: 2;
-			
+
 		}
 	}
 }
-@media screen and (max-width: 1800px) and (orientation: landscape) {
+@media screen and (1000px <= width <= 1800px) and (orientation: landscape) {
 	// Screen is narrow and landscape
 	div:has(> aside) {
 		&::after {
@@ -569,7 +559,7 @@ div:has(aside:hover, .aside-attn:hover) {
 		}
 	}
 }
-@media screen and (max-width: 1800px) and (orientation: portrait) {
+@media screen and (width <= 1800px) and (orientation: portrait), screen and (width <= 1000px) {
 	// Screen is narrow and portrait
 	div:has(> aside) {
 		&:not(.no-reverse) {
@@ -585,7 +575,7 @@ div:has(aside:hover, .aside-attn:hover) {
 			max-width: calc(60% - 2em);
 		}
 		> aside {
-			max-width: 100%;
+			max-width: calc(100% - theme.$spacing-unit);
 
 			margin-bottom: 1em;
 		}
@@ -608,7 +598,6 @@ div:has(aside:hover, .aside-attn:hover) {
 		min-width: max-content;
 	}
 }
-
 
 @media screen and (max-width: 1800px) {
 	.float-reverse {

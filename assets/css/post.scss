@@ -1,6 +1,10 @@
 @use "theme";
 @use "colors";
 
+:is(.post-content, .post-excerpt) p {
+    text-align: var(--sidneys1-text-align);
+}
+
 //// Center align a div
 .center {
     text-align: center;

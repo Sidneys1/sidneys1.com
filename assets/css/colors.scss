@@ -7,12 +7,44 @@ $highlight-1-dark: rgba(#d65cc6, 0.5);
 $highlight-2-dark: rgba(#956bcd, 0.5);
 $highlight-3-dark: rgba(#4db1bc, 0.5);
 
+$red-accent: var(--sidneys1-red-accent);
+$red-accent-subtle: var(--sidneys1-red-accent-subtle);
+$red-accent-compliment: var(--sidneys1-red-accent-compliment);
+$red-accent-visited: var(--sidneys1-red-accent-visited);
+
+$green-accent: var(--sidneys1-green-accent);
+$green-accent-subtle: var(--sidneys1-green-accent-subtle);
+$green-accent-compliment: var(--sidneys1-green-accent-compliment);
+$green-accent-visited: var(--sidneys1-green-accent-visited);
+
+$blue-accent: var(--sidneys1-blue-accent);
+$blue-accent-subtle: var(--sidneys1-blue-accent-subtle);
+$blue-accent-compliment: var(--sidneys1-blue-accent-compliment);
+$blue-accent-visited: var(--sidneys1-blue-accent-visited);
+
 $colors: (
+    "red-accent": darkred #BF3D7C,
+    "red-accent-subtle": color.adjust(darkred, $whiteness: 50%) color.adjust(#BF3D7C, $blackness: 50%),
+    "red-accent-compliment": color.adjust(darkred, $hue: 180) color.adjust(#BF3D7C, $hue: 180),
+    "red-accent-visited": color.adjust(darkred, $lightness: -15%) color.adjust(#BF3D7C, $lightness: 5%),
+
+    "green-accent": darkgreen #7b914d,
+    "green-accent-subtle": color.adjust(darkgreen, $whiteness: 50%) color.adjust(#7b914d, $blackness: 50%),
+    "green-accent-compliment": color.adjust(darkgreen, $hue: 180) color.adjust(#7b914d, $hue: 180),
+    "green-accent-visited": color.adjust(darkgreen, $lightness: -15%) color.adjust(#7b914d, $lightness: 5%),
+
+    "blue-accent": #2a7ae2 #5c8bc9,
+    "blue-accent-subtle": color.adjust(#2a7ae2, $whiteness: 50%) color.adjust(#5c8bc9, $blackness: 50%),
+    "blue-accent-compliment": color.adjust(#2a7ae2, $hue: 180) color.adjust(#5c8bc9, $hue: 180),
+    "blue-accent-visited": color.adjust(#2a7ae2, $lightness: -15%) color.adjust(#5c8bc9, $lightness: 5%),
+
     "sticky-note": #ffc rgb(79, 79, 50),
     "sticky-note-title": rgb(234, 234, 169) rgb(104, 104, 77),
     "link-compliment-color": #9D174D #9E3B63,
-    "accent-color": theme.$lm-link-base-color theme.$dm-link-base-color,
-    "accent-compliment-color": color.adjust(theme.$lm-link-base-color, $hue: 180) color.adjust(theme.$dm-link-base-color, $hue: 180),
+
+    "accent-color": #{$blue-accent} #{$blue-accent},
+    "accent-subtle": #{$blue-accent-subtle} #{$blue-accent-subtle},
+    "accent-compliment-color": #{$blue-accent-compliment} #{$blue-accent-compliment},
 
     "highlight-1": rgba(#d65cc6, 0.5) $highlight-1-dark,
     "highlight-2": rgba(#834ccb, 0.5) $highlight-2-dark,
@@ -20,6 +52,7 @@ $colors: (
 );
 
 $accent-color: var(--sidneys1-accent-color);
+$accent-subtle: var(--sidneys1-accent-subtle);
 $accent-compliment-color: var(--sidneys1-accent-compliment-color);
 $sticky-note: var(--sidneys1-sticky-note);
 $sticky-note-title: var(--sidneys1-sticky-note-title);
@@ -35,8 +68,16 @@ $highlight-3: var(--sidneys1-highlight-3);
     }
 }
 
+@media (prefers-color-scheme: light) {
+    :root:has(input:checked[name=mode][value=dark], input:checked[name=mode][value=black]) {
+        @each $name, $color in $colors {
+            --sidneys1-#{$name}: #{nth($color, 2)};
+        }
+    }
+}
+
 @media (prefers-color-scheme: dark) {
-    :root {
+    :root:not(:has(input:checked[name=mode][value=light])) {
         @each $name, $color in $colors {
             --sidneys1-#{$name}: #{nth($color, 2)};
         }

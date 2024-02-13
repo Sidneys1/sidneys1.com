@@ -4,3 +4,29 @@ $on-laptop: 1200px !default;
 @import
   "minima/skins/auto",
   "minima/initialize";
+
+:root {
+  --minima-base-font-family: #{$base-font-family};
+  --minima-code-font-family: #{$code-font-family};
+  --sidneys1-text-align: unset;
+
+}
+
+body {
+  font: $base-font-weight #{$base-font-size/#{$base-line-height}} var(--minima-base-font-family);
+
+}
+
+div.code-split-root, div.highlighter-rouge {
+  --minima-code-background-color: #272822;
+}
+
+pre, code {
+  font-family: var(--minima-code-font-family);
+}
+
+@media screen and (max-width: 2200px) {
+  .page-content {
+    padding-top: 0 !important;
+  }
+}
