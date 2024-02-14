@@ -23,21 +23,22 @@
             text-align: center;
 
             svg {
-                width: unset;
-                height: 24px;
+                width: 32px;
+                height: 32px;
                 opacity: 50%;
-                transition: 250ms linear;
+                transition: opacity 250ms linear;
                 color: theme.$text-color;
+                margin: 0 0 4px 8px;
+                vertical-align: middle;
             }
 
             svg:hover {
                 opacity: 100%;
-                transition: 250ms linear;
+                transition: opacity 250ms linear;
             }
         }
 
         .site-nav {
-            position: initial !important;
             justify-self: right;
         }
     }
@@ -49,7 +50,7 @@
     }
 
     100% {
-        opacity: 25%;
+        opacity: 50%;
     }
 }
 
@@ -66,7 +67,7 @@
 
     20% {
         box-shadow: 0 0 0 20px transparent,
-        0 0 0 20px transparent;
+            0 0 0 20px transparent;
     }
 
     // 40% {
@@ -83,15 +84,42 @@
 #theme-select {
     position: relative;
     display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+
     border: 1px solid theme.$border-color-01;
     border-top: none;
     border-bottom-left-radius: 1em;
     border-bottom-right-radius: 1em;
-    padding: 0.25em 0.5em 0.5em 0.5em;
+
+    padding: 0 0.25em 0.25em 0.25em;
     width: max-content;
     margin-left: auto;
 
+    background-color: theme.$background-color;
+    opacity: 50%;
+    transition: opacity 1s ease-in-out, font-size 1s ease-in-out;
+
     animation: 2s linear 3s 2 backwards theme-select-pulse, 2s ease-in-out 7s 1 backwards theme-select-fade-out;
+
+    &:is(:hover, :active, :focus-within, :focus) {
+        opacity: 1;
+        transition: opacity 100ms ease-in-out, font-size 1s ease-in-out;
+    }
+
+    noscript {
+        flex-basis: 100%;
+        text-align: center;
+        font-weight: bold;
+        font-size: x-small;
+        text-transform: uppercase;
+        width: 0;
+
+        em {
+            text-decoration: underline dotted;
+        }
+    }
 
     fieldset {
         display: flex;
@@ -148,18 +176,6 @@
             }
         }
     }
-
-    background-color: theme.$background-color;
-    // >* {
-    opacity: 25%;
-    transition: opacity 1s ease-in-out;
-    // }
-
-    &:hover {
-        opacity: 1;
-        transition: opacity 100ms ease-in-out;
-    }
-
 }
 
 #theme-parent {
@@ -171,7 +187,7 @@
     max-width: calc(((100vw - #{theme.$content-width + theme.$spacing-unit * 2}) / 2));
 }
 
-@media screen and (min-width: 2200px) {
+@media screen and (min-width: 2000px) {
 
     // Screen is wide
     #theme-parent {
@@ -181,13 +197,19 @@
 
 @media screen and (max-width: 1000px) {
 
-    // Screen is narrow and landscape
+    // Screen is narrow
     #theme-select {
-        margin-left: unset;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: calc(100vw - #{theme.$spacing-unit * 2});
+        opacity: 1;
+        animation: 2s linear 3s 2 backwards theme-select-pulse;
+        font-size: small;
     }
 
     #theme-parent {
         left: #{theme.$spacing-unit};
-        max-width: calc(((100vw - #{theme.$content-width + theme.$spacing-unit * 2}) / 2));
+        right: #{theme.$spacing-unit};
+        max-width: unset;
     }
 }

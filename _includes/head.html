@@ -1,36 +1,82 @@
 <head>
-  <meta charset="utf-8">
+	<meta charset="utf-8">
 
-  <link rel="preload" href="{{ '/assets/css/main.css' | absolute_url }}" as="style" />
+	<link rel="preload" href="{{ '/assets/OpenDyslexic3-Regular.otf' | absolute_url }}" as="font" crossorigin="anonymous">
+	<link rel="preload" href="{{ '/assets/OpenDyslexicMono-Regular.otf' | absolute_url }}" as="font" crossorigin="anonymous">
+	<link rel="preload" href="{{ '/assets/css/main.css' | absolute_url }}" as="style" />
 
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="onion-location"
-    content="http://sidneys77crlfslcr7zmj3msmxchgnxhrxlp3p3kbaswo7twchjnicid.onion{{ page.url }}" />
-  <link rel="icon" type="image/png" sizes="16x16"
-    href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYBAMAAAASWSDLAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAwUExURU03LQsKCjRLXmBfW7hSE5xdMqNxTeGqSrKLX09qi5R9hHCnv7bDvaWgnfPWpvHt2OhtVZsAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAECSURBVCjPY5goCAQsjCDSjAFEiri4gChBEEdJ3KXcEcoRUmAvKWGEcZREytlhHEFFgVAQxQiWEYQARogBIKYQlLMbZJeQgKIgQxuT0umNQPbsiYoRDBlnlH+ClM49M2kZQ9ppIRBHefUZBQ6GjDvCn4AmMQFl2BhabJQ+CUpcYN5zRhEok6vwU5DvFeed0xPDGCJarf4YX4/VXaysmMaQmlb+/v37VxKFwgxhDKmhJc/r+xIEBQXCgDKhz/z+/3/AwGAcCuI8j+h5/y5Z0ArMuVf37t2JVYJv0zIY0oCc5w6CUgK/3ICc4BN1/949F1i7ICyDoS10bvi//89l/xqGdQAA2bZcXLL532IAAAAASUVORK5CYII=" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="onion-location"
+		content="http://sidneys77crlfslcr7zmj3msmxchgnxhrxlp3p3kbaswo7twchjnicid.onion{{ page.url }}" />
+	<link rel="icon" type="image/png" sizes="16x16"
+		href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYBAMAAAASWSDLAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAwUExURU03LQsKCjRLXmBfW7hSE5xdMqNxTeGqSrKLX09qi5R9hHCnv7bDvaWgnfPWpvHt2OhtVZsAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAECSURBVCjPY5goCAQsjCDSjAFEiri4gChBEEdJ3KXcEcoRUmAvKWGEcZREytlhHEFFgVAQxQiWEYQARogBIKYQlLMbZJeQgKIgQxuT0umNQPbsiYoRDBlnlH+ClM49M2kZQ9ppIRBHefUZBQ6GjDvCn4AmMQFl2BhabJQ+CUpcYN5zRhEok6vwU5DvFeed0xPDGCJarf4YX4/VXaysmMaQmlb+/v37VxKFwgxhDKmhJc/r+xIEBQXCgDKhz/z+/3/AwGAcCuI8j+h5/y5Z0ArMuVf37t2JVYJv0zIY0oCc5w6CUgK/3ICc4BN1/949F1i7ICyDoS10bvi//89l/xqGdQAA2bZcXLL532IAAAAASUVORK5CYII=" />
 
-  {%- seo -%}
+	{%- seo -%}
 
-  <link rel="stylesheet" href="{{ '/assets/css/main.css' | absolute_url }}">
+	<link rel="stylesheet" href="{{ '/assets/css/main.css' | absolute_url }}">
 
-  {%- feed_meta -%}
+	{%- feed_meta -%}
 
-  {%- if page.path contains '_posts' -%}
-  <script defer src="{{ '/assets/mastodon_comments.js' | absolute_url }}" onload="initComments()"></script>
-  {%- endif -%}
+	{%- if page.path contains '_posts' -%}
+	<script defer src="{{ '/assets/mastodon_comments.js' | absolute_url }}" onload="initComments()"></script>
+	{%- endif -%}
 
-  <!-- KaTeX -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
-    integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+	<!-- KaTeX -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+		integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
 
-  <!-- The loading of KaTeX is deferred to speed up page rendering -->
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
-    integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
-    crossorigin="anonymous"></script>
+	<!-- The loading of KaTeX is deferred to speed up page rendering -->
+	<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+		integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
+		crossorigin="anonymous"></script>
 
-  <!-- To automatically render math in text elements, include the auto-render extension: -->
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
-    onload="renderMathInElement(document.body);"></script>
+	<!-- To automatically render math in text elements, include the auto-render extension: -->
+	<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+		integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+		onload="renderMathInElement(document.body);"></script>
+
+	<script>
+		/*
+		 * This code is only used for loading/saving preferences
+		 * to/from `localstorage`. If scripts are disabled all
+		 * the theming still works, they just won't persist. :^)
+		 */
+
+		// Definition of preferences. Individual toggles should be
+		// `id`'d `${key}-${value}`.
+		const PREFERENCES = {
+			'color': ['blue', 'green', 'red'],
+			'mode': ['auto', 'light', 'dark', 'black'],
+			'align': ['left', 'justify'],
+			'font': ['default', 'od'],
+		};
+
+		// Save preferences to `localstorage`.
+		function savePreferences() {
+			var p = {
+			};
+
+			Object.entries(PREFERENCES).forEach(([key, values]) => {
+				p[key] = values.find(value =>
+					document.getElementById(`${key}-${value}`).checked);
+			});
+
+			localStorage.setItem('preferences', JSON.stringify(p));
+		};
+
+		// Run at page load
+		document.addEventListener("DOMContentLoaded", function (_, __) {
+			// Load preferences once.
+			const p = JSON.parse(localStorage.getItem('preferences') || '{}');
+			Object.entries(PREFERENCES).forEach(([key, values]) =>
+				document.getElementById(`${key}-${p[key] || values[0]}`).checked = true);
+
+			// Register change handlers.
+			Object.entries(PREFERENCES).forEach(([key, values]) =>
+				values.forEach(value =>
+					document.getElementById(`${key}-${value}`).addEventListener('change', e =>
+						savePreferences())));
+		});
+	</script>
 </head>

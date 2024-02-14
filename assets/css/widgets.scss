@@ -1,6 +1,12 @@
 @use "theme";
 @use "colors";
 
+
+.flex-break {
+	flex-basis: 100%;
+	height: 0;
+}
+
 //// Post tags
 .tag {
     font-size: smaller;

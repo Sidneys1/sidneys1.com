@@ -31,8 +31,8 @@ $od-mono-font-path: "" !default;
 }
 
 @include root-has("font", "od") {
-    --minima-base-font-family: opendyslexic, #{theme.$base-font-family};
-    --minima-code-font-family: opendyslexicmono, #{theme.$code-font-family};
+    --minima-base-font-family: OpenDyslexic, #{theme.$base-font-family};
+    --minima-code-font-family: OpenDyslexicMono, #{theme.$code-font-family};
 }
 
 @include root-has("align", "justify") {

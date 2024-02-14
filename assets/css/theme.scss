@@ -9,7 +9,6 @@ $on-laptop: 1200px !default;
   --minima-base-font-family: #{$base-font-family};
   --minima-code-font-family: #{$code-font-family};
   --sidneys1-text-align: unset;
-
 }
 
 body {
@@ -25,7 +24,7 @@ pre, code {
   font-family: var(--minima-code-font-family);
 }
 
-@media screen and (max-width: 2200px) {
+@media screen and (max-width: 2000px) {
   .page-content {
     padding-top: 0 !important;
   }
