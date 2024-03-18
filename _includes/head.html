@@ -36,7 +36,7 @@
 		integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
 		onload="renderMathInElement(document.body);"></script>
 
-	<script>
+	<script type="module">
 		/*
 		 * This code is only used for loading/saving preferences
 		 * to/from `localstorage`. If scripts are disabled all
@@ -66,17 +66,18 @@
 		};
 
 		// Run at page load
-		document.addEventListener("DOMContentLoaded", function (_, __) {
-			// Load preferences once.
-			const p = JSON.parse(localStorage.getItem('preferences') || '{}');
-			Object.entries(PREFERENCES).forEach(([key, values]) =>
-				document.getElementById(`${key}-${p[key] || values[0]}`).checked = true);
+		// document.addEventListener("DOMContentLoaded", function (_, __) {
+		// Load preferences once.
+		const p = JSON.parse(localStorage.getItem('preferences') || '{}');
+		Object.entries(PREFERENCES).forEach(([key, values]) =>
+			document.getElementById(`${key}-${p[key] || values[0]}`).checked = true);
 
-			// Register change handlers.
-			Object.entries(PREFERENCES).forEach(([key, values]) =>
-				values.forEach(value =>
-					document.getElementById(`${key}-${value}`).addEventListener('change', e =>
-						savePreferences())));
-		});
+		// Register change handlers.
+		Object.entries(PREFERENCES).forEach(([key, values]) =>
+			values.forEach(value =>
+				document.getElementById(`${key}-${value}`).addEventListener('change', e =>
+					savePreferences())));
+		// });
 	</script>
+	<noscript><style> .jsonly { display: none } </style></noscript>
 </head>

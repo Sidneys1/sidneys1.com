@@ -104,3 +104,10 @@ exclude:
 
 include:
 - .htaccess
+- _redirects
+
+defaults:
+  - scope:
+      path: "assets/404"
+    values:
+      "404": true

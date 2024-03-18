@@ -3,23 +3,26 @@ permalink: /404.html
 layout: base
 ---
 
-<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+<div class="center">
+	<h1>404</h1>
+	<p><strong>Page not found :(</strong></p>
+	<p>The requested page could not be found.</p>
 
-<div class="container">
-  <h1>404</h1>
+	<hr style="max-width: 50%; margin: 1em auto">
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
+	<noscript><p>If you had JavaScript enabled you'd find some dumb mini-games here...</p></noscript>
+	<div class="jsonly">
+		<div id="game-root">
+			<h2>Since you're here...</h2>
+			<p>How about a dumb mini-game?</p>
+		</div>
+		<script type="module">
+			document.getElementById('load-game-button').addEventListener('click', () => {
+				import("{{ '/assets/404_games.js' | absolute_url }}").then(module => {
+					module.default();
+				});
+			});
+		</script>
+		<button class="link" id="load-game-button">🎲 Load a random game...</button>
+	</div>
 </div>

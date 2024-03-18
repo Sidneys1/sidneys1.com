@@ -618,3 +618,17 @@ div:has(aside:hover, .aside-attn:hover) {
 	display: table;
 	clear: both;
 }
+
+button.link {
+	background: none!important;
+	border: none;
+	padding: 0!important;
+	/*optional*/
+	font-family: arial, sans-serif;
+	/*input has OS specific font-family*/
+	color: theme.$link-base-color;
+	cursor: pointer;
+	&:hover {
+		text-decoration: underline;
+	}
+}
