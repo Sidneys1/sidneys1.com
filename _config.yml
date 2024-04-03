@@ -49,8 +49,7 @@ plugins:
 
 alternative_access:
   - { platform: tor, user_url: "http://sidneys77crlfslcr7zmj3msmxchgnxhrxlp3p3kbaswo7twchjnicid.onion", title: "Tor" }
-  - { platform: ipfs, user_url: "https://ipfs.io/ipns/sidneys1.com", title: "IPFS (IPFS.io)" }
-  - { platform: ipfs, user_url: "https://cloudflare-ipfs.com/ipns/sidneys1.com", title: "IPFS (Cloudflare)" }
+  - { platform: ipfs, user_url: "https://sidneys1-com.ipns.cf-ipfs.com/", title: "IPFS (Cloudflare)" }
   - { platform: github, user_url: "https://sidneys1.github.io", title: "GitHub Pages" }
 
 author:
