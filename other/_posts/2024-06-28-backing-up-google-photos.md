@@ -9,6 +9,7 @@ author: Sidneys1
 toc: true
 excerpt_separator: <!--more-->
 permalink: /Backing-Up-Google-Photos/
+mastodon_comment_url: https://infosec.exchange/@Sidneys1/112696052754347038
 ---
 
 Google Photos is wonderful. It backs up my photos and videos, tags them, and makes them available to share with my
