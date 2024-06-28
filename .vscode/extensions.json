@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "marvhen.reflow-markdown",
+        "editorconfig.editorconfig",
+        "davidanson.vscode-markdownlint",
+        "streetsidesoftware.code-spell-checker"
+    ]
+}
