@@ -66,15 +66,15 @@ dialog.popover {
 //// Anchors
 
 .anchor {
-    padding-left: 1em;
+    // padding-left: 1em;
 
     &:target {
         font-weight: bolder;
 
         &::before {
             content: "⚓";
-            position: absolute;
-            margin-left: -1.5em;
+            // position: absolute;
+            // margin-left: -1.5em;
         }
     }
 }
@@ -261,6 +261,11 @@ p.c-compare:hover {
 .pill.multipart {
 	background-color: colors.$accent-compliment-color;
 	border-color: colors.$accent-compliment-color;
+}
+
+.pill.review {
+	background-color: colors.$accent-subtle;
+	border-color: colors.$accent-subtle;
 }
 
 //// TODO

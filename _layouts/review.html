@@ -1,10 +1,100 @@
 ---
-layout: default
+layout: base
 ---
-<h1>{{ page.title }}</h1>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+	<header class="post-header">
+		<h1 class="post-title review-title p-name" itemprop="name headline">{{ page.title }}</h1>
+		{%- if page.description -%}<h2 class="review-description">{{ page.description | escape }}</h2>{%- endif -%}
+		{%- if page.series -%}
+		<div class="series">This post is part of a series: <a href="{{ "/series.html" | absolute_url }}#{{ page.series
+				| slugify }}">{{ page.series | escape }}</a></div>
+		{%- endif -%}
+		{%- if page.erratum -%}
+		<div class="erratum-notice">This review has <a href="#erratum">erratum</a>.</div>
+		{%- endif -%}
+		<div class="post-meta">
+			<time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
+				{%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+				{{ page.date | date: date_format }}
+			</time>
+			{%- if page.author -%}
+			• <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+				<span class="p-author h-card" itemprop="name">{{ page.author }}</span></span>
+				{%- endif -%}
+		</div>
+	</header>
 
-<p id="description">{{ page.description | markdownify }}</p>
+	{%- if page.image -%}
+	<div class="post-image"><img src="{{ page.image | absolute_url }}" style="{% if page.image_shadow == false %}box-shadow: none;{% endif %}"></div>
+	{%- endif -%}
 
-{{ content }}
+	<!-- <div class="post-toc"> -->
+	{% toc %}
+	<!-- </div> -->
 
-{% include dynamic-review.html dynamic_content=page.dynamic_content %}
+
+	<div class="post-content e-content" itemprop="articleBody">
+		{{ page.excerpt }}
+		{% include at-a-glance.html pros=page.pros cons=page.cons %}
+		{% assign slice_start = page.excerpt.size | plus: page.excerpt_separator.size %}
+		{% assign slice_end = content.size | minus: slice_start %}
+		{{ content | slice: slice_start, slice_end }}
+	</div>
+
+	{% if page.erratum %}
+		<hr style="clear: both;">
+		<details id="erratum">
+			<summary>Erratum</summary>
+			<ul>
+				{% for erratum in page.erratum %}
+					<li>{{erratum}}</li>
+				{% endfor %}
+			</ul>
+		</details>
+	{% endif %}
+
+	<hr style="clear: both;">
+
+	<div class="donate">
+		Like what you read?
+		<a href="https://ko-fi.com/sidneys1" target="_blank" rel="noreferrer">
+			Consider buying me a coffee.
+		</a>
+		<br/>
+		<a title="Consider buying me a coffee." href="https://ko-fi.com/sidneys1" target="_blank" rel="noreferrer" style="display: inline-block;">
+			<!-- <img height="50px" title="Buy me a Coffee" src="{{"/assets/coffee-cup-1.svg" | absolute_url}}"/> -->
+			<svg class="svg-icon grey">
+				<use xlink:href="{{"/assets/coffee-cup-1.svg#coffee" | relative_url}}"></use>
+			</svg>
+		</a>
+	</div>
+
+	{%- if site.mode == "www" or site.mode == "local-prod" -%}
+	<section id="comments" data-url="{{ page.mastodon_comment_url }}">
+		<h2>Comments from Mastodon <span id="stats"></span></h2>
+		{% if page.mastodon_comment_url -%}
+		<p>
+			You can leave a comment by replying to <a target="_blank" href="{{ page.mastodon_comment_url }}">this
+			Mastodon post</a> from any ActivityPub-capable social network that can exchange replies with Mastodon.
+		</p>
+		<noscript><p class="disabled">Scripts are disabled.</p></noscript>
+		<template><article class="comment">
+			<div class="avatar"><img class="avatar"></div>
+			<div class="header">
+				<a class="user"><span class="displayname"></span><span class="handle"></span></a>
+				<a target="_blank" class="link"><span class="timestamp"></span></a>
+			</div>
+			<div class="content"></div>
+			<div class="tidbits"></div>
+		</article></template>
+		{%- else -%}
+		<p class="disabled">This review has not had comments enabled (yet).</p>
+		{%- endif -%}
+		<p id="comment-credit" class="disabled">Comment support inspired by <a href="https://blaede.family/@cassidy" target="_blank">Cassidy James <span class="social-handle">(@cassidy@blaede.family)</span></a> and some code borrowed from <a target="_blank" href="https://fietkau.social/@julian">Julian Fietkau <span class="social-handle">(@julian@fietkau.social)</span></a>.</p>
+	</section>
+	{%- else -%}
+	<p class="todo">Comments only visible under <code>site.mode == "www" or site.mode == "local-prod"</code>!</p>
+	{%- endif -%}
+
+	<a class="u-url" href="{{ page.url | absolute_url }}" hidden></a>
+</article>
