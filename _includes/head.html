@@ -15,6 +15,7 @@
 	{%- seo -%}
 
 	<link rel="stylesheet" href="{{ '/assets/css/main.css' | absolute_url }}">
+	<link rel="stylesheet" href="{{ '/hitcount.py.cgi' | absolute_url }}?path={{page.url | url_encode}}" fetchpriority="low" />
 
 	{%- feed_meta -%}
 

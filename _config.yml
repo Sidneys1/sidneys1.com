@@ -104,6 +104,7 @@ exclude:
 include:
 - .htaccess
 - _redirects
+- hitcount.py.cgi
 
 defaults:
   - scope:

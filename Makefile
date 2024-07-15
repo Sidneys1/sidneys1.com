@@ -1,4 +1,4 @@
-SRC := _config.yml $(shell find . -type f \( -iname '*.md' -o -iname '*.html' -o -iname '*.scss' \) -not \( -path './_site*/*' -o -path './github_pages/*' \))
+SRC := _config.yml $(shell find . -type f \( -iname '*.md' -o -iname '*.html' -o -iname '*.scss' -o -iname '*.cgi' \) -not \( -path './_site*/*' -o -path './github_pages/*' \))
 TIME:=$(shell date -Iminutes)
 
 ONLINE_SSH_HOST:=sidneys1_sidneys1@ssh.nyc1.nearlyfreespeech.net
@@ -25,6 +25,7 @@ publish: publish_online publish_tor publish_github publish_ipfs
 
 publish_online: _site/
 	rsync -icrz --delete _site/* ${ONLINE_SSH_HOST}:.
+	ssh ${ONLINE_SSH_HOST} 'mkdir -p ./writeable/ && chgrp web ./writeable/ && chmod g+w ./writeable/'
 
 publish_tor: _site_tor/
 	tar cz -C _site_tor . | ssh ${TOR_SSH_HOST} 'cat | sudo tar xz -C /var/www/html/ && echo PUBLISHED TO TOR SUCCESSFULLY'

@@ -1,5 +1,5 @@
 <footer class="site-footer h-card">
-	<data class="u-url" href="{{ " /" | absolute_url }}"></data>
+	<data class="u-url" href="{{ "/" | absolute_url }}"></data>
 
 	<div class="wrapper">
 
@@ -14,6 +14,15 @@
 			</div>
 			<div class="footer-col site-desc">
 				<p>{{ site.description | escape }}</p>
+				{%- if site.mode == "www" -%}
+				<div class="hitcount">
+					<h2 title="Since 2024-07-15">Hits</h2>
+					<h3>This Page</h3>
+					<h3>Total</h3>
+					<div class="hitcount-page"></div>
+					<div class="hitcount-total"></div>
+				</div>
+				{%- endif -%}
 				<hr>
 			</div>
 			<div class="footer-col">
