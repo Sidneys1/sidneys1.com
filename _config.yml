@@ -32,6 +32,8 @@ paginate: 10
 markdown: kramdown
 kramdown:
    math_engine: mathjax
+   footnote_backlink: '🔙'
+   footnote_backlink_inline: false
 
 # Build settings
 theme: minima
@@ -120,3 +122,7 @@ defaults:
 collections:
   reviews:
     output: true
+
+feed:
+  collections:
+  - reviews

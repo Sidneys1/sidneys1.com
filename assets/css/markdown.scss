@@ -443,7 +443,7 @@ summary {
 
 //// External links
 
-:is(post-content, section#comments) a[target="_blank"]::after {
+:is(.post-content, section#comments) a[target="_blank"]:not(.no-arrow)::after {
 	content: ' ';
 	// background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9IiMyQTdBRTIiIHZpZXdCb3g9IjAgMCA4IDgiPjxwYXRoIGQ9Ik0wIDB2OGg4VjZIN3YxSDFWMWgxVjBIMHptNCAwIDEuNSAxLjVMMyA0bDEgMSAyLjUtMi41TDggNFYwSDR6Ii8+PC9zdmc+");
 	// background-size: calc(min(1em, 8px)) calc(min(1em, 8px));
@@ -514,4 +514,29 @@ audio {
 	.highlight .gi {
 		background-color: rgb(43, 83, 43) !important;
 	}
+}
+
+.hidden-header:target {
+	transition: height 500ms ease-in-out, margin 500ms ease-in-out, opacity 500ms ease-in-out 500ms;
+}
+
+.hidden-header:not(:target) {
+	opacity: 0 !important;
+	height: 0px !important;
+	margin: 0 0 0 0 !important;
+
+	transition: height 500ms ease-in-out 500ms, margin 500ms ease-in-out 500ms, opacity 500ms ease-in-out;
+}
+
+hr.short-rule {
+	width: calc(100% / 3);
+	margin: 0 auto;
+}
+
+.critique {
+	text-decoration: underline wavy color-mix(in srgb, var(--sidneys1-red-accent) 75%, transparent);
+}
+
+.praise {
+	text-decoration: underline wavy color-mix(in srgb, var(--sidneys1-green-accent) 75%, transparent);
 }
