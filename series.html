@@ -6,7 +6,8 @@ title: Series
 {% comment %}
 {% endcomment %}
 {% assign rawseries = "" %}
-{% assign pages = site.posts | concat: site.reviews %}
+{% assign pages = site.posts  %}
+<!-- | concat: site.reviews -->
 {% for post in pages %}
 	{% assign tseries = post.series | join:'|' | append:'|' %}
 	{% assign rawseries = rawseries | append:tseries %}

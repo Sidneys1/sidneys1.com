@@ -113,16 +113,3 @@ defaults:
       path: "assets/404"
     values:
       "404": true
-  - scope:
-      path: ""
-      type: "reviews"
-    values:
-      layout: "review"
-
-collections:
-  reviews:
-    output: true
-
-feed:
-  collections:
-  - reviews
