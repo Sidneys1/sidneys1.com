@@ -511,3 +511,16 @@ audio {
 		background-color: rgb(43, 83, 43) !important;
 	}
 }
+
+pre.amber-term code {
+	// font-size: larger;
+	font-weight: bold;
+	color: #EFB143 !important;
+	text-shadow: 0px 0px 5px #EFB14380;
+}
+
+code.amber-term {
+	background-color: #212121;
+	color: #EFB143;
+	text-shadow: 0px 0px 5px #EFB14380;
+}
