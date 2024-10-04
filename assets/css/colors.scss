@@ -3,9 +3,18 @@
 @use "sass:map";
 @use "sass:list";
 
+$highlight-1: rgba(#d65cc6, 0.5);
+$highlight-2: rgba(#956bcd, 0.5);
+$highlight-3: rgba(#4db1bc, 0.5);
+$highlight-4: rgba(#4dbc60, 0.5);
+$highlight-5: rgba(#9bbc4d, 0.5);
+$highlight-6: rgba(#bc904d, 0.5);
 $highlight-1-dark: rgba(#d65cc6, 0.5);
 $highlight-2-dark: rgba(#956bcd, 0.5);
 $highlight-3-dark: rgba(#4db1bc, 0.5);
+$highlight-4-dark: rgba(#4dbc60, 0.5);
+$highlight-5-dark: rgba(#9bbc4d, 0.5);
+$highlight-6-dark: rgba(#bc904d, 0.5);
 
 $red-accent: var(--sidneys1-red-accent);
 $red-accent-subtle: var(--sidneys1-red-accent-subtle);
@@ -46,9 +55,12 @@ $colors: (
     "accent-subtle": #{$blue-accent-subtle} #{$blue-accent-subtle},
     "accent-compliment-color": #{$blue-accent-compliment} #{$blue-accent-compliment},
 
-    "highlight-1": rgba(#d65cc6, 0.5) $highlight-1-dark,
-    "highlight-2": rgba(#834ccb, 0.5) $highlight-2-dark,
-    "highlight-3": rgba(#4db1bc, 0.5) $highlight-3-dark,
+    "highlight-1": $highlight-1 $highlight-1-dark,
+    "highlight-2": $highlight-2 $highlight-2-dark,
+    "highlight-3": $highlight-3 $highlight-3-dark,
+    "highlight-4": $highlight-4 $highlight-4-dark,
+    "highlight-5": $highlight-5 $highlight-5-dark,
+    "highlight-6": $highlight-6 $highlight-6-dark,
 );
 
 $accent-color: var(--sidneys1-accent-color);
@@ -61,6 +73,9 @@ $link-compliment-color: var(--sidneys1-link-compliment-color);
 $highlight-1: var(--sidneys1-highlight-1);
 $highlight-2: var(--sidneys1-highlight-2);
 $highlight-3: var(--sidneys1-highlight-3);
+$highlight-4: var(--sidneys1-highlight-4);
+$highlight-5: var(--sidneys1-highlight-5);
+$highlight-6: var(--sidneys1-highlight-6);
 
 :root {
     @each $name, $color in $colors {

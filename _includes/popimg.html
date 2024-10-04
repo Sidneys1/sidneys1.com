@@ -1,11 +1,15 @@
 {% assign randomNumber = "now" | date: "%N" | modulo: 255 %}
 {% capture popid %}{{ randomNumber | append: "-" }}{{ include.alt | slugify }}{% endcapture %}
+{% capture popstyle -%}
+  {%- if include.height %}max-height:{{include.height}};{% endif -%}
+  {%- if include.width %}max-width:{{include.width}};{% endif -%}
+{%- endcapture %}
 
-<div class="popunder">
+<div class="popunder" {% if include.style %}style="{{include.style}}"{% endif %}>
 	{% if include.thumb %}
-		<img class="pop" src="{{ include.thumb | absolute_url }}" alt="{{ include.alt }}" title="{{ include.alt }}" onclick="document.getElementById('{{ popid }}').showModal()">
+		<img class="pop" style="{{popstyle}}" src="{{ include.thumb | absolute_url }}" alt="{{ include.alt }}" title="{{ include.alt }}" onclick="document.getElementById('{{ popid }}').showModal()">
 	{% else %}
-		<img class="pop" src="{{ include.src | absolute_url }}" alt="{{ include.alt }}" title="{{ include.alt }}" onclick="document.getElementById('{{ popid }}').showModal()">
+		<img class="pop" style="{{popstyle}}" src="{{ include.src | absolute_url }}" alt="{{ include.alt }}" title="{{ include.alt }}" onclick="document.getElementById('{{ popid }}').showModal()">
 	{% endif %}
 	<em>Click to zoom.</em>
 </div>
