@@ -24,7 +24,7 @@ _site_%/: ${SRC}
 publish: publish_online publish_tor publish_github publish_ipfs
 
 publish_online: _site/
-	rsync -icrz --delete _site/* ${ONLINE_SSH_HOST}:.
+	rsync -icrz --delete --exclude writeable/ _site/* ${ONLINE_SSH_HOST}:.
 	ssh ${ONLINE_SSH_HOST} 'mkdir -p ./writeable/ && chgrp web ./writeable/ && chmod g+w ./writeable/'
 
 publish_tor: _site_tor/
