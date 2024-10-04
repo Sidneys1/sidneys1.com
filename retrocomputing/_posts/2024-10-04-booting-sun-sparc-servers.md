@@ -8,6 +8,7 @@ image: /images/sparc-journey/hero.jpg
 image_shadow: true
 toc: true
 excerpt_separator: <!--more-->
+mastodon_comment_url: https://infosec.exchange/@Sidneys1/113250979290486754
 
 carousels:
   - images:
