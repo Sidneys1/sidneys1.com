@@ -8,6 +8,7 @@ image: /images/html5-canvas-tips/hero.png
 image_shadow: false
 toc: true
 excerpt_separator: <!--more-->
+mastodon_comment_url: https://infosec.exchange/@Sidneys1/113584748001153882
 ---
 
 The `<canvas>` element may be the best thing to happen to HTML since `<marquee>`. I've been
