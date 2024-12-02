@@ -54,33 +54,6 @@
     }
 }
 
-@keyframes theme-select-pulse {
-    0% {
-        box-shadow: 0 0 0 0 #{theme.$background-color},
-        0 0 0 0 #{colors.$accent-color};
-    }
-
-    10% {
-        box-shadow: 0 0 0 0 #{theme.$background-color},
-        0 0 0 10px #{colors.$accent-color};
-    }
-
-    20% {
-        box-shadow: 0 0 0 20px transparent,
-            0 0 0 20px transparent;
-    }
-
-    // 40% {
-    //     box-shadow: 0 0 0 20px transparent,
-    //     0 0 0 20px transparent;
-    // }
-
-    100% {
-        box-shadow: 0 0 0 20px transparent,
-            0 0 0 20px transparent;
-    }
-}
-
 #theme-select {
     position: relative;
     display: flex;
@@ -101,7 +74,7 @@
     opacity: 50%;
     transition: opacity 1s ease-in-out, font-size 1s ease-in-out;
 
-    animation: 2s linear 3s 2 backwards theme-select-pulse, 2s ease-in-out 7s 1 backwards theme-select-fade-out;
+    animation: 2s ease-in-out 3s 1 backwards theme-select-fade-out;
 
     &:is(:hover, :active, :focus-within, :focus) {
         opacity: 1;
@@ -203,7 +176,6 @@
         margin-right: auto;
         max-width: calc(100vw - #{theme.$spacing-unit * 2});
         opacity: 1;
-        animation: 2s linear 3s 2 backwards theme-select-pulse;
         font-size: small;
     }
 

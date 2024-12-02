@@ -212,6 +212,21 @@ kbd {
 			display: block;
 		}
 
+		&.language-html::before {
+			content: attr(data-file-name, '.html');
+			display: block;
+		}
+
+		&.language-css::before {
+			content: attr(data-file-name, '.css');
+			display: block;
+		}
+
+		&.language-js::before {
+			content: attr(data-file-name, '.js');
+			display: block;
+		}
+
 		&[data-file-name]::before {
 			box-shadow: 0px 0px 10px #00000033;
 			content: attr(data-file-name);
