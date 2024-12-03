@@ -1,15 +1,10 @@
 ---
 layout: post
 title:  "DCT Playground"
-subtitle: "Let's JPEG-compress music!"
-# date:   2022-03-23 13:04:39 -0400
-# tags: [programming]
-# series: Raytracing
+subtitle: "This audio clip needs more JPEG..."
+tags: [programming]
 author: Sidneys1
-# image: /images/2022-03-23-raytracing/hero.png
-# toc: true
 excerpt_separator: <!--more-->
-permalink: /dct-playground.html
 ---
 
 A discreet cosine transform (<dfn><abbr title="Discreet Cosine Transform">DCT</abbr></dfn>) is a method of encoding
@@ -18,26 +13,6 @@ frequencies. Woof! That's a mouth full. Put more simply, any set of $$n$$ values
 weights to waves produced by the $$\cos$$ function. Let's try and explore this concept intuitively!
 
 <!--more-->
-
-<!--
-
-So for example, the data on the left could be expressed as the set of weights on the right:
-
-$$
-\mathrm{dct}\big(\begin{bmatrix}
-0.12, & -0.30, & 0.45
-\end{bmatrix}\big)=\begin{bmatrix}
--0.98, & 0.70, & 0.23
-\end{bmatrix}
-$$
-
-This would result in this function that produces a curve that, when sampled at three points, would recreate our input
-values $$0.12$$, $$-0.30$$, and $$0.45$$:
-
-$$
--0.98+\cos(x\pi)\cdot0.7+\cos(x\pi2)\cdot0.23
-$$
-<!---->
 
 Here on the left we can see an **Input** waveform that we're trying to match. To its right we see a series of
 $$\cos(Nx)$$-based waves (where $$N$$ increases as we go across) that are scaled by some $$\theta$$. These sum together
@@ -161,15 +136,24 @@ for k in range(0, N):
                for n in range(0, N))
 ```
 
-Here's a waveform from an actual sound[^1]!
+Here's 32 samples of a waveform from an actual sound[^1], and the 32 DCT values that can represent it. You can tweak the
+values to see the output change.
 
 <div style="height: 278px; width: calc(100%+60px); position: relative;margin: 0 -30px;">
-	<canvas data-class="DCT" data-src="{{ '/assets/posts/samples.json' | absolute_url }}" data-auto="true" data-terms="4" width="1" height="1"></canvas>
+	<canvas data-class="DCT" data-src="{{ '/assets/posts/samples.json' | absolute_url }}" width="1" height="1"></canvas>
 </div>
-
-<script src="{{ '/assets/posts/discreet-cosine-transformations.js' | absolute_url }}" defer></script>
 
 [^1]: [hello.mp3 by james11111][hellomp3]{: target="_blank" }; License: [CC-A 3.0][cca]{: target="_blank" }.
 
 [hellomp3]: https://freesound.org/people/james11111/sounds/34312/
 [cca]: http://creativecommons.org/licenses/by/3.0/
+
+## Quant-a-tize Me, Cap'n!
+
+Now let's play with quantization.
+
+<div style="height: 278px; width: calc(100%+60px); position: relative;margin: 0 -30px;">
+	<canvas data-class="Quant" data-src="{{ '/assets/posts/samples.json' | absolute_url }}" width="1" height="1"></canvas>
+</div>
+
+<script src="{{ '/assets/posts/discreet-cosine-transformations.js' | absolute_url }}" defer></script>
