@@ -156,6 +156,10 @@ kbd {
 	&[align="left"] {
 		margin-right: 1em;
 	}
+
+	&.no-shadow {
+		box-shadow: none !important;
+	}
 }
 
 //// Code blocks

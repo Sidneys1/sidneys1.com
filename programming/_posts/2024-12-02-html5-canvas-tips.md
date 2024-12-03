@@ -33,22 +33,56 @@ canvas:not(.no-shadow) {
 .highlight-4 {
 	text-shadow: 0 0 3px #00000080;
 }
+
+.grid-2 {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	gap: 1em;
+
+	> div, > figure {
+		align-self: center;
+	}
+}
+
+.grid-3 {
+	display: grid;
+	grid-template-columns: 1fr auto auto;
+	gap: 1em;
+
+	> div, > figure {
+		align-self: center;
+	}
+}
+
+figcaption {
+	font-weight: bold;
+}
+
+@media screen and (max-width: 1200px) {
+	:is(.grid-2,.grid-2-even,.grid-3):not(.no-phone-layout) {
+		display: block;
+		> canvas, > figure > canvas {
+			margin-left: auto;
+			margin-right: auto;
+			display: block;
+		}
+	}
+}
 </style>
 
-## Pixel Canvas
+## Pixel-Art Canvas
 
 If you've used canvas at all you know that its `width="xxx"` and `height="xxx"` attributes define the dimensions of the
 image the canvas represents, while you can use the `style="width: xxx; height: xxx;"` CSS properties to control the
 size of the element on the page. If you're trying to create a pixelated-style game, you can use the CSS to scale up a
 relatively small canvas:
 
-<div style="display: grid; grid-template-columns: 1fr auto; gap: 1em;">
-
-<div markdown="1" style="align-self: center;">
-
+<img id="favicon" src="{{ '/favicon.png' | absolute_url }}" style="display:none;" />
+<div class="grid-2">
+<div markdown="1">
 ```html
 <canvas id="pixelated-canvas"
-        width="50" height="50"></canvas>
+		width="50" height="50"></canvas>
 ```
 
 ```css
@@ -62,57 +96,61 @@ ctx.fillRect(0, 0, 50, 50);
 ctx.strokeStyle = 'black';
 ctx.rect(5, 5, 40, 40);
 ctx.stroke();
+ctx.drawImage(document.getElementById('favicon'), 13, 13, 24, 24);
 ```
-
+</div>
+	<canvas id="pixelated-canvas" width="50" height="50" style="width: 300px; height: 300px;"></canvas>
+	<script>
+		window.addEventListener('load', e => {
+			const canvas = document.getElementById('pixelated-canvas');
+			if (!(canvas instanceof HTMLCanvasElement)) throw `Expected 'canvas', got '${canvas?.constructor.name}'`;
+			const ctx = canvas.getContext('2d');
+			ctx.fillStyle = 'grey';
+			ctx.fillRect(0, 0, 50, 50);
+			ctx.rect(5, 5, 40, 40);
+			ctx.strokeStyle = 'black';
+			ctx.stroke();
+			ctx.drawImage(document.getElementById('favicon'), 13, 13, 24, 24);
+		});
+	</script>
 </div>
 
-<canvas id="pixelated-canvas" width="50" height="50" style="width: 300px; height: 300px;"></canvas>
-<script>
-window.addEventListener('load', e => {
-    const canvas = document.getElementById('pixelated-canvas');
-    if (!(canvas instanceof HTMLCanvasElement)) throw `Expected 'canvas', got '${canvas?.constructor.name}'`;
-    const ctx = canvas.getContext('2d');
-    ctx.fillStyle = 'grey';
-    ctx.fillRect(0, 0, 50, 50);
-    ctx.rect(5, 5, 40, 40);
-    ctx.strokeStyle = 'black';
-    ctx.stroke();
-});
-</script>
-
-<div style="grid-column:1/3;" markdown="1">
 Well, isn't that ugly! Thankfully we can fix it with the `image-rendering: pixelated` CSS property. Also note while
-we're here that the stroke borders two pixels. That's because the point coordinates fall on the borders between pixels.
-To overcome this, we'll also offset the coordinates by half a pixel.
+we're here that the stroke seems to be two pixels wide, and semi-transparent. That's because the point coordinates fall
+on the borders between pixels, and the line is being drawn as if it was halfway between them. To overcome this, we'll
+need to offset the coordinates of the line by half a pixel. Maybe an illustration will help:
+
+<div style="display: flex;flex-wrap:wrap;justify-content:center;">
+	<img class="no-shadow" alt="An illustration of attempting to draw a line on a pixel grid." src="{{ '/images/html5-canvas-tips/grid-0-0.png' | absolute_url }}"/>
+	<img class="no-shadow" alt="An illustration of attempting to draw a line on a pixel grid, offset by half a unit." src="{{ '/images/html5-canvas-tips/grid-05-05.png' | absolute_url }}"/>
 </div>
 
-<div markdown="1" style="align-self: center;">
+So, let's apply these fixes:
 
-<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">canvas</span> <span class="p">{</span> <span class="nl">width</span><span class="p">:</span> <span class="m">300px</span><span class="p">;</span> <span class="nl">height</span><span class="p">:</span> <span class="m">300px</span><span class="p">;</span>
-         <span class="highlight-4"><span class="nl">image-rendering</span><span class="p">:</span> <span class="n">pixelated</span><span class="p">;</span></span> <span class="p">}</span>
-</code></pre></div>    </div>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ...</span>
+<div class="grid-2">
+	<div>
+		<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">canvas</span> <span class="p">{</span> <span class="nl">width</span><span class="p">:</span> <span class="m">300px</span><span class="p">;</span> <span class="nl">height</span><span class="p">:</span> <span class="m">300px</span><span class="p">;</span>
+         <span class="highlight-4"><span class="nl">image-rendering</span><span class="p">:</span> <span class="n">pixelated</span><span class="p">;</span></span> <span class="p">}</span></code></pre></div>
+		</div>
+		<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ...</span>
 <span class="nx">ctx</span><span class="p">.</span><span class="nf">rect</span><span class="p">(</span><span class="mf">5<span class="highlight-4">.5</span></span><span class="p">,</span> <span class="mf">5<span class="highlight-4">.5</span></span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">40</span><span class="p">);</span>
-<span class="nx">ctx</span><span class="p">.</span><span class="nf">stroke</span><span class="p">();</span>
-</code></pre></div>    </div>
-
-</div>
-
-<canvas id="pixelated-canvas-2" width="50" height="50" style="width: 300px; height: 300px; image-rendering: pixelated;"></canvas>
-<script>
-window.addEventListener('load', e => {
-    const canvas = document.getElementById('pixelated-canvas-2');
-    if (!(canvas instanceof HTMLCanvasElement)) throw 'bla';
-    const ctx = canvas.getContext('2d');
-    ctx.fillStyle = 'grey';
-    ctx.fillRect(0, 0, 50, 50);
-    ctx.rect(5.5, 5.5, 40, 40);
-    ctx.strokeStyle = 'black';
-    ctx.stroke();
-});
-</script>
-
+<span class="c1">// ...</span></code></pre></div>
+		</div>
+	</div>
+	<canvas id="pixelated-canvas-2" width="50" height="50" style="width: 300px; height: 300px; image-rendering: pixelated;"></canvas>
+	<script>
+		window.addEventListener('load', e => {
+			const canvas = document.getElementById('pixelated-canvas-2');
+			if (!(canvas instanceof HTMLCanvasElement)) throw 'bla';
+			const ctx = canvas.getContext('2d');
+			ctx.fillStyle = 'grey';
+			ctx.fillRect(0, 0, 50, 50);
+			ctx.rect(5.5, 5.5, 40, 40);
+			ctx.strokeStyle = 'black';
+			ctx.stroke();
+			ctx.drawImage(document.getElementById('favicon'), 13, 13, 24, 24);
+		});
+	</script>
 </div>
 
 ## HI-DPI Canvas
@@ -121,11 +159,8 @@ Because the canvas element has a specific size in pixels, it is not DPI-aware. T
 browser zoom is set to anything other than 100%, the number of physical screen pixels that represent each CSS pixel may
 not be in a 1-to-1 ratio.
 
-<div style="display: grid; grid-template-columns: 1fr auto auto; gap: 1em;">
-
-<div style="text-align: center; grid-column: 2/3;font-weight: bold;">Canvas</div><div style="text-align: center;font-weight: bold;">Zoomed 3x</div>
-
-<div markdown="1" style="align-self: center;">
+<div class="grid-3">
+<div markdown="1">
 
 ```js
 // This is the current pixel ratio of device pixels to CSS pixels. For example,
@@ -147,37 +182,44 @@ ctx.fillText(`Ratio: ${(ratio*100).toFixed(0)}%`, 30, 100);
 
 </div>
 
-<canvas id="hidpi-canvas" width="200" height="200"></canvas>
-<script>
-window.addEventListener('load', e => {
-    const ratio = window.devicePixelRatio || 1;
-    const canvas = document.getElementById('hidpi-canvas');
-    if (!(canvas instanceof HTMLCanvasElement)) throw 'bla';
-    const ctx = canvas.getContext('2d');
-    ctx.fillStyle = 'grey';
-    ctx.fillRect(0, 0, 200, 200);
-    ctx.moveTo(50.5, 105.5);
-    ctx.lineTo(150.5, 105.5);
-    ctx.strokeStyle = 'black';
-    ctx.stroke();
-    ctx.font = '20pt serif';
-    ctx.fillStyle = 'black';
-    const text = `Ratio: ${(ratio*100).toFixed(0)}%`;
-    const size = ctx.measureText(text);
-    ctx.fillText(text, 100-(size.width / 2), 100);
-});
-</script>
+<figure>
+	<figcaption>Canvas</figcaption>
+	<canvas id="hidpi-canvas" width="200" height="200"></canvas>
+	<script>
+	window.addEventListener('load', e => {
+		const ratio = window.devicePixelRatio || 1;
+		const canvas = document.getElementById('hidpi-canvas');
+		if (!(canvas instanceof HTMLCanvasElement)) throw 'bla';
+		const ctx = canvas.getContext('2d');
+		ctx.fillStyle = 'grey';
+		ctx.fillRect(0, 0, 200, 200);
+		ctx.moveTo(50.5, 105.5);
+		ctx.lineTo(150.5, 105.5);
+		ctx.strokeStyle = 'black';
+		ctx.stroke();
+		ctx.font = '20pt serif';
+		ctx.fillStyle = 'black';
+		const text = `Ratio: ${(ratio*100).toFixed(0)}%`;
+		const size = ctx.measureText(text);
+		ctx.fillText(text, 100-(size.width / 2), 100);
+	});
+	</script>
+</figure>
 
-<img style="align-self: center; margin-bottom: 15px;" src="{{ '/images/html5-canvas-tips/bad-hi-dpi.png' | absolute_url }}">
-
-<div style="grid-column: 1/4;" markdown="1">
-Note how the text is blurry, and the line below it is as well, despite using our half a pixel offset trick from
-[the previous section](#pixel-canvas) (if your ratio is 100%, just consult the screenshot)? Let's make some tweaks to
-the canvas to work around this:
+<figure>
+	<figcaption>Zoomed 3x</figcaption>
+	<img style="align-self: center; margin-bottom: 15px;" src="{{ '/images/html5-canvas-tips/bad-hi-dpi.png' | absolute_url }}">
+</figure>
 </div>
 
-<div style="align-self: center;">
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ...</span>
+Note how the text is blurry, and the line below it is as well, despite using our half a pixel offset trick from
+[the previous section](#pixel-art-canvas) (if your ratio is 100%, just consult the screenshot)? Let's make some tweaks
+to the canvas to work around this:
+
+
+<div class="grid-3">
+	<div style="align-self: center;">
+		<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ...</span>
 <span class="kd">const</span> <span class="nx">ratio</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">devicePixelRatio</span> <span class="o">||</span> <span class="mi">1</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nf">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">hidpi-canvas</span><span class="dl">'</span><span class="p">);</span>
 <span class="highlight-4"><span class="nx">canvas</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span><span class="p">}</span><span class="s2">px`</span><span class="p">;</span>
@@ -186,38 +228,52 @@ the canvas to work around this:
 <span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span> <span class="o">*=</span> <span class="nx">ratio</span><span class="p">;</span></span>
 <span class="kd">const</span> <span class="nx">ctx</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nf">getContext</span><span class="p">(</span><span class="dl">'</span><span class="s1">2d</span><span class="dl">'</span><span class="p">);</span>
 <span class="highlight-4"><span class="nx">ctx</span><span class="p">.</span><span class="nf">scale</span><span class="p">(</span><span class="nx">ratio</span><span class="p">,</span> <span class="nx">ratio</span><span class="p">);</span></span>
-<span class="c1">// ...</span></code></pre></div>    </div>
+<span class="c1">// ...</span></code></pre></div>
+		</div>
+	</div>
+	<figure>
+		<figcaption>Canvas</figcaption>
+		<canvas id="hidpi-canvas-2" width="200" height="200"></canvas>
+		<script>
+		window.addEventListener('load', e => {
+			const ratio = window.devicePixelRatio || 1;
+			const canvas = document.getElementById('hidpi-canvas-2');
+			if (!(canvas instanceof HTMLCanvasElement)) throw 'bla';
+			canvas.style.width = `${canvas.width}px`;
+			canvas.style.height = `${canvas.height}px`;
+			canvas.width *= ratio;
+			canvas.height *= ratio;
+			const ctx = canvas.getContext('2d');
+			ctx.scale(ratio, ratio);
+			ctx.fillStyle = 'grey';
+			ctx.fillRect(0, 0, 200, 200);
+			ctx.moveTo(50.5, 105.5);
+			ctx.lineTo(150.5, 105.5);
+			ctx.strokeStyle = 'black';
+			ctx.stroke();
+			ctx.font = '20pt serif';
+			ctx.fillStyle = 'black';
+			const text = `Ratio: ${(ratio*100).toFixed(0)}%`;
+			const size = ctx.measureText(text);
+			ctx.fillText(text, 100-(size.width / 2), 100);
+		});
+		</script>
+	</figure>
+	<figure>
+		<figcaption>Zoomed 3x</figcaption>
+		<img style="align-self: center; margin-bottom: 15px;" src="{{ '/images/html5-canvas-tips/good-hi-dpi.png' | absolute_url }}">
+	</figure>
 </div>
 
-<canvas id="hidpi-canvas-2" width="200" height="200"></canvas>
-<script>
-window.addEventListener('load', e => {
-    const ratio = window.devicePixelRatio || 1;
-    const canvas = document.getElementById('hidpi-canvas-2');
-    if (!(canvas instanceof HTMLCanvasElement)) throw 'bla';
-    canvas.style.width = `${canvas.width}px`;
-    canvas.style.height = `${canvas.height}px`;
-    canvas.width *= ratio;
-    canvas.height *= ratio;
-    const ctx = canvas.getContext('2d');
-    ctx.scale(ratio, ratio);
-    ctx.fillStyle = 'grey';
-    ctx.fillRect(0, 0, 200, 200);
-    ctx.moveTo(50.5, 105.5);
-    ctx.lineTo(150.5, 105.5);
-    ctx.strokeStyle = 'black';
-    ctx.stroke();
-    ctx.font = '20pt serif';
-    ctx.fillStyle = 'black';
-    const text = `Ratio: ${(ratio*100).toFixed(0)}%`;
-    const size = ctx.measureText(text);
-    ctx.fillText(text, 100-(size.width / 2), 100);
-});
-</script>
+Note that in the case of my screenshots, the device scaling is 150%, which means for every CSS pixel there are 1.5
+device pixels. That means that no matter how much scaling fanciness we do, our 1px line will never perfectly align to
+the screen's pixel grid.
 
-<img style="align-self: center; margin-bottom: 15px;" src="{{ '/images/html5-canvas-tips/good-hi-dpi.png' | absolute_url }}">
+This graphic depicts a 150% scaling ratio between the device pixels (the white and gray grid) and CSS pixels (the black
+dotted lines). The red outlines show where a line would be drawn, aligned to the CSS pixel grid. The green pixels show
+the effective rasterization of the red area to the physical pixel grid.
 
-</div>
+![An example of fractional scaling causing misalignment between CSS and physical pixels.]({{ '/images/html5-canvas-tips/fractional-scaling.png' | absolute_url }}){:.no-shadow}
 
 ## ClearType Font Smoothing
 
@@ -231,80 +287,89 @@ need to use an opaque canvas, created by passing some options to the canvas' `ge
 <span class="kd">const</span> <span class="nx">ctx</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nf">getContext</span><span class="p">(</span><span class="dl">'</span><span class="s1">2d</span><span class="dl">'</span><span class="p">,</span> <span class="highlight-4"><span class="p">{</span><span class="na">alpha</span><span class="p">:</span> <span class="kc">false</span><span class="p">}</span></span><span class="p">);</span>
 </code></pre></div></div>
 
-<div style="display: grid; grid-template-columns: auto 1fr auto; gap: 0 1em;">
+<div class="grid-2 no-phone-layout" style="gap:0;">
 
-<div style="grid-column: 3; font-weight: bold;text-align: center;">Zoomed 4x</div>
+<!-- <div style="grid-column: 3; font-weight: bold;text-align: center;">Zoomed 4x</div> -->
 
-<div style="align-self: center; font-style:italic; justify-self: end;">Browser-rendered text:</div>
+<!-- <div style="align-self: center; font-style:italic; justify-self: end;">Browser-rendered text:</div> -->
 
-<div id="hello-world" style="align-self: center; text-align: center;color: grey;">Hello, World!</div>
+<figure>
+	<figcaption>Browser-Rendered Text</figcaption>
+	<div id="hello-world" style="align-self: center; text-align: center;color: grey;">Hello, World!</div>
+</figure>
 
-<img style="align-self: center; margin-bottom: 15px;" src="{{ '/images/html5-canvas-tips/browser-text.png' | absolute_url }}">
+<figure>
+	<img style="align-self: center; margin-bottom: 15px;" src="{{ '/images/html5-canvas-tips/browser-text.png' | absolute_url }}">
+</figure>
 
-<div style="align-self: center;font-style:italic; justify-self: end;">Default canvas-rendered text (with HI-DPI fix):</div>
-<canvas id="no-cleartype-canvas" class="no-shadow" width="200" height="50"></canvas>
-<script>
-window.addEventListener('load', e => {
-    const helloWorld = document.getElementById('hello-world');
-    if (!(helloWorld instanceof HTMLDivElement)) throw 'Expected div!';
-    const font = window.getComputedStyle(helloWorld).font;
-    const ratio = window.devicePixelRatio || 1;
-    const canvas = document.getElementById('no-cleartype-canvas');
-    if (!(canvas instanceof HTMLCanvasElement)) throw 'bla';
-    canvas.style.width = `${canvas.width}px`;
-    canvas.style.height = `${canvas.height}px`;
-    canvas.width *= ratio;
-    canvas.height *= ratio;
-    const ctx = canvas.getContext('2d');
-    ctx.scale(ratio, ratio);
-    ctx.font = font;
-    ctx.fillStyle = 'grey';
-    const text = 'Hello, World!';
-    const size = ctx.measureText(text);
-    ctx.fillText(text, 100-(size.width / 2), 40);
-});
-</script>
+<figure>
+	<figcaption>Default Canvas-Rendered Text, With HI-DPI Fix</figcaption>
+	<canvas id="no-cleartype-canvas" class="no-shadow" width="200" height="24" style="margin: 0 auto;display:block;"></canvas>
+	<script>
+	window.addEventListener('load', e => {
+		const helloWorld = document.getElementById('hello-world');
+		if (!(helloWorld instanceof HTMLDivElement)) throw 'Expected div!';
+		const font = window.getComputedStyle(helloWorld).font;
+		const ratio = window.devicePixelRatio || 1;
+		const canvas = document.getElementById('no-cleartype-canvas');
+		if (!(canvas instanceof HTMLCanvasElement)) throw 'bla';
+		canvas.style.width = `${canvas.width}px`;
+		canvas.style.height = `${canvas.height}px`;
+		canvas.width *= ratio;
+		canvas.height *= ratio;
+		const ctx = canvas.getContext('2d');
+		ctx.scale(ratio, ratio);
+		ctx.font = font;
+		ctx.fillStyle = 'grey';
+		const text = 'Hello, World!';
+		const size = ctx.measureText(text);
+		ctx.fillText(text, 100-(size.width / 2), 24-size.fontBoundingBoxDescent);
+	});
+	</script>
+</figure>
 <img style="align-self: center; margin-bottom: 15px;" src="{{ '/images/html5-canvas-tips/bad-canvas-text.png' | absolute_url }}">
 
-<div style="align-self: center;font-style:italic; justify-self: end;">Canvas-rendered text with HI-DPI and ClearType fix:</div>
-<canvas id="cleartype-canvas" class="no-shadow" width="200" height="50"></canvas>
-<script>
-function getBgColor(element) {
-    if (element === undefined) throw "Reached end of tree...";
-    const bg = window.getComputedStyle(element).background;
-    if (bg === 'none') return getBgColor(element.parentElement);
-    return [bg, element];
-}
-function redraw(ctx, bg) {
-    const helloWorld = document.getElementById('hello-world');
-    if (!(helloWorld instanceof HTMLDivElement)) throw 'Expected div!';
-    const font = window.getComputedStyle(helloWorld).font;
-    ctx.fillStyle = bg;
-    ctx.fillRect(0, 0, 200, 50);
-    ctx.font = font;
-    ctx.fillStyle = 'grey';
-    const text = 'Hello, World!';
-    const size = ctx.measureText(text);
-    ctx.fillText(text, 100-(size.width / 2), 40);
-}
-window.addEventListener('load', e => {
-    const ratio = window.devicePixelRatio || 1;
-    const canvas = document.getElementById('cleartype-canvas');
-    if (!(canvas instanceof HTMLCanvasElement)) throw 'bla';
-    canvas.style.width = `${canvas.width}px`;
-    canvas.style.height = `${canvas.height}px`;
-    canvas.width *= ratio;
-    canvas.height *= ratio;
-    const ctx = canvas.getContext('2d', {alpha: false});
-	ctx.scale(ratio, ratio);
-    const [bg, element] = getBgColor(canvas);
-    element.addEventListener('change', e => {
-        const [bg2, element] = getBgColor(canvas);
-        redraw(ctx, bg2);
-    });
-    redraw(ctx, bg);
-});
-</script>
+<figure>
+	<figcaption>Opaque Canvas-Rendered Text, With HI-DPI and ClearType Fix</figcaption>
+	<canvas id="cleartype-canvas" class="no-shadow" width="200" height="24" style="margin:0 auto;display:block;"></canvas>
+	<script>
+	function getBgColor(element) {
+		if (element === undefined) throw "Reached end of tree...";
+		const bg = window.getComputedStyle(element).background;
+		if (bg === 'none') return getBgColor(element.parentElement);
+		return [bg, element];
+	}
+	function redraw(ctx, bg) {
+		const helloWorld = document.getElementById('hello-world');
+		if (!(helloWorld instanceof HTMLDivElement)) throw 'Expected div!';
+		const font = window.getComputedStyle(helloWorld).font;
+		ctx.fillStyle = bg;
+		ctx.fillRect(0, 0, 200, 50);
+		ctx.font = font;
+		ctx.fillStyle = 'grey';
+		const text = 'Hello, World!';
+		const size = ctx.measureText(text);
+		ctx.fillText(text, 100-(size.width / 2), 24-size.fontBoundingBoxDescent);
+	}
+	window.addEventListener('load', e => {
+		const ratio = window.devicePixelRatio || 1;
+		const canvas = document.getElementById('cleartype-canvas');
+		if (!(canvas instanceof HTMLCanvasElement)) throw 'bla';
+		canvas.style.width = `${canvas.width}px`;
+		canvas.style.height = `${canvas.height}px`;
+		canvas.width *= ratio;
+		canvas.height *= ratio;
+		const ctx = canvas.getContext('2d', {alpha: false});
+		ctx.scale(ratio, ratio);
+		const [bg, element] = getBgColor(canvas);
+		element.addEventListener('change', e => {
+			const [bg2, element] = getBgColor(canvas);
+			redraw(ctx, bg2);
+		});
+		redraw(ctx, bg);
+	});
+	</script>
+</figure>
 
 <img style="align-self: center; margin-bottom: 15px;" src="{{ '/images/html5-canvas-tips/good-canvas-text.png' | absolute_url }}">
 </div>
