@@ -19,6 +19,7 @@
 
 	{%- feed_meta -%}
 	{% webmentions_head %}
+	<link rel="webmention" href="https://webmention.io/sidneys1.com/webmention" />
 
 	{%- if page.path contains '_posts' -%}
 	<script defer src="{{ '/assets/mastodon_comments.js' | absolute_url }}" onload="initComments()"></script>

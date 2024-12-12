@@ -139,7 +139,9 @@ layout: base
 		<p id="comment-credit" class="disabled">Comment support inspired by <a href="https://blaede.family/@cassidy" target="_blank">Cassidy James <span class="social-handle">(@cassidy@blaede.family)</span></a> and some code borrowed from <a target="_blank" href="https://fietkau.social/@julian">Julian Fietkau <span class="social-handle">(@julian@fietkau.social)</span></a>.</p>
 	</section>
 	<section id="webmention">
+		<h2>Webmentions <span id="webmention-stats"><span>♥️{% webmention_count page.url likes %}</span></span></h2>
 		{% webmentions page.url %}
+		<p id="webmention-comment-credit" class="disabled">Webmention support enabled by <a href="https://webmention.io" target="_blank">webmention.io</a> and <a href="https://aarongustafson.github.io/jekyll-webmention_io/" target="_blank">Webmentions for Jekyll</a>.</p>
 	</section>
 	{%- else -%}
 	<p class="todo">Comments only visible under <code>site.mode == "www" or site.mode == "local-prod"</code>!</p>

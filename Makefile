@@ -5,6 +5,8 @@ ONLINE_SSH_HOST:=sidneys1_sidneys1@ssh.nyc1.nearlyfreespeech.net
 TOR_SSH_HOST:=192.168.6.36
 IPFS_SSH_HOST:=192.168.6.160
 
+.PHONY: all build serve serve-prod publish publish_online publish_tor publish_ipfs publish_github webmentions clean
+
 all: build
 
 build: _site/ _site_tor/ _site_ipfs/ _site_github/
@@ -21,11 +23,11 @@ _site/: ${SRC}
 _site_%/: ${SRC}
 	env JEKYLL_ENV=production bundle exec jekyll build --incremental --destination _site_$*/ --config _config.yml,_config.$*.yml
 
-publish: publish_online publish_tor publish_github publish_ipfs
+publish: publish_online publish_tor publish_ipfs publish_github
 
 publish_online: _site/
 	rsync -icrz --delete --exclude writeable/ _site/* ${ONLINE_SSH_HOST}:.
-	ssh ${ONLINE_SSH_HOST} 'mkdir -p ./writeable/ && chgrp web ./writeable/ && chmod g+w ./writeable/'
+	# ssh ${ONLINE_SSH_HOST} 'mkdir -p ./writeable/ && chgrp web ./writeable/ && chmod g+w ./writeable/'
 
 publish_tor: _site_tor/
 	tar cz -C _site_tor . | ssh ${TOR_SSH_HOST} 'cat | sudo tar xz -C /var/www/html/ && echo PUBLISHED TO TOR SUCCESSFULLY'
@@ -38,6 +40,9 @@ publish_github: _site_github/
 	cd github_pages && git add -A && git commit -m "Updated website at ${TIME}" && git push
 	git add github_pages
 	git commit -m 'Updated github pages'
+
+webmentions:
+	bundle exec jekyll webmention
 
 clean:
 	rm -rf _site/ _site_github/ _site_ipfs/ _site_tor/ _site_live/
