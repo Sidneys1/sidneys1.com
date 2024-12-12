@@ -115,7 +115,7 @@ layout: base
 		</a>
 	</div>
 
-	{%- if site.mode == "www" or site.mode == "local-prod" -%}
+	{%- if site.mode == "www" or site.mode == "local-prod" or site.mode == "ipfs" or site.mode == "github" or site.mode == "preview" or site.mode == "tor" -%}
 	<section id="comments" data-url="{{ page.mastodon_comment_url }}">
 		<h2>Comments from Mastodon <span id="stats"></span></h2>
 		{% if page.mastodon_comment_url -%}
