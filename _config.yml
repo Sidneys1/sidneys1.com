@@ -111,3 +111,8 @@ defaults:
       path: "assets/404"
     values:
       "404": true
+
+webmention:
+  username: "sidneys1.com"
+  blacklist:
+    - "http://localhost:4000%60."

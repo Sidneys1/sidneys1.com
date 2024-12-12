@@ -18,6 +18,7 @@
 	<link rel="stylesheet" href="{{ '/hitcount.py.cgi' | absolute_url }}?path={{page.url | url_encode}}" fetchpriority="low" />
 
 	{%- feed_meta -%}
+	{% webmentions_head %}
 
 	{%- if page.path contains '_posts' -%}
 	<script defer src="{{ '/assets/mastodon_comments.js' | absolute_url }}" onload="initComments()"></script>

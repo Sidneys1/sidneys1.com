@@ -138,9 +138,13 @@ layout: base
 		{%- endif -%}
 		<p id="comment-credit" class="disabled">Comment support inspired by <a href="https://blaede.family/@cassidy" target="_blank">Cassidy James <span class="social-handle">(@cassidy@blaede.family)</span></a> and some code borrowed from <a target="_blank" href="https://fietkau.social/@julian">Julian Fietkau <span class="social-handle">(@julian@fietkau.social)</span></a>.</p>
 	</section>
+	<section id="webmention">
+		{% webmentions page.url %}
+	</section>
 	{%- else -%}
 	<p class="todo">Comments only visible under <code>site.mode == "www" or site.mode == "local-prod"</code>!</p>
 	{%- endif -%}
 
 	<a class="u-url" href="{{ page.url | absolute_url }}" hidden></a>
 </article>
+{% webmentions_js %}
