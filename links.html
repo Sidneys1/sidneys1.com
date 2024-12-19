@@ -1,0 +1,71 @@
+---
+layout: base
+title: Links
+permalink: /links/
+pagination:
+  enabled: true
+  collection: links
+  permalink: /:num/
+---
+
+{%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+
+<section id="links">
+	<h1>Links{%if paginator.page > 1%} {{paginator.page|roman}}{%endif%}</h1>
+{%- if paginator.posts.size > 0 -%}
+{%- if page.list_title -%}
+  <h2 class="link-list-heading">{{ page.list_title }}</h2>
+{%- endif -%}
+<ul class="post-list" id="links-list">
+  {%- for link in paginator.posts -%}
+  <li>
+	<h3>
+		<div style="display: flex; flex-wrap: wrap; align-items: center;">
+			<a class="post-link" href="{{ link.url | absolute_url }}">
+				{{ link.title | escape }}
+			</a>
+			{%- for tag in link.tags -%}
+				<a href="{{ "/tags.html" | absolute_url }}#{{ tag | slugify }}" style="display: inline;"
+					class="tag pill clickable">{{ tag | slugify }}</a>
+			{%- endfor -%}
+		</div>
+	</h3>
+	<div style="display: flex; flex-wrap: wrap; align-items: baseline;">
+		<span class="post-meta">{{ link.date | date: date_format }}</span>
+	</div>
+	  <div class="post-excerpt">
+		<div>{{ link.description }}</div>
+	  </div>
+  </li>
+  {%- endfor -%}
+</ul>
+
+{% if paginator.total_pages > 1 %}
+  <div class="pager">
+	<ul class="pagination">
+	{%- if paginator.page > 2 -%}
+	<li><a href="{{ "/" | absolute_url }}" class="previous-page">1</a></li>
+	<li style="padding: 10px 12px;">...</li>
+	{%- endif -%}
+	{%- if paginator.previous_page %}
+	  <li><a href="{{ paginator.previous_page_path | absolute_url }}" class="previous-page">{{ paginator.previous_page }}</a></li>
+	{%- else %}
+	  <li><div class="pager-edge">•</div></li>
+	{%- endif %}
+	  <li><div class="current-page">{{ paginator.page }}</div></li>
+	{%- if paginator.next_page %}
+	  <li><a href="{{ paginator.next_page_path | absolute_url }}" class="next-page">{{ paginator.next_page }}</a></li>
+	{%- else %}
+	  <li><div class="pager-edge">•</div></li>
+	{%- endif %}
+	{% assign secondToLast = paginator.total_pages | minus: 1 %}
+	{%- if paginator.page < secondToLast -%}
+		<li style="padding: 10px 12px;">...</li>
+		<li><a href="{{ site.root | append: "page" | append: paginator.total_pages | append: "/" | absolute_url }}" class="previous-page">{{ paginator.total_pages }}</a></li>
+	{%- endif -%}
+	</ul>
+  </div>
+{%- endif %}
+
+{%- endif -%}
+</section>

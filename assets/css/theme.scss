@@ -24,6 +24,10 @@ pre, code {
   font-family: var(--minima-code-font-family);
 }
 
+.page-content {
+  position: relative;
+}
+
 @media screen and (max-width: 2000px) {
   .page-content {
     padding-top: 0 !important;

@@ -458,7 +458,7 @@ summary {
 
 //// External links
 
-:is(.post-content, section#comments, section#webmention) a[target="_blank"]:not(.no-arrow)::after {
+:is(.post-content, section#comments, section#webmention, #links-list) a[target="_blank"]:not(.no-arrow)::after {
 	content: ' ';
 	// background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9IiMyQTdBRTIiIHZpZXdCb3g9IjAgMCA4IDgiPjxwYXRoIGQ9Ik0wIDB2OGg4VjZIN3YxSDFWMWgxVjBIMHptNCAwIDEuNSAxLjVMMyA0bDEgMSAyLjUtMi41TDggNFYwSDR6Ii8+PC9zdmc+");
 	// background-size: calc(min(1em, 8px)) calc(min(1em, 8px));

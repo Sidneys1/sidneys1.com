@@ -2,28 +2,46 @@
 layout: base
 ---
 
+{%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+
 <div class="home">
-  {%- if page.title -%}
+  <!-- {%- if page.title -%}
     <h1 class="page-heading">{{ page.title }}</h1>
-  {%- endif -%}
+  {%- endif -%} -->
+
+	<div id="links-parent">
+		<section id="links">
+			<h1>
+				<a href="{{'/links/' | absolute_url}}">Shared Links</a>
+				<a href="{{ '/feed/links.xml' | absolute_url}}" target="_blank" title="Links RSS Feed">
+					<svg class="svg-icon grey">
+					  <use xlink:href="{{ '/assets/minima-social-icons.svg#rss' | absolute_url }}"></use>
+					</svg>
+				  </a>
+			</h1>
+			<ul id="links-list">
+			{%-for link in site.links reversed limit: 5 -%}
+				<li>
+					<a href="{{link.link}}" target="_blank" referrerpolicy="origin" rel="external nofollow noopener">{{link.title}}</a>
+					<p><span title="{{link.date| date: "%Y-%m-%d"}}" class="date dt-shared">{{link.date | date: date_format}}</span> {{link.description}}</p></li>
+			{%-endfor-%}
+			</ul>
+			{%- if site.links.size > 10 -%}
+				<a href="{{ '/links' | absolute_url }}">More...</a>
+			{%- endif -%}
+		</section>
+	</div>
 
   {{ content }}
 
-
-  {% if site.paginate %}
-    {% assign posts = paginator.posts %}
-  {% else %}
-    {% assign posts = site.posts %}
-  {% endif %}
-
-
-  {%- if posts.size > 0 -%}
+	<section id="posts">
+		<h1>Posts{%if paginator.page > 1%} {{paginator.page|roman}}{%endif%}</h1>
+  {%- if paginator.posts.size > 0 -%}
     {%- if page.list_title -%}
       <h2 class="post-list-heading">{{ page.list_title }}</h2>
     {%- endif -%}
     <ul class="post-list">
-      {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
-      {%- for post in posts -%}
+      {%- for post in paginator.posts -%}
       <li>
         <h3>
 			<div style="display: flex; flex-wrap: wrap; align-items: center;"><a class="post-link" href="{{ post.url | absolute_url }}">
@@ -60,7 +78,7 @@ layout: base
       {%- endfor -%}
     </ul>
 
-    {% if site.paginate and paginator.total_pages > 1 %}
+    {% if paginator.total_pages > 1 %}
       <div class="pager">
         <ul class="pagination">
 		{%- if paginator.page > 2 -%}
@@ -88,5 +106,6 @@ layout: base
     {%- endif %}
 
   {%- endif -%}
+	</section>
 
 </div>

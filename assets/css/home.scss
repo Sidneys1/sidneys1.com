@@ -1,3 +1,5 @@
+@use "theme";
+
 ul.post-list>li::after {
     content: "";
     display: block;
@@ -31,5 +33,90 @@ ul.post-list h4 {
         margin-right: 1em;
 		width: 250px;
 		float:left;
+    }
+}
+
+#links-parent {
+    position: absolute;
+    top: 0px;
+    right: 30px;
+    width: calc((100vw - 1260px) / 2);
+
+    #links {
+        margin-right: auto;
+        max-width: fit-content;
+        // max-width: min(30%, fit-content);
+        // margin-left: 1em;
+        // float: right;
+
+        // margin-top: -30px;
+        padding: 0.5em 1em;
+        border: 1px solid theme.$border-color-01;
+        border-top: none;
+        border-bottom-left-radius: 1em;
+        border-bottom-right-radius: 1em;
+
+        > h1 {
+            margin-bottom: 5px;
+            .svg-icon {
+                // width: 1em;
+                // height: 1em;
+                // display: inline-block;
+                font-size: 0.5em;
+                vertical-align: baseline;
+            }
+        }
+
+        > ul {
+            list-style: none;
+            margin: 0;
+
+
+            > li {
+                > a {
+                    font-weight: bold;
+                }
+                > p {
+                    > .date {
+                        // font-weight: 800;
+                        font-variant: small-caps;
+                        font-size: theme.$small-font-size;
+                        color: theme.$brand-color;
+                    }
+                }
+
+                &:last-child > p {
+                    margin-bottom: 0;
+                }
+            }
+
+        }
+    }
+}
+
+@media screen and (max-width: 2000px) {
+    #links-parent {
+        position: static;
+        // margin-top: -30px;
+        max-width: 30%;
+        width: unset;
+        float: right;
+        // margin-left: 1em;
+        margin-right: -15px;
+
+
+        #links {
+            padding: 0.5em 1em;
+            border: 1px solid theme.$border-color-01;
+            border-right: none;
+            border-top-left-radius: 1em;
+            border-bottom-right-radius: 0;
+        }
+    }
+}
+
+@media screen and (max-width: 800px) {
+    #links-parent {
+        display: none;
     }
 }

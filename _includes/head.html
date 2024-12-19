@@ -18,6 +18,8 @@
 	<link rel="stylesheet" href="{{ '/hitcount.py.cgi' | absolute_url }}?path={{page.url | url_encode}}" fetchpriority="low" />
 
 	{%- feed_meta -%}
+	<link type="application/atom+xml" rel="alternate" href="{{ '/feed/links.xml' | absolute_url }}" title="Sidneys1.com - Links">
+
 	{% webmentions_head %}
 	<link rel="webmention" href="https://webmention.io/sidneys1.com/webmention" />
 
