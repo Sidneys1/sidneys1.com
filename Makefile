@@ -37,7 +37,7 @@ publish_ipfs: _site_ipfs/
 
 publish_github: _site_github/
 	rsync -icr --delete _site_github/* github_pages/
-	cd github_pages && git add -A && git commit -m "Updated website at ${TIME}" && git push
+	cd github_pages && git add -A && git commit -m "Updated website at ${TIME}" && git.exe push
 	git add github_pages
 	git commit -m 'Updated github pages'
 
