@@ -1,7 +1,8 @@
-SRC := _config.yml $(shell find . -type f \( -iname '*.md' -o -iname '*.html' -o -iname '*.scss' -o -iname '*.cgi' \) -not \( -path './_site*/*' -o -path './github_pages/*' \))
+SRC := _config.yml $(shell find . -type f \( -iname '*.md' -o -iname '*.html' -o -iname '*.scss' -o -iname '*.cgi' -o -iname '*.xml' \) -not \( -path './_site*/*' -o -path './github_pages/*' \))
 TIME:=$(shell date -Iminutes)
 
 ONLINE_SSH_HOST:=sidneys1_sidneys1@ssh.nyc1.nearlyfreespeech.net
+PREVIEW_SSH_HOST:=sidneys1@truenas.sidneys1.com
 TOR_SSH_HOST:=192.168.6.36
 IPFS_SSH_HOST:=192.168.6.160
 
@@ -23,11 +24,17 @@ _site/: ${SRC}
 _site_%/: ${SRC}
 	env JEKYLL_ENV=production bundle exec jekyll build --incremental --destination _site_$*/ --config _config.yml,_config.$*.yml
 
-publish: publish_online publish_tor publish_ipfs publish_github
+_site_preview/: ${SRC}
+	env JEKYLL_ENV=production bundle exec jekyll build --drafts --incremental --destination _site_preview/ --config _config.yml,_config.preview.yml
+
+publish: publish_online publish_tor publish_github publish_ipfs publish_preview
 
 publish_online: _site/
 	rsync -icrz --delete --exclude writeable/ _site/* ${ONLINE_SSH_HOST}:.
-	# ssh ${ONLINE_SSH_HOST} 'mkdir -p ./writeable/ && chgrp web ./writeable/ && chmod g+w ./writeable/'
+#	ssh ${ONLINE_SSH_HOST} 'mkdir -p ./writeable/ && chgrp web ./writeable/ && chmod g+w ./writeable/'
+
+publish_preview: _site_preview/
+	rsync -icrzp --chown 568:568 --delete --exclude writeable/ _site_preview/* "${PREVIEW_SSH_HOST}:/mnt/Bulk Storage/docker/data/preview.sidneys1.com/www/"
 
 publish_tor: _site_tor/
 	tar cz -C _site_tor . | ssh ${TOR_SSH_HOST} 'cat | sudo tar xz -C /var/www/html/ && echo PUBLISHED TO TOR SUCCESSFULLY'
@@ -45,5 +52,5 @@ webmentions:
 	bundle exec jekyll webmention
 
 clean:
-	rm -rf _site/ _site_github/ _site_ipfs/ _site_tor/ _site_live/
+	rm -rf _site/ _site_github/ _site_ipfs/ _site_tor/ _site_live/ _site_preview/
 	cd github_pages && git reset --hard HEAD

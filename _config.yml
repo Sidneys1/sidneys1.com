@@ -53,6 +53,7 @@ alternative_access:
 
 author:
   name: Sidneys1
+  email: admin@sidneys1.com
   contact:
     - { platform: protonmail, user_url: "mailto:Sidneys1@proton.me", title: "ProtonMail"}
     - { platform: email, user_url: "mailto:admin@Sidneys1.com", title: "Site Support"}
@@ -131,5 +132,5 @@ pagination:
   sort_reverse: true
 
 feed:
-  collections:
-    - links
+  # collections:
+  #   - links
