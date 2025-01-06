@@ -35,7 +35,7 @@ layout: base
   {{ content }}
 
 	<section id="posts">
-		<h1>Posts{%if paginator.page > 1%} {{paginator.page|roman}}{%endif%}</h1>
+		{%if paginator.page > 1%}<h1 style="font-size: 2em;">Posts (Page {{paginator.page|roman}})</h1>{%endif%}
   {%- if paginator.posts.size > 0 -%}
     {%- if page.list_title -%}
       <h2 class="post-list-heading">{{ page.list_title }}</h2>
@@ -63,6 +63,14 @@ layout: base
 				{%- endfor -%}
 			</div>
         </h3>
+		{% if post.categories contains 'reviews' %}
+		<div style="display: grid; grid-template-columns: auto auto auto 1fr; gap: 0.25em;">
+			{% include review-subjectbox.html info=post.info %}
+			<div class="review-details">
+				<div class="review-excerpt">{{ post.excerpt }}</div>
+			</div>
+		</div>
+		{%else%}
 		<div style="display: flex; flex-wrap: wrap; align-items: baseline;">
 			{%- if post.subtitle -%}<h4 style="display: inline">{{post.subtitle}}&nbsp;</h4>{%- endif -%}<span class="post-meta">{{ post.date | date: date_format }}</span>
 		</div>
@@ -74,6 +82,7 @@ layout: base
 			<div>{{ post.excerpt }}</div>
 		  </div>
         {%- endif -%}
+		{%endif%}
       </li>
       {%- endfor -%}
     </ul>

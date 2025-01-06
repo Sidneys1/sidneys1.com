@@ -1,0 +1,54 @@
+---
+layout: base
+title: Reviews
+permalink: /reviews/
+pagination:
+  enabled: true
+  per_page: 1
+  category: reviews
+  permalink: '/reviews/:num/'
+---
+<h1>Reviews & Essays</h1>
+
+<ul class="review-list">
+  {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+  {% for review in paginator.posts %}
+	<li>
+		<h3>
+			<a class="review-link review-title" href="{{ review.url | absolute_url }}">{{ review.title }}</a><span class="review-meta">{{ review.date | date: date_format }}</span>
+		</h3>
+		{% include review-subjectbox.html info=review.info %}
+		<div class="review-details">
+			{%- if review.subtitle -%}<div class="review-description">{{ review.subtitle }}</div>{%- endif -%}
+			<div class="review-excerpt">{{ review.excerpt }}</div>
+		</div>
+	</li>
+  {% endfor %}
+</ul>
+
+{% if paginator.total_pages > 1 %}
+  <div class="pager">
+	<ul class="pagination">
+	{%- if paginator.page > 2 -%}
+	<li><a href="{{ "/" | absolute_url }}" class="previous-page">1</a></li>
+	<li style="padding: 10px 12px;">...</li>
+	{%- endif -%}
+	{%- if paginator.previous_page %}
+	  <li><a href="{{ paginator.previous_page_path | absolute_url }}" class="previous-page">{{ paginator.previous_page }}</a></li>
+	{%- else %}
+	  <li><div class="pager-edge">•</div></li>
+	{%- endif %}
+	  <li><div class="current-page">{{ paginator.page }}</div></li>
+	{%- if paginator.next_page %}
+	  <li><a href="{{ paginator.next_page_path | absolute_url }}" class="next-page">{{ paginator.next_page }}</a></li>
+	{%- else %}
+	  <li><div class="pager-edge">•</div></li>
+	{%- endif %}
+	{% assign secondToLast = paginator.total_pages | minus: 1 %}
+	{%- if paginator.page < secondToLast -%}
+		<li style="padding: 10px 12px;">...</li>
+		<li><a href="{{ site.root | append: "page" | append: paginator.total_pages | append: "/" | absolute_url }}" class="previous-page">{{ paginator.total_pages }}</a></li>
+	{%- endif -%}
+	</ul>
+  </div>
+{%- endif %}

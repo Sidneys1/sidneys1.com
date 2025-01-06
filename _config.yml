@@ -76,7 +76,7 @@ header_pages:
     title: Series
   - url: /links/
     title: Links
-  - url: reviews.html
+  - url: reviews/index.html
     title: Reviews
 
 show_excerpts: true

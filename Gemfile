@@ -36,7 +36,7 @@ gem "http_parser.rb", "~> 0.6.0", :platforms => [:jruby]
 gem 'jekyll-toc'
 gem "webrick", "~> 1.8"
 gem 'jekyll-seo-tag'
-gem 'jekyll-paginate-v2'
+gem "jekyll-paginate-v2", git: "https://github.com/sverrirs/jekyll-paginate-v2", ref: "7bc2634c04c49120b674cc3506275f85c4389f5c"
 gem 'csv'
 gem 'base64'
 gem 'bigdecimal'

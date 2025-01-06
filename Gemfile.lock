@@ -8,6 +8,14 @@ GIT
       jekyll-feed (~> 0.9)
       jekyll-seo-tag (~> 2.1)
 
+GIT
+  remote: https://github.com/sverrirs/jekyll-paginate-v2
+  revision: 7bc2634c04c49120b674cc3506275f85c4389f5c
+  ref: 7bc2634c04c49120b674cc3506275f85c4389f5c
+  specs:
+    jekyll-paginate-v2 (3.0.0)
+      jekyll (>= 3.0, < 5.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -82,8 +90,6 @@ GEM
       webrick (~> 1.7)
     jekyll-feed (0.17.0)
       jekyll (>= 3.7, < 5.0)
-    jekyll-paginate-v2 (3.0.0)
-      jekyll (>= 3.0, < 5.0)
     jekyll-sass-converter (3.0.0)
       sass-embedded (~> 1.54)
     jekyll-seo-tag (2.8.0)
@@ -170,7 +176,7 @@ DEPENDENCIES
   http_parser.rb (~> 0.6.0)
   jekyll (~> 4.3.3)
   jekyll-feed (~> 0.12)
-  jekyll-paginate-v2
+  jekyll-paginate-v2!
   jekyll-seo-tag
   jekyll-toc
   jekyll-webmention_io (~> 4.0)

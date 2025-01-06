@@ -26,62 +26,6 @@
             }
         }
 
-        >.review-subjectbox {
-            display: grid;
-            grid-column: 1 / 4;
-            grid-template-columns: subgrid;
-            // max-height: 10em;
-            padding-right: 0.5em;
-            gap: 0 0.25em;
-
-            border-right: 2px solid theme.$brand-color-light;
-
-            img.review-subject-cover {
-                gap: none;
-                grid-column: 1;
-                grid-row: 1 / 10;
-                height: 9em;
-                margin-right: 0.25em;
-
-                box-shadow: 0px 0px 10px #00000033;
-                transition: 250ms linear;
-
-                &:hover {
-                    box-shadow: 0px 0px 10px #00000066;
-                    transition: 250ms linear;
-                }
-            }
-
-            .label {
-                grid-column: 2;
-                font-weight: 600;
-                font-variant: small-caps;
-                text-transform: lowercase;
-                text-align: right;
-                font-size: smaller;
-            }
-
-            cite, .rating {
-                grid-column: 2 / 4;
-                text-align: center;
-                font-size: x-large;
-            }
-
-            .rating > span {
-                font-size: small;
-            }
-
-            .value {
-                grid-column: 3;
-                font-size: smaller;
-            }
-        }
-
-        >.review-details {
-            grid-column: 4;
-            margin-left: 0.25em;
-        }
-
         &::after {
             content: "";
             display: block;
@@ -127,6 +71,62 @@
 
     ul {
         clear: both;
+    }
+}
+
+.review-details {
+    grid-column: 4;
+    margin-left: 0.25em;
+}
+
+.review-subjectbox {
+    display: grid;
+    grid-column: 1 / 4;
+    grid-template-columns: subgrid;
+    // max-height: 10em;
+    padding-right: 0.5em;
+    gap: 0 0.25em;
+
+    border-right: 2px solid theme.$brand-color-light;
+
+    img.review-subject-cover {
+        gap: none;
+        grid-column: 1;
+        grid-row: 1 / 10;
+        height: 9em;
+        margin-right: 0.25em;
+
+        box-shadow: 0px 0px 10px #00000033;
+        transition: 250ms linear;
+
+        &:hover {
+            box-shadow: 0px 0px 10px #00000066;
+            transition: 250ms linear;
+        }
+    }
+
+    .label {
+        grid-column: 2;
+        font-weight: 600;
+        font-variant: small-caps;
+        text-transform: lowercase;
+        text-align: right;
+        font-size: smaller;
+    }
+
+    cite, .rating {
+        grid-column: 2 / 4;
+        text-align: center;
+        font-size: x-large;
+    }
+
+    .rating > span {
+        font-size: small;
+    }
+
+    .value {
+        grid-column: 3;
+        font-size: smaller;
     }
 }
 
