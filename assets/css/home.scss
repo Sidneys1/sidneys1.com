@@ -58,13 +58,13 @@ ul.post-list h4 {
 
         > h1 {
             margin-bottom: 5px;
-            .svg-icon {
-                // width: 1em;
-                // height: 1em;
-                // display: inline-block;
-                font-size: 0.5em;
-                vertical-align: baseline;
-            }
+            // .svg-icon {
+            //     // width: 1em;
+            //     // height: 1em;
+            //     // display: inline-block;
+            //     font-size: 0.5em;
+            //     vertical-align: baseline;
+            // }
         }
 
         > ul {
@@ -95,6 +95,25 @@ ul.post-list h4 {
 }
 
 @media screen and (max-width: 2000px) {
+    #links-parent {
+        position: static;
+        // margin-top: -30px;
+        max-width: 30%;
+        width: unset;
+        float: right;
+        // margin-left: 1em;
+        margin-right: -15px;
+
+
+        #links {
+            padding: 0.5em 1em;
+            border: 1px solid theme.$border-color-01;
+            border-radius: 1em;
+        }
+    }
+}
+
+@media screen and (max-width: 1200px) {
     #links-parent {
         position: static;
         // margin-top: -30px;

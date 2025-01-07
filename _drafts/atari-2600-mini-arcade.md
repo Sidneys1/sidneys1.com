@@ -6,7 +6,6 @@ tags: [retrocomputing, gadgets, reviews]
 author: Sidneys1
 # image: /images/atari-2600-mini-arcade/hero.jpg
 toc: false
-excerpt_separator: <!--more-->
 ---
 
 The Atari 2600...

@@ -8,7 +8,6 @@ author: Sidneys1
 # image: images/reverse-engineering-a-win95-game-III/hero.png
 # image_shadow: false
 toc: false
-excerpt_separator: <!--more-->
 multipart: reverse-engineering-win95-game
 mastodon_comment_url: https://infosec.exchange/@Sidneys1/111858306377371679
 carousels:

@@ -80,6 +80,7 @@ header_pages:
     title: Reviews
 
 show_excerpts: true
+excerpt_separator: <!--more-->
 
 # TOC Settings
 toc:
@@ -127,10 +128,14 @@ defaults:
     values:
       layout: "review"
 
-webmention:
+webmentions:
+  # debug: true
+  collections:
+  - links
   username: "sidneys1.com"
   blacklist:
-    - "http://localhost:4000%60."
+    - "http://localhost:4000`."
+    - "https://en.wikipedia.org"
 
 collections:
   links:

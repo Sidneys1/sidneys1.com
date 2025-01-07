@@ -7,7 +7,6 @@ tags: [programming, raytracing]
 author: Sidneys1
 image: /images/2022-03-23-raytracing/hero.png
 toc: true
-excerpt_separator: <!--more-->
 erratum:
 - "2022-07-xx: Various screenshots updated."
 - "2022-08-19: Updated the look of the \"Note\" callouts."

@@ -101,20 +101,6 @@ layout: base
 
 	<hr>
 
-	<div class="donate">
-		Like what you read?
-		<a href="https://ko-fi.com/sidneys1" target="_blank" rel="noreferrer">
-			Consider buying me a coffee.
-		</a>
-		<br/>
-		<a title="Consider buying me a coffee." href="https://ko-fi.com/sidneys1" target="_blank" rel="noreferrer" style="display: inline-block;">
-			<!-- <img height="50px" title="Buy me a Coffee" src="{{"/assets/coffee-cup-1.svg" | absolute_url}}"/> -->
-			<svg class="svg-icon grey">
-				<use xlink:href="{{"/assets/coffee-cup-1.svg#coffee" | relative_url}}"></use>
-			</svg>
-		</a>
-	</div>
-
 	{%- if site.mode == "www" or site.mode == "local-prod" -%}
 	<section id="comments" data-url="{{ page.mastodon_comment_url }}">
 		<h2>Comments from Mastodon <span id="stats"></span></h2>

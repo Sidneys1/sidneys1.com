@@ -1,0 +1,87 @@
+---
+---
+<xsl:stylesheet
+  version="1.0"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  exclude-result-prefixes="atom"
+>
+  <xsl:output method="html" version="1.0" encoding="UTF-8" indent="yes" />
+  <xsl:template match="/">
+    <html xmlns="http://www.w3.org/1999/xhtml">
+      <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <title>Web Feed • <xsl:value-of select="atom:feed/atom:title" /></title>
+        <link rel="stylesheet" href="{{ '/assets/css/main.css' | absolute_url }}"></link>
+      </head>
+      <body>
+        <main class="page-content" aria-label="Content">
+        <div class="wrapper">
+          <section>
+            <div class="alert">
+              <p><strong>This is a web feed</strong>, also known as an RSS feed. <strong>Subscribe</strong>
+                by copying the URL from the address bar into your newsreader app.</p>
+            </div>
+          </section>
+          <section>
+            <xsl:apply-templates select="atom:feed" />
+          </section>
+          <section id="links">
+            <h2>Recent Items</h2>
+            <ul id="links-list" class="post-list">
+            <xsl:apply-templates select="atom:feed/atom:entry" />
+            </ul>
+          </section>
+        </div></main>
+      </body>
+    </html>
+  </xsl:template>
+
+  <xsl:template match="atom:feed">
+    <h1><xsl:value-of select="atom:title" /> Web Feed Preview</h1>
+    <p>This RSS feed provides the latest posts from <xsl:value-of select="atom:title" />'s blog. <a
+        class="head_link" target="_blank">
+        <xsl:attribute name="href">
+          <xsl:value-of select="atom:link[@rel='alternate']/@href" />
+        </xsl:attribute> Visit
+      Website &#x2192; </a>
+
+    </p>
+
+    <details>
+      <summary>What is an RSS feed?</summary>
+      <p>An RSS feed is a data format that contains the latest content from a website, blog, or
+        podcast. You can use feeds to <strong>subscribe</strong> to websites and get the <strong>latest
+        content in one place</strong>.</p>
+      <ul>
+        <li><strong>Feeds put you in control.</strong> Unlike social media apps, there is no
+          algorithm deciding what you see or read. You always get the latest content from the
+          creators you care about.</li>
+        <li><strong>Feed are private by design.</strong> No one owns web feeds, so no one is
+          harvesting your personal information and profiting by selling it to advertisers.</li>
+        <li><strong>Feeds are spam-proof.</strong> Had enough? Easy, just unsubscribe from the feed.</li>
+      </ul>
+      <p>All you need to do to get started is to add the URL (web address) for this feed to a
+        special app called a newsreader. Visit <a href="https://aboutfeeds.com/">About Feeds</a> to
+        get started with newsreaders and subscribing. It’s free. </p>
+    </details>
+  </xsl:template>
+
+  <xsl:template match="atom:entry">
+    <li>
+      <h3>
+        <a target="_blank">
+          <xsl:attribute name="href">
+            <xsl:value-of select="atom:link/@href" />
+          </xsl:attribute>
+          <xsl:value-of select="atom:title" disable-output-escaping="yes" />
+        </a>
+      </h3>
+      <div style="display: flex; flex-wrap: wrap; align-items: baseline;"><span class="post-meta"><xsl:value-of select="atom:updated" /></span></div>
+      <div class="post-excerpt"><div>
+        <xsl:value-of select="atom:summary" disable-output-escaping="yes" />
+      </div></div>
+    </li>
+  </xsl:template>
+</xsl:stylesheet>

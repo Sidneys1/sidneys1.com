@@ -18,26 +18,6 @@
         column-gap: 0.5em;
         align-items: center;
 
-        .coffee {
-            flex-grow: 1;
-            text-align: center;
-
-            svg {
-                width: 32px;
-                height: 32px;
-                opacity: 50%;
-                transition: opacity 250ms linear;
-                color: theme.$text-color;
-                margin: 0 0 4px 8px;
-                vertical-align: middle;
-            }
-
-            svg:hover {
-                opacity: 100%;
-                transition: opacity 250ms linear;
-            }
-        }
-
         .site-nav {
             justify-self: right;
         }
