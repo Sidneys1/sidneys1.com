@@ -7,7 +7,6 @@ series: "Selectric Repair"
 author: Sidneys1
 image: /images/ibm-selectric/hero.jfif
 toc: false
-excerpt_separator: <!--more-->
 ---
 
 The IBM Selectric - a marvel of early-1960's through mid-1980s engineering. The Selectric line features a typing system

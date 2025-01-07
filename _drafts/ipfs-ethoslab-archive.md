@@ -6,7 +6,6 @@ tags: [youtube, ipfs, data hoarding]
 author: Sidneys1
 image: /images/ipfs-ethoslab-archive/hero.jpg
 toc: false
-excerpt_separator: <!--more-->
 ---
 
 This is a cool little project I did to create a resilient, automatic, and offline archive of the video content from the

@@ -5,37 +5,33 @@ layout: base
 {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
 
 <div class="home">
-  <!-- {%- if page.title -%}
-    <h1 class="page-heading">{{ page.title }}</h1>
-  {%- endif -%} -->
-
+  {%-if paginator.page == 1%}
 	<div id="links-parent">
 		<section id="links">
-			<h1>
+			<h2>
 				<a href="{{'/links/' | absolute_url}}">Shared Links</a>
 				<a href="{{ '/feed/links.xml' | absolute_url}}" target="_blank" title="Links RSS Feed">
-					<svg class="svg-icon grey">
-					  <use xlink:href="{{ '/assets/minima-social-icons.svg#rss' | absolute_url }}"></use>
-					</svg>
-				  </a>
-			</h1>
+					<svg class="svg-icon grey" style="font-size: 0.5em; vertical-align: baseline;"><use xlink:href="{{ '/assets/minima-social-icons.svg#rss' | absolute_url }}"></use></svg>
+				</a>
+			</h2>
 			<ul id="links-list">
 			{%-for link in site.links reversed limit: 5 -%}
 				<li>
-					<a href="{{link.link}}" target="_blank" referrerpolicy="origin" rel="external nofollow noopener">{{link.title}}</a>
-					<p><span title="{{link.date| date: "%Y-%m-%d"}}" class="date dt-shared">{{link.date | date: date_format}}</span> {{link.description}}</p></li>
+					<a href="{{link.link}}" target="_blank" referrerpolicy="origin" rel="external nofollow noopener">{{link.title | markdownify| remove: '<p>' | remove: '</p>' | strip}}</a>
+					<p><span title="{{link.date| date: "%Y-%m-%d"}}" class="date dt-shared">{{link.date | date: date_format}}</span> {{link.excerpt| remove: '<p>' | remove: '</p>' | strip}}</p></li>
 			{%-endfor-%}
-			</ul>
-			{%- if site.links.size > 10 -%}
-				<a href="{{ '/links' | absolute_url }}">More...</a>
+			{%- if site.links.size > 5 -%}
+				<li><a style="font-weight: inherit;" href="{{ '/links/' | absolute_url }}">More...</a></li>
 			{%- endif -%}
+			</ul>
 		</section>
 	</div>
+	{%endif-%}
 
   {{ content }}
 
 	<section id="posts">
-		<h1>Posts{%if paginator.page > 1%} {{paginator.page|roman}}{%endif%}</h1>
+		{%if paginator.page > 1%}<h1>Posts, p.{{paginator.page|roman}}</h1>{%endif%}
   {%- if paginator.posts.size > 0 -%}
     {%- if page.list_title -%}
       <h2 class="post-list-heading">{{ page.list_title }}</h2>

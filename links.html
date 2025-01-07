@@ -11,7 +11,10 @@ pagination:
 {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
 
 <section id="links">
-	<h1>Links{%if paginator.page > 1%} {{paginator.page|roman}}{%endif%}</h1>
+	<h1>
+		Shared Links{%if paginator.page > 1%}, p.{{paginator.page|roman}}{%endif%}
+	</h1>
+	<p><a href="{{ '/feed/links.xml' | absolute_url}}" target="_blank" title="Links RSS Feed">Feed <svg class="svg-icon grey" style="font-size: 0.5em; vertical-align: baseline;"><use xlink:href="{{ '/assets/minima-social-icons.svg#rss' | absolute_url }}"></use></svg></a></p>
 {%- if paginator.posts.size > 0 -%}
 {%- if page.list_title -%}
   <h2 class="link-list-heading">{{ page.list_title }}</h2>
@@ -21,9 +24,7 @@ pagination:
   <li>
 	<h3>
 		<div style="display: flex; flex-wrap: wrap; align-items: center;">
-			<a class="post-link" href="{{ link.url | absolute_url }}">
-				{{ link.title | escape }}
-			</a>
+			<a class="post-link" target="_blank" referrerpolicy="origin" rel="external nofollow noopener" href="{{ link.link | absolute_url }}">{{ link.title | markdownify | remove: '<p>' | remove: '</p>' | strip }}</a>
 			{%- for tag in link.tags -%}
 				<a href="{{ "/tags.html" | absolute_url }}#{{ tag | slugify }}" style="display: inline;"
 					class="tag pill clickable">{{ tag | slugify }}</a>
@@ -34,7 +35,7 @@ pagination:
 		<span class="post-meta">{{ link.date | date: date_format }}</span>
 	</div>
 	  <div class="post-excerpt">
-		<div>{{ link.description }}</div>
+		<div>{{ link.excerpt }}</div>
 	  </div>
   </li>
   {%- endfor -%}

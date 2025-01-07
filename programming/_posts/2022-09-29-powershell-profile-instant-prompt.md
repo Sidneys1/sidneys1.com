@@ -6,7 +6,6 @@ tags: [programming, powershell]
 author: Sidneys1
 # image: /images/ipfs-ethoslab-archive/hero.jpg
 toc: false
-excerpt_separator: <!--more-->
 ---
 
 Recently I began using [Oh My Posh](https://ohmyposh.dev/) for PowerShell 7+ (pwsh). One thing I noticed however is that

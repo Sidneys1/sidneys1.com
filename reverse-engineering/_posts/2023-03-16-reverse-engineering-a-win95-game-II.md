@@ -8,7 +8,6 @@ author: Sidneys1
 image: images/reverse-engineering-a-win95-game-II/hero.png
 image_shadow: false
 toc: false
-excerpt_separator: <!--more-->
 multipart: reverse-engineering-win95-game
 kramdown:
   syntax_highlighter_opts:

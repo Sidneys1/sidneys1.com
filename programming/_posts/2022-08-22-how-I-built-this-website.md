@@ -10,7 +10,6 @@ author: Sidneys1
 image: /images/how-I-built-this-website/hero.png
 image_shadow: false
 toc: false
-excerpt_separator: <!--more-->
 multipart: building-this-website
 erratum:
 - "2022-08-24: Added section on modifying the Jekyll configuration and notes about GitHub Pages."

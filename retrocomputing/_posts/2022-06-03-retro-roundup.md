@@ -8,7 +8,6 @@ series: "Retro Roundups"
 image: /images/2022-06-03-retro-roundup/hero.png
 image_shadow: false
 toc: true
-excerpt_separator: <!--more-->
 ---
 
 Here's a quick roundup of the retrocomputing projects I worked on and devices I've acquired! Since this is the first

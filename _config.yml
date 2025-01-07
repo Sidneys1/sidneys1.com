@@ -75,6 +75,7 @@ header_pages:
   - url: /links/
     title: Links
 show_excerpts: true
+excerpt_separator: <!--more-->
 
 # TOC Settings
 toc:
@@ -117,10 +118,14 @@ defaults:
     values:
       "404": true
 
-webmention:
+webmentions:
+  # debug: true
+  collections:
+  - links
   username: "sidneys1.com"
   blacklist:
-    - "http://localhost:4000%60."
+    - "http://localhost:4000`."
+    - "https://en.wikipedia.org"
 
 collections:
   links:
