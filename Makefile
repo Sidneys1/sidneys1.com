@@ -49,6 +49,7 @@ publish_github: _site_github/
 	git commit -m 'Updated github pages'
 
 webmentions:
+	python3 hn.py
 	bundle exec jekyll webmention
 
 clean:
