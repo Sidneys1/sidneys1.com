@@ -53,6 +53,9 @@ layout: base
 				{% endfor %}
 				<span class="pill multipart">Part {{multipart_counter | roman}}</span>
 				{%- endif -%}
+				{%- if post.categories contains 'reviews' -%}
+				<span class="pill review">Review</span>
+				{%- endif -%}
 				{%- for tag in post.tags -%}
 				<a href="{{ "/tags.html" | absolute_url }}#{{ tag | slugify }}" style="display: inline;"
 					class="tag pill clickable">{{ tag | slugify }}</a>
@@ -61,6 +64,9 @@ layout: base
         </h3>
 		{% if post.categories contains 'reviews' %}
 		<div style="display: grid; grid-template-columns: auto auto auto 1fr; gap: 0.25em;">
+			<div style="grid-column: 1/5; display: flex; flex-wrap: wrap; align-items: baseline;">
+				{%- if post.subtitle -%}<h4 style="display: inline">{{post.subtitle}}&nbsp;</h4>{%- endif -%}<span class="post-meta">{{ post.date | date: date_format }}</span>
+			</div>
 			{% include review-subjectbox.html info=post.info %}
 			<div class="review-details">
 				<div class="review-excerpt">{{ post.excerpt }}</div>

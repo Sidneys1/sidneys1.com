@@ -87,8 +87,6 @@
     padding-right: 0.5em;
     gap: 0 0.25em;
 
-    border-right: 2px solid theme.$brand-color-light;
-
     img.review-subject-cover {
         gap: none;
         grid-column: 1;
@@ -147,9 +145,6 @@ header.post-header {
 }
 
 #at-a-glance-host {
-    display: grid;
-    grid-template-columns: auto 1fr;
-
     border: 1px solid black;
     border-radius: 0.5em;
     // padding: 1.5em 1em 1em 1em;
@@ -158,6 +153,36 @@ header.post-header {
     position: relative;
     background-color: theme.$background-color;
     z-index: 1000;
+
+    display: grid;
+    grid-template-columns: auto 1fr;
+
+    &.floating {
+        display: flex;
+        justify-content: center;
+    }
+    @media screen and (max-width: 800px) {
+        & {
+            display: flex;
+            flex-direction: column;
+            .review-subjectbox {
+                align-self: center;
+            }
+            #at-a-glance {
+                border-left: none !important;
+                border-top: 2px solid theme.$brand-color-light;
+            }
+        }
+    }
+    @media screen and (min-width: 800px) {
+        &.floating {
+            float: right;
+            margin-left: 1em;
+            margin-bottom: 0px;
+            display: flex;
+            justify-content: center;
+        }
+    }
 
     &::before {
         content: "At a Glance";
@@ -177,8 +202,9 @@ header.post-header {
         padding-top: 20px;
         grid-column: 2;
 
-        border-left: 1px solid theme.$brand-color;
+        // border-left: 1px solid theme.$brand-color;
         padding-left: 0.5em;
+        border-left: 2px solid theme.$brand-color-light;
 
         > h3 {
             font-size: large;

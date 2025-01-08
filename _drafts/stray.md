@@ -10,10 +10,10 @@ info:
   date: "2022-07-19"
   author: BlueTwelve Studio
   publisher: Annapurna Interactive
-tags: [review, video-games]
+tags: [video-games]
+categories: [reviews]
 # pros: []
 # cons: []
-excerpt_separator: <!--more-->
 subtitle: Do you have what it takes to be a Stray?
 toc: true
 # mastodon_comment_url:

@@ -35,16 +35,22 @@ $colors: (
     "red-accent": darkred #BF3D7C,
     "red-accent-subtle": color.adjust(darkred, $blackness: 10%) color.adjust(#BF3D7C, $lightness: -30%),
     "red-accent-compliment": color.adjust(darkred, $hue: 180) color.adjust(#BF3D7C, $hue: 180),
+    "red-accent-compliment-2": color.adjust(darkred, $hue: 120) color.adjust(#BF3D7C, $hue: 120),
+    "red-accent-compliment-3": color.adjust(darkred, $hue: -120) color.adjust(#BF3D7C, $hue: -120),
     "red-accent-visited": color.adjust(darkred, $lightness: -15%) color.adjust(#BF3D7C, $lightness: 5%),
 
     "green-accent": darkgreen #7b914d,
     "green-accent-subtle": color.adjust(darkgreen, $blackness: 10%) color.adjust(#7b914d, $lightness: -30%),
     "green-accent-compliment": color.adjust(darkgreen, $hue: 180) color.adjust(#7b914d, $hue: 180),
+    "green-accent-compliment-2": color.adjust(darkgreen, $hue: 120) color.adjust(#7b914d, $hue: 120),
+    "green-accent-compliment-3": color.adjust(darkgreen, $hue: -120) color.adjust(#7b914d, $hue: -120),
     "green-accent-visited": color.adjust(darkgreen, $lightness: -15%) color.adjust(#7b914d, $lightness: 5%),
 
     "blue-accent": #2a7ae2 #5c8bc9,
     "blue-accent-subtle": color.adjust(#2a7ae2, $blackness: 10%) color.adjust(#5c8bc9, $lightness: -30%),
     "blue-accent-compliment": color.adjust(#2a7ae2, $hue: 180) color.adjust(#5c8bc9, $hue: 180),
+    "blue-accent-compliment-2": color.adjust(#2a7ae2, $hue: 120) color.adjust(#5c8bc9, $hue: 120),
+    "blue-accent-compliment-3": color.adjust(#2a7ae2, $hue: -120) color.adjust(#5c8bc9, $hue: -120),
     "blue-accent-visited": color.adjust(#2a7ae2, $lightness: -15%) color.adjust(#5c8bc9, $lightness: 5%),
 
     "sticky-note": #ffc rgb(79, 79, 50),
@@ -66,6 +72,8 @@ $colors: (
 $accent-color: var(--sidneys1-accent-color);
 $accent-subtle: var(--sidneys1-accent-subtle);
 $accent-compliment-color: var(--sidneys1-accent-compliment-color);
+$accent-compliment-color-2: var(--sidneys1-accent-compliment-color-2);
+$accent-compliment-color-3: var(--sidneys1-accent-compliment-color-3);
 $sticky-note: var(--sidneys1-sticky-note);
 $sticky-note-title: var(--sidneys1-sticky-note-title);
 $link-compliment-color: var(--sidneys1-link-compliment-color);

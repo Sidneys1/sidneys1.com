@@ -1,0 +1,35 @@
+---
+layout: base
+---
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+	<p><a href="{{ '/links/' | absolute_url }}">&larr; Links</a></p>
+	<header class="post-header">
+		<h1 class="post-title p-name" itemprop="name headline">
+			<a target="_blank" referrerpolicy="origin" rel="external nofollow noopener" href="{{ page.link | absolute_url }}">
+				{{ page.title | markdownify | remove: '<p>' | remove: '</p>' | strip }}
+			</a>
+		</h1>
+		<p class="post-meta">
+			<time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
+				{%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+				{{ page.date | date: date_format }}
+			</time>
+			{%- if page.author -%}
+			• <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+				<span class="p-author h-card" itemprop="name">{{ page.author }}</span></span>
+			{%- endif -%}
+			{%- if page.tags -%}
+			{%- for tag in page.tags -%}
+			&nbsp;•&nbsp;<a href="{{ "/tags.html" | absolute_url }}#{{ tag | slugify }}" style="display: inline;"
+				class="tag">{{ tag | slugify }}</a>
+			{%- endfor -%}
+			{%- endif -%}
+		</p>
+	</header>
+
+	<div class="post-content e-content{% if page.hanging %} hanging{% endif %}" itemprop="articleBody">
+		{{ content }}
+	</div>
+
+	<a class="u-url" href="{{ page.url | absolute_url }}" hidden></a>
+</article>

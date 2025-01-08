@@ -1,7 +1,7 @@
 ---
 layout: base
 ---
-<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+<article class="post h-review" itemscope itemtype="http://schema.org/BlogPosting">
 	<header class="post-header">
 		<h1 class="post-title review-title p-name" itemprop="name headline">{{ page.title }}</h1>
 		{%- if page.description -%}<h2 class="review-description">{{ page.description | escape }}</h2>{%- endif -%}
@@ -53,23 +53,9 @@ layout: base
 		</details>
 	{% endif %}
 
-	<hr style="clear: both;">
-
-	<div class="donate">
-		Like what you read?
-		<a href="https://ko-fi.com/sidneys1" target="_blank" rel="noreferrer">
-			Consider buying me a coffee.
-		</a>
-		<br/>
-		<a title="Consider buying me a coffee." href="https://ko-fi.com/sidneys1" target="_blank" rel="noreferrer" style="display: inline-block;">
-			<!-- <img height="50px" title="Buy me a Coffee" src="{{"/assets/coffee-cup-1.svg" | absolute_url}}"/> -->
-			<svg class="svg-icon grey">
-				<use xlink:href="{{"/assets/coffee-cup-1.svg#coffee" | relative_url}}"></use>
-			</svg>
-		</a>
-	</div>
 
 	{%- if site.mode == "www" or site.mode == "local-prod" -%}
+	<hr style="clear: both;">
 	<section id="comments" data-url="{{ page.mastodon_comment_url }}">
 		<h2>Comments from Mastodon <span id="stats"></span></h2>
 		{% if page.mastodon_comment_url -%}
@@ -92,8 +78,6 @@ layout: base
 		{%- endif -%}
 		<p id="comment-credit" class="disabled">Comment support inspired by <a href="https://blaede.family/@cassidy" target="_blank">Cassidy James <span class="social-handle">(@cassidy@blaede.family)</span></a> and some code borrowed from <a target="_blank" href="https://fietkau.social/@julian">Julian Fietkau <span class="social-handle">(@julian@fietkau.social)</span></a>.</p>
 	</section>
-	{%- else -%}
-	<p class="todo">Comments only visible under <code>site.mode == "www" or site.mode == "local-prod"</code>!</p>
 	{%- endif -%}
 
 	<a class="u-url" href="{{ page.url | absolute_url }}" hidden></a>

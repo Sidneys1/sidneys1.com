@@ -127,6 +127,11 @@ defaults:
       type: "reviews"
     values:
       layout: "review"
+  - scope:
+      path: ""
+      type: "links"
+    values:
+      layout: "link"
 
 webmentions:
   # debug: true
@@ -134,12 +139,14 @@ webmentions:
   - links
   username: "sidneys1.com"
   blacklist:
-    - "http://localhost:4000`."
-    - "https://en.wikipedia.org"
+    - "^http://localhost:4000`."
+    - "^https://en.wikipedia.org"
+    - "^https://github.com"
 
 collections:
   links:
-    output: false
+    output: true
+    permalink: /:collection/archive/:name:output_ext
   reviews:
     output: true
 

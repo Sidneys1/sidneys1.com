@@ -32,7 +32,7 @@ pagination:
 		</div>
 	</h3>
 	<div style="display: flex; flex-wrap: wrap; align-items: baseline;">
-		<span class="post-meta">{{ link.date | date: date_format }}</span>
+		<span class="post-meta">{{ link.date | date: date_format }}&nbsp;•&nbsp;<a href="{{ link.url | absolute_url }}">Permalink</a></span>
 	</div>
 	  <div class="post-excerpt">
 		<div>{{ link.excerpt }}</div>

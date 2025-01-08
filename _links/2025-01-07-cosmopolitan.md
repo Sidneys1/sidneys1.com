@@ -7,4 +7,4 @@ OpenBSD, NetBSD, and bare metal on AMD64 and ARM64.
 
 <!--more-->
 
-[Cosmopolitan](https://justine.lol/cosmopolitan/).
+[Outgoing link](https://justine.lol/cosmopolitan/){: target="_blank" referrerpolicy="origin" rel="external nofollow noopener"}

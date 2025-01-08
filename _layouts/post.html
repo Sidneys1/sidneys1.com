@@ -77,7 +77,7 @@ layout: base
 	{% endif %}
 
 	{%- if page.multipart -%}
-	<hr/>
+	<hr style="clear:both;"/>
 	<div class="multipart center">
 		<em>This post has multiple parts:</em>
 		<ul>
@@ -99,9 +99,8 @@ layout: base
 	</div>
 	{%- endif -%}
 
-	<hr>
-
 	{%- if site.mode == "www" or site.mode == "local-prod" -%}
+	<hr style="clear:both;">
 	<section id="comments" data-url="{{ page.mastodon_comment_url }}">
 		<h2>Comments from Mastodon <span id="stats"></span></h2>
 		{% if page.mastodon_comment_url -%}
@@ -129,8 +128,6 @@ layout: base
 		{% webmentions page.url %}
 		<p id="webmention-comment-credit" class="disabled">Webmention support enabled by <a href="https://webmention.io" target="_blank">webmention.io</a> and <a href="https://aarongustafson.github.io/jekyll-webmention_io/" target="_blank">Webmentions for Jekyll</a>.</p>
 	</section>
-	{%- else -%}
-	<p class="todo">Comments only visible under <code>site.mode == "www" or site.mode == "local-prod"</code>!</p>
 	{%- endif -%}
 
 	<a class="u-url" href="{{ page.url | absolute_url }}" hidden></a>

@@ -24,9 +24,13 @@ $od-mono-font-path: "" !default;
     @include root-has("color", $name) {
         --minima-link-base-color: var(--sidneys1-#{$name}-accent);
         --minima-link-visited-color: var(--sidneys1-#{$name}-accent-visited);
+        --minima-link-compliment-color: var(--sidneys1-#{$name}-accent-compliment);
         --sidneys1-accent-color: var(--sidneys1-#{$name}-accent);
         --sidneys1-accent-subtle: var(--sidneys1-#{$name}-accent-subtle);
         --sidneys1-accent-compliment-color: var(--sidneys1-#{$name}-accent-compliment);
+        --sidneys1-accent-compliment-color-2: var(--sidneys1-#{$name}-accent-compliment-2);
+        --sidneys1-accent-compliment-color-3: var(--sidneys1-#{$name}-accent-compliment-3);
+        --sidneys1-link-compliment-color: var(--sidneys1-#{$name}-accent-compliment);
     }
 }
 
