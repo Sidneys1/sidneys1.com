@@ -13,7 +13,7 @@ tags: [video-games]
 categories: [reviews]
 subtitle: How hard could it be?
 toc: true
-# mastodon_comment_url:
+mastodon_comment_url: https://infosec.exchange/@Sidneys1/113793849462699574
 ---
 
 <cite>Slay the Princess</cite> is a breathtaking visual novel that explores obedience, rebellion, heartbreak, love, and

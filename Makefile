@@ -37,10 +37,10 @@ publish_preview: .site_preview/
 	rsync -icrzp --chown 568:568 --delete --exclude writeable/ .site_preview/* "${PREVIEW_SSH_HOST}:/mnt/Bulk Storage/docker/data/preview.sidneys1.com/www/"
 
 publish_tor: .site_tor/
-	tar cz -C $^ | ssh ${TOR_SSH_HOST} 'cat | sudo tar xz -C /var/www/html/ && echo PUBLISHED TO TOR SUCCESSFULLY'
+	tar cz -C $^ . | ssh ${TOR_SSH_HOST} 'cat | sudo tar xz -C /var/www/html/ && echo PUBLISHED TO TOR SUCCESSFULLY'
 
 publish_ipfs: .site_ipfs/
-	tar cz $^ | ssh ipfs@${IPFS_SSH_HOST} 'cat | tar xz && ipfs add -rQ $^ | xargs -I"!" ipfs name publish --key sidneys1.com "/ipfs/!" && echo PUBLISHED TO IPFS SUCCESSFULLY'
+	tar cz $^ . | ssh ipfs@${IPFS_SSH_HOST} 'pv | tar xz && ipfs add -rQ $^ | xargs -I"!" ipfs name publish --key sidneys1.com "/ipfs/!" && echo PUBLISHED TO IPFS SUCCESSFULLY'
 
 publish_github: .site_github/
 	rsync -icr --delete .site_github/* github_pages/
