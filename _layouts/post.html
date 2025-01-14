@@ -53,7 +53,7 @@ layout: base
 	</header>
 
 	{%- if page.image -%}
-	<div class="post-image"><img src="{{ page.image | absolute_url }}" style="{% if page.image_shadow == false %}box-shadow: none;{% endif %}"></div>
+	<div class="post-image{% if page.image_float == true %} post-image-float{% endif %}"><img src="{{ page.image | absolute_url }}" style="{% if page.image_shadow == false %}box-shadow: none;{% endif %}"></div>
 	{%- endif -%}
 
 	<!-- <div class="post-toc"> -->
