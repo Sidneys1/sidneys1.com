@@ -154,6 +154,14 @@ div.note {
             transition: 250ms linear;
         }
     }
+
+    @media screen and (min-width: 1000px) {
+        &.post-image-float {
+            float: right;
+            margin-left: 1em;
+            max-width: 50%;
+        }
+    }
 }
 
 // Header

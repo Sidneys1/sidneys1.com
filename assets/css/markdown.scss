@@ -627,3 +627,8 @@ hr.short-rule {
 .praise {
 	text-decoration: underline wavy color-mix(in srgb, var(--sidneys1-green-accent) 75%, transparent);
 }
+
+
+tbody + tbody {
+	border-top: 3px solid theme.$table-border-color;
+}
