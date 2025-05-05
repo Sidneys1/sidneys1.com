@@ -5,7 +5,7 @@ permalink: /etho-timeline/
 tags: [etho, ethoslab, youtube]
 author: Sidneys1
 toc: false
-# mastodon_comment_url:
+mastodon_comment_url: https://infosec.exchange/@Sidneys1/114450132218148938
 ---
 
 Here's a timeline of video uploads to different series of the YouTube channel

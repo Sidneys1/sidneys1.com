@@ -27,7 +27,7 @@ serve-prod:
 _site_preview/: ${SRC}
 	env JEKYLL_ENV=production bundle exec jekyll build --drafts --incremental --destination _site_preview/ --config _config.yml,_config.preview.yml
 
-publish: publish_online publish_tor publish_github publish_ipfs publish_preview
+publish: publish_online publish_tor publish_github publish_ipfs
 
 publish_online: .site/
 	rsync -icrz --delete --exclude writeable/ .site/* ${ONLINE_SSH_HOST}:.
